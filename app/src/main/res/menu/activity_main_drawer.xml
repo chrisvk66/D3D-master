@@ -3,34 +3,51 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_inicio"
+            android:icon="@drawable/sing_in_black"
+            android:title="@string/nav_inicio" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/user_black"
+            android:title="@string/nav_perfil" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_buscar"
+            android:icon="@drawable/search_black"
+            android:title="@string/nav_buscar" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+            android:id="@+id/nav_publicar"
+            android:icon="@drawable/publish_black"
+            android:title="@string/nav_publicar" />
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_publicados"
+            android:icon="@drawable/list_black"
+            android:title="@string/nav_publicados" />
+
+        <item
+            android:id="@+id/nav_mis_proyectos"
+            android:icon="@drawable/dashboard_black"
+            android:title="@string/nav_mis_proyectos" />
+
+        <item
+            android:id="@+id/nav_evaluacion"
+            android:icon="@drawable/star_black"
+            android:title="@string/nav_evaluacion" />
+
+        <item
+            android:id="@+id/nav_mensajes"
+            android:icon="@drawable/mail_black"
+            android:title="@string/nav_mensajes" />
+
+        <item
+            android:id="@+id/nav_como_funciona"
+            android:icon="@drawable/question_black"
+            android:title="@string/nav_como_funciona" />
+
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/log_out_black"
+            android:title="@string/nav_exit" />
+    </group>
 
 </menu>

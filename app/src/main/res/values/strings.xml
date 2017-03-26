@@ -5,4 +5,19 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <!-- strings del menu lateral-->
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_perfil">Perfil</string>
+    <string name="nav_buscar">Buscar profesionales</string>
+    <string name="nav_publicar">Publicar proyectos</string>
+    <string name="nav_publicados">Proyectos publicados</string>
+    <string name="nav_mis_proyectos">Mis proyectos</string>
+    <string name="nav_evaluacion">Evaluación</string>
+    <string name="nav_mensajes">Mensajes</string>
+    <string name="nav_como_funciona">Cómo funciona</string>
+    <string name="nav_exit">Cerrar sesión</string>
+    <!-- Fin menu lateral-->
+
 </resources>

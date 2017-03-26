@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- strings del menu lateral-->
+    <string name="nav_inicio">Sign in</string>
+    <string name="nav_perfil">Profile</string>
+    <string name="nav_buscar">Search professionals</string>
+    <string name="nav_publicar">Publish projects</string>
+    <string name="nav_publicados">Published projects</string>
+    <string name="nav_mis_proyectos">My projects</string>
+    <string name="nav_evaluacion">Evaluation</string>
+    <string name="nav_mensajes">Messages</string>
+    <string name="nav_como_funciona">How does it work</string>
+    <string name="nav_exit">Log out</string>
+    <!-- Fin menu lateral-->
+</resources>
