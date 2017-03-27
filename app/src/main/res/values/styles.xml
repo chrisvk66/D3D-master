@@ -17,4 +17,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--Botones transparentes-->
+    <style name="botones_inicio">
+        <item name="android:background">@drawable/botones_pantalla_inicio </item>
+        <item name="android:textColor">@color/blanco</item>
+    </style>
+
+    <!--Boton Facebook-->
+    <style name="boton_facebook">
+        <item name="android:background">@drawable/boton_facebook </item>
+        <item name="android:textColor">@color/blanco</item>
+    </style>
+
 </resources>

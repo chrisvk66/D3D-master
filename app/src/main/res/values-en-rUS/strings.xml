@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">D3D</string>
+
     <!-- strings del menu lateral-->
     <string name="nav_inicio">Sign in</string>
     <string name="nav_perfil">Profile</string>
@@ -11,5 +13,12 @@
     <string name="nav_mensajes">Messages</string>
     <string name="nav_como_funciona">How does it work</string>
     <string name="nav_exit">Log out</string>
+    <string name="web_d3d">www.doingit3d.com/</string>
     <!-- Fin menu lateral-->
+
+    <!-- Botones de la pantalla de inicio-->
+    <string name="registrarse">Sign in</string>
+    <string name="entrar">Login</string>
+    <string name="facebook">Facebook</string>
+    <!-- Fin botones de la pantalla de inicio-->
 </resources>
