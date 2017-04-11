@@ -11,11 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 public class How_does_it_works extends AppCompatActivity {
     private CustomSwipeAdapter csa;
     private ViewPager vp;
-    //el array comentado es el bueno pero de error de outofmemoryerror y supongo que habria que redimensionarlas o algo de eso
-    //private int[] fotos ={R.drawable.screen_00,R.drawable.screen_01,R.drawable.screen_02,R.drawable.screen_03,R.drawable.screen_04,R.drawable.screen_05};
+    //habrá que cambiar la resolucion de las imagenes porque salen "estiradas"
+    private int[] fotos ={R.drawable.screen_00,R.drawable.screen_01,R.drawable.screen_02,R.drawable.screen_03,R.drawable.screen_04,R.drawable.screen_05};
 
-    //fotos de prueba
-    private int[] fotos ={R.drawable.history_black,R.drawable.dashboard_black};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
