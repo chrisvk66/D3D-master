@@ -11,8 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 public class How_does_it_works extends AppCompatActivity {
     private CustomSwipeAdapter csa;
     private ViewPager vp;
-    //habrá que cambiar la resolucion de las imagenes porque salen "estiradas"
-    private int[] fotos ={R.drawable.screen_00,R.drawable.screen_01,R.drawable.screen_02,R.drawable.screen_03,R.drawable.screen_04,R.drawable.screen_05};
+
+    //array de imagenes
+    private int[] fotos ={R.drawable.s0,R.drawable.s1,R.drawable.s2,R.drawable.s3,R.drawable.s4,R.drawable.s5};
 
 
     protected void onCreate(Bundle savedInstanceState) {
