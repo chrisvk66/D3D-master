@@ -23,6 +23,7 @@
         </activity>
 
         <activity android:name=".How_does_it_works"></activity>
+        <activity android:name=".Profile"></activity>
 
 
     </application>

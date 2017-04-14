@@ -27,4 +27,11 @@
     <string name="facebook">Facebook</string>
     <!-- Fin botones de la pantalla de inicio-->
 
+    <!-- Botones de la pantalla del pefil-->
+    <string name="perfil_activo">Perfil Activo</string>
+    <string name="disenio_impresion_scanner">Diseño 3D / Impresión 3D / Scanner 3D</string>
+    <string name="como_contratista">Como contratista</string>
+    <string name="como_trabajador">Como trabajador</string>
+    <!-- Fin botones de la pantalla del perfil-->
+
 </resources>
