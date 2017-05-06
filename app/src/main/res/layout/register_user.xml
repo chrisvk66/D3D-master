@@ -179,6 +179,7 @@
                     android:layout_weight="0.29"
                     android:background="@color/boton"
                     android:textColor="@color/blanco"
+                    android:textSize="20dp"
                     android:text="@string/salvar_perfil" />
             </LinearLayout>
 
