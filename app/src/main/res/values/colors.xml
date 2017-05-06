@@ -7,4 +7,6 @@
     <color name="blanco">#ffffff</color>
     <color name="transparente">#00ffffff</color>
     <color name="azul_facebook">#4980ff</color>
+    <color name="negro">#000000</color>
+    <color name="gris">#a3a0a0</color>
 </resources>
