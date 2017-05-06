@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity
        //cuando se pulsa "como funciona"
        if (id==R.id.nav_como_funciona){
            startActivity(new Intent(this,How_does_it_works.class));
+       }else if (id==R.id.nav_perfil){
+           startActivity(new Intent(this, Profile.class));
        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

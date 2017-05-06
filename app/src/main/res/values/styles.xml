@@ -29,4 +29,9 @@
         <item name="android:textColor">@color/blanco</item>
     </style>
 
+    <!--Boton Perfil-->
+    <style name="boton_perfil">
+        <item name="android:background">@drawable/botones_perfil </item>
+        <item name="android:textColor">@color/negro</item>
+    </style>
 </resources>

@@ -21,4 +21,17 @@
     <string name="entrar">Login</string>
     <string name="facebook">Facebook</string>
     <!-- Fin botones de la pantalla de inicio-->
+
+
+    <!-- Botones de la pantalla del pefil-->
+    <string name="perfil_activo">Active profile</string>
+    <string name="disenio_impresion_scanner">Design 3D / Print 3D / Scanner 3D</string>
+    <string name="como_contratista">As a contractor</string>
+    <string name="como_trabajador">As a worker</string>
+    <string name="experiencia_perfil">Experience</string>
+    <string name="como_vas">HOW ARE YOU DOING?</string>
+    <string name="historial">RECORD</string>
+    <string name="portafolios">PORTAFOLIO OF WORKS</string>
+    <string name="editar_perfil">EDIT PROFILE</string>
+    <!-- Fin botones de la pantalla del perfil-->
 </resources>

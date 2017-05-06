@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".How_does_it_works"></activity>
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".How_does_it_works" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Profile" android:theme="@style/AppTheme.NoActionBar"></activity>
 
 
     </application>

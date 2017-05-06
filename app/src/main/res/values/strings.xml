@@ -32,6 +32,11 @@
     <string name="disenio_impresion_scanner">Diseño 3D / Impresión 3D / Scanner 3D</string>
     <string name="como_contratista">Como contratista</string>
     <string name="como_trabajador">Como trabajador</string>
+    <string name="experiencia_perfil">Experiencia</string>
+    <string name="como_vas">¿CÓMO VAS?</string>
+    <string name="historial">HISTORIAL</string>
+    <string name="portafolios">Portafolio de trabajos</string>
+    <string name="editar_perfil">EDITAR PERFIL</string>
     <!-- Fin botones de la pantalla del perfil-->
 
 </resources>
