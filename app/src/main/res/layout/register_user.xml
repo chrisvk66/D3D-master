@@ -93,61 +93,53 @@
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:text="@string/nombre" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
 
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/nombre" />
+            <EditText
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/nombre" />
+        </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:text="@string/email" />
 
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/email" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
 
-        <TextView
-            android:id="@+id/tv_pw"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:text="@string/contraseña" />
+            <EditText
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/email" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/et_pw"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/contraseña" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:text="@string/rep_contraseña" />
+            <EditText
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/contraseña" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/rep_contraseña" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
+
+            <EditText
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/rep_contraseña" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
