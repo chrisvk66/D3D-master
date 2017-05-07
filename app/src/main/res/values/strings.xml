@@ -21,13 +21,13 @@
     <string name="web_d3d">www.doingit3d.com/</string>
     <!-- Fin menu lateral-->
 
-    <!-- Botones de la pantalla de inicio-->
+    <!-- strings de la pantalla de inicio-->
     <string name="registrarse">Registrarse</string>
     <string name="entrar">Entrar</string>
     <string name="facebook">Facebook</string>
-    <!-- Fin botones de la pantalla de inicio-->
+    <!-- Fin strings de la pantalla de inicio-->
 
-    <!-- Botones de la pantalla del perfil-->
+    <!-- strings de la pantalla del perfil-->
     <string name="perfil_activo">Perfil Activo</string>
     <string name="disenio_impresion_scanner">Diseño 3D / Impresión 3D / Scanner 3D</string>
     <string name="como_contratista">Como contratista</string>
@@ -37,9 +37,9 @@
     <string name="historial">HISTORIAL</string>
     <string name="portafolios">Portafolio de trabajos</string>
     <string name="editar_perfil">EDITAR PERFIL</string>
-    <!-- Fin botones de la pantalla del perrfil-->
+    <!-- Fin strings de la pantalla del perrfil-->
 
-    <!-- Botones de la pantalla del registro-->
+    <!-- strings de la pantalla del registro-->
     <string name="registro">Registro</string>
     <string name="tipo_perfil">Servicios asociados a tu perfil</string>
     <string name="diseñador_3d">Soy diseñador 3D</string>
@@ -50,9 +50,9 @@
     <string name="contraseña">Contraseña</string>
     <string name="rep_contraseña">Repetir contraseña</string>
     <string name="salvar_perfil">Guardar Perfil</string>
-    <!-- Fin botones de la pantalla del registro-->
+    <!-- Fin strings de la pantalla del registro-->
 
-    <!-- Botones de la pantalla de publicar proyecto-->
+    <!-- strings de la pantalla de publicar proyecto-->
     <string name="titulo_proyecto">Titulo del proyecto</string>
     <string name="tipologia_proyecto">Tipoloía del proyecto</string>
     <string name="descripcion_proyecto">Descripción del proyecto</string>
@@ -85,6 +85,6 @@
     <string name="privacidad_privado">Privado. Solo los usuarios con el perfil de diseñador pueden ver este proyecto</string>
     <string name="terminos_condiciones">He leído y acepto los términos de publicación</string>
     <string name="publicar_proyecto">PUBLICAR PROYECTO</string>
-    <!-- Fin botones de la pantalla de publicar proyecto-->
+    <!-- Fin strings de la pantalla de publicar proyecto-->
 
 </resources>

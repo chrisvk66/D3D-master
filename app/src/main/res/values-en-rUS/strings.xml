@@ -16,14 +16,14 @@
     <string name="web_d3d">www.doingit3d.com/</string>
     <!-- Fin menu lateral-->
 
-    <!-- Botones de la pantalla de inicio-->
+    <!-- strings de la pantalla de inicio-->
     <string name="registrarse">Sign in</string>
     <string name="entrar">Login</string>
     <string name="facebook">Facebook</string>
-    <!-- Fin botones de la pantalla de inicio-->
+    <!-- Fin strings de la pantalla de inicio-->
 
 
-    <!-- Botones de la pantalla del pefil-->
+    <!-- strings de la pantalla del pefil-->
     <string name="perfil_activo">Active profile</string>
     <string name="disenio_impresion_scanner">Design 3D / Print 3D / Scanner 3D</string>
     <string name="como_contratista">As a contractor</string>
@@ -33,10 +33,10 @@
     <string name="historial">RECORD</string>
     <string name="portafolios">PORTAFOLIO OF WORKS</string>
     <string name="editar_perfil">EDIT PROFILE</string>
-    <!-- Fin botones de la pantalla del perfil-->
+    <!-- Fin strings de la pantalla del perfil-->
 
 
-    <!-- Botones de la pantalla del registro-->
+    <!-- strings de la pantalla del registro-->
     <string name="registro">Register</string>
     <string name="tipo_perfil">Services associated to your profile</string>
     <string name="diseñador_3d">I am a 3D designer</string>
@@ -47,9 +47,9 @@
     <string name="contraseña">Password</string>
     <string name="rep_contraseña">Repeat password</string>
     <string name="salvar_perfil">Save profile</string>
-    <!-- Fin botones de la pantalla del registro-->
+    <!-- Fin strings de la pantalla del registro-->
 
-    <!-- Botones de la pantalla de publicar proyecto-->
+    <!-- strings de la pantalla de publicar proyecto-->
     <string name="titulo_proyecto">Title of the project</string>
     <string name="tipologia_proyecto">Typology of the project</string>
     <string name="descripcion_proyecto">Project description</string>
@@ -83,5 +83,5 @@
     <string name="privacidad_privado">Private. Only users with the designer profile can see this project</string>
     <string name="terminos_condiciones">I have read and accept the terms of publication</string>
     <string name="publicar_proyecto">PUBLISH PROJECT</string>
-    <!-- Fin botones de la pantalla de publicar proyecto-->
+    <!-- Fin strings de la pantalla de publicar proyecto-->
 </resources>
