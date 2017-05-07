@@ -87,4 +87,9 @@
     <string name="publicar_proyecto">PUBLICAR PROYECTO</string>
     <!-- Fin strings de la pantalla de publicar proyecto-->
 
+    <!-- strings de la pantalla ver proyectos publicados-->
+    <string name="proyectos">Proyectos 3D publiados</string>
+
+    <!-- Fin strings de la pantalla ver proyectos publicados-->
+
 </resources>
