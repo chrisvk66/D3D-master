@@ -13,16 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Button b_registrarse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        b_registrarse=(Button) findViewById(R.id.b_registrarse);
 
         //comento el codigo del boton flotante porque por ahora no lo vamos a usar
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    public void registrarse(View v){
+        finish();
+        startActivity(new Intent(this,Register.class));
     }
 
     @Override
