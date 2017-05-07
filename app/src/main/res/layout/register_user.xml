@@ -183,6 +183,8 @@
                     android:text="@string/salvar_perfil" />
             </LinearLayout>
 
+
+            <!-- Las lineas comentadas que hay mas abajo es porque me daba eror-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -193,7 +195,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="65dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/cab" />
+                     />
+                <!--app:srcCompat="@drawable/cab"-->
             </LinearLayout>
 
         </LinearLayout>
@@ -202,6 +205,7 @@
             android:id="@+id/imageView4"
             android:layout_width="134dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/don_app" />
+             />
+        <!-- app:srcCompat="@drawable/don_app"-->
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_titulo_proyecto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/titulo_proyecto"
+                    android:inputType="textPersonName|time"
+                    android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_tipologia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tipologia_proyecto"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_tipologia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/tipologia_de_proyecto" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_formato_archivo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp"
+                android:layout_marginTop="20sp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/descripcion_proyecto"
+                    android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_formato_archivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/formato_archivo"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_formato_archivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:entries="@array/formato_de_archivo" />
+
+            <TextView
+                android:id="@+id/tv_fecha_hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fecha_hora"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/b_fecha_hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="abrirCalendario"
+                    android:text="@string/seleccionar_hint" />
+
+                <TextView
+                    android:id="@+id/tv_fecha_seleccionada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="serif"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_moneda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tipo_moneda"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_moneda"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp">
+
+                <RadioButton
+                    android:id="@+id/radioButton_euro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/euro" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_dolar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dolar" />
+            </RadioGroup>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_ciudad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ciudad_poblacion_pais" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_privacidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacidad" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp">
+
+                <RadioButton
+                    android:id="@+id/radioButton_publico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/privacidad_publico" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_privado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/privacidad_privado" />
+
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/checkBox_terminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:layout_weight="1"
+                android:text="@string/terminos_condiciones"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b_publicar_proyecto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/save_white"
+                android:gravity="center_vertical|center"
+                android:text="@string/publicar_proyecto"
+                style="@style/boton_publicar"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

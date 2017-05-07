@@ -34,4 +34,10 @@
         <item name="android:background">@drawable/botones_perfil </item>
         <item name="android:textColor">@color/negro</item>
     </style>
+
+    <!-- Boton Publicar proyecto-->
+    <style name="boton_publicar">
+        <item name="android:background">@drawable/boton_publicar_proyecto</item>
+        <item name="android:textColor">@color/blanco</item>
+    </style>
 </resources>
