@@ -16,14 +16,14 @@
     <string name="web_d3d">www.doingit3d.com/</string>
     <!-- Fin menu lateral-->
 
-    <!-- Botones de la pantalla de inicio-->
+    <!-- strings de la pantalla de inicio-->
     <string name="registrarse">Sign in</string>
     <string name="entrar">Login</string>
     <string name="facebook">Facebook</string>
-    <!-- Fin botones de la pantalla de inicio-->
+    <!-- Fin strings de la pantalla de inicio-->
 
 
-    <!-- Botones de la pantalla del pefil-->
+    <!-- strings de la pantalla del pefil-->
     <string name="perfil_activo">Active profile</string>
     <string name="disenio_impresion_scanner">Design 3D / Print 3D / Scanner 3D</string>
     <string name="como_contratista">As a contractor</string>
@@ -33,5 +33,55 @@
     <string name="historial">RECORD</string>
     <string name="portafolios">PORTAFOLIO OF WORKS</string>
     <string name="editar_perfil">EDIT PROFILE</string>
-    <!-- Fin botones de la pantalla del perfil-->
+    <!-- Fin strings de la pantalla del perfil-->
+
+
+    <!-- strings de la pantalla del registro-->
+    <string name="registro">Register</string>
+    <string name="tipo_perfil">Services associated to your profile</string>
+    <string name="diseñador_3d">I am a 3D designer</string>
+    <string name="impresor_3d">I have a 3D printer</string>
+    <string name="scanner_3d">I have a 3D scanner</string>
+    <string name="nombre">Name</string>
+    <string name="email">E-Mail</string>
+    <string name="contraseña">Password</string>
+    <string name="rep_contraseña">Repeat password</string>
+    <string name="salvar_perfil">Save profile</string>
+    <!-- Fin strings de la pantalla del registro-->
+
+    <!-- strings de la pantalla de publicar proyecto-->
+    <string name="titulo_proyecto">Title of the project</string>
+    <string name="tipologia_proyecto">Typology of the project</string>
+    <string name="descripcion_proyecto">Project description</string>
+    <string name="formato_archivo">File format (For 3D design delivery)</string>
+    <string name="fecha_hora">Date and Time of completion (The longer this date, the more the offer will receive)</string>
+    <string name="tipo_moneda">Currency in which you want to receive quotes</string>
+    <string name="desplazamiento">Does it require displacement?</string>
+    <string name="privacidad">Privacy of the project</string>
+
+    <string-array name="tipologia_de_proyecto">
+        <item>Scanner 3D</item>
+        <item>Design 3D</item>
+        <item>Printer 3D</item>
+        <item>Merchandising</item>
+    </string-array>
+
+    <string name="seleccionar_hint">Select</string>
+
+    <string-array name="formato_de_archivo">
+        <item>PSD</item>
+        <item>CDE material</item>
+    </string-array>
+
+    <string name="euro">Euro</string>
+    <string name="dolar">Dollar</string>
+
+    <string name="no_desplazamiento">No. I can send the piece I want to send.</string>
+    <string name="si_desplazamiento">Yes. It is necessary to move</string>
+    <string name="ciudad_poblacion_pais">Enter City / Town / Country</string>
+    <string name="privacidad_publico">Public. The project is visible in the DoingIt 3D Home</string>
+    <string name="privacidad_privado">Private. Only users with the designer profile can see this project</string>
+    <string name="terminos_condiciones">I have read and accept the terms of publication</string>
+    <string name="publicar_proyecto">PUBLISH PROJECT</string>
+    <!-- Fin strings de la pantalla de publicar proyecto-->
 </resources>
