@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("¿Desea salir de la aplicación?")
-                    .setContentText("¿Seguro?")
                     .setCancelText("No, permanecer aquí")
                     .setConfirmText("Sí")
                     .showCancelButton(true)
