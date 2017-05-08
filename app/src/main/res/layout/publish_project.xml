@@ -2,12 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10sp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <!-- nuevos botones: https://github.com/hoang8f/android-flat-button-->
 
+    <!-- si quereis una toolbar poned este codigo <include>, si no no saldrá y ponedlo el primero obviamente-->
+    <include
+        layout="@layout/toolbar_reutilizable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,6 +37,7 @@
                     android:inputType="textPersonName|time"
                     android:textStyle="bold" />
             </android.support.design.widget.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/tv_tipologia"
@@ -82,13 +93,26 @@
                 android:layout_marginBottom="20sp"
                 android:orientation="horizontal">
 
-                <Button
+               <!-- <Button
                     android:id="@+id/b_fecha_hora"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="abrirCalendario"
-                    android:text="@string/seleccionar_hint" />
+                    android:text="@string/seleccionar_hint" />-->
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/b_fecha_hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seleccionar_hint"
+                    fbutton:buttonColor="@color/fbutton_color_alizarin"
+                    fbutton:cornerRadius="5dp"
+                    fbutton:shadowColor="@color/fbutton_color_pomegranate"
+                    fbutton:shadowEnabled="true"
+                    fbutton:shadowHeight="5dp"
+                    android:layout_weight="0.13"
+                    android:onClick="abrirCalendario"/>
 
                 <TextView
                     android:id="@+id/tv_fecha_seleccionada"
@@ -178,14 +202,26 @@
                 android:text="@string/terminos_condiciones"
                 android:textStyle="bold" />
 
-            <Button
+            <!--<Button
                 android:id="@+id/b_publicar_proyecto"
+                style="@style/boton_publicar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/save_white"
                 android:gravity="center_vertical|center"
+                android:text="@string/publicar_proyecto" />-->
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/b_publicar_proyecto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp"
                 android:text="@string/publicar_proyecto"
-                style="@style/boton_publicar"/>
+                fbutton:buttonColor="@color/fbutton_color_peter_river"
+                fbutton:cornerRadius="5dp"
+                fbutton:shadowColor="@color/fbutton_color_belize_hole"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="5dp" />
 
         </LinearLayout>
     </ScrollView>

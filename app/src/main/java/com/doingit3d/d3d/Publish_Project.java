@@ -1,26 +1,41 @@
 package com.doingit3d.d3d;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.app.DialogFragment;
-import android.widget.Button;
+import info.hoang8f.widget.FButton;
 
 /**
  * Created by David M on 14/04/2017.
  */
 
-public class Publish_Project extends Activity {
+public class Publish_Project extends AppCompatActivity {
 
     //boton que al pulsarlo sale un calendario para elegir fecha
-    private Button b_fecha;
+   // private Button b_fecha, b_publicar;
+
+    //FButton se llaman asi los botones de la libreria
+    private FButton  b_fecha, b_publicar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_project);
 
-        b_fecha =(Button) findViewById(R.id.b_fecha_hora);
+       // b_fecha =(Button) findViewById(R.id.b_fecha_hora);
+       // b_publicar=(Button) findViewById(R.id.b_publicar_proyecto);
+
+        b_fecha =(FButton) findViewById(R.id.b_fecha_hora);
+        b_publicar=(FButton) findViewById(R.id.b_publicar_proyecto);
+
+        //poned en todas las actividades que querais la toolbar este codigo
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
     }
 
@@ -30,8 +45,16 @@ public class Publish_Project extends Activity {
         newFragment.show(getFragmentManager(),"Date Picker");
     }
 
+    //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();//llama a este metodo
+        return true;
+    }
+
     public void onBackPressed(){
         finish();
         startActivity(new Intent(this,MainActivity.class));
     }
+
 }
