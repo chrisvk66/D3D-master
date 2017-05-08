@@ -55,7 +55,8 @@
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/img_perfil" />
+                        app:srcCompat="@drawable/img_perfil"
+                        android:clickable="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,8 +113,8 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/nombre" />
+            android:hint="@string/nombre"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/tv_email"
@@ -126,8 +127,8 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/email" />
+            android:hint="@string/email"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/tv_pw"
@@ -140,8 +141,8 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/contraseña" />
+            android:hint="@string/contraseña"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView2"
@@ -154,8 +155,8 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/rep_contraseña" />
+            android:hint="@string/rep_contraseña"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout

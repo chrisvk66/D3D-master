@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.app.DialogFragment;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import info.hoang8f.widget.FButton;
 
 /**
@@ -43,6 +45,24 @@ public class Publish_Project extends AppCompatActivity {
     public void abrirCalendario(View v){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(),"Date Picker");
+    }
+
+    public void publicar_proyecto(View v){
+        //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("!Enhorabuena¡")
+                .setContentText("Proyecto publicado con éxito")
+                .setConfirmText("Aceptar")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        finish();
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    }
+                })
+                .show();
+
     }
 
     //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse

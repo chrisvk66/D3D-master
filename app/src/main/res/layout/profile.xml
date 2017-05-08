@@ -72,6 +72,7 @@
 
             <RatingBar
                 android:id="@+id/ratingBar_contratista"
+                android:isIndicator="false"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -96,6 +97,7 @@
             <RatingBar
                 android:id="@+id/ratingBar_trabajador"
                 style="@style/Widget.AppCompat.RatingBar.Small"
+                android:isIndicator="false"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
@@ -169,11 +171,9 @@
     <info.hoang8f.widget.FButton
         android:id="@+id/b_editar_perfil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:layout_weight="0.13"
         android:drawableLeft="@drawable/edit_black"
         android:text="@string/editar_perfil"
         android:textSize="18sp"

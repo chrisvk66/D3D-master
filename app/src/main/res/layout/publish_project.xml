@@ -28,7 +28,8 @@
                 android:id="@+id/til_titulo_proyecto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="20sp">
+                android:layout_marginBottom="20sp"
+                android:focusable="false">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -221,7 +222,8 @@
                 fbutton:cornerRadius="5dp"
                 fbutton:shadowColor="@color/fbutton_color_belize_hole"
                 fbutton:shadowEnabled="true"
-                fbutton:shadowHeight="5dp" />
+                fbutton:shadowHeight="5dp"
+                android:onClick="publicar_proyecto"/>
 
         </LinearLayout>
     </ScrollView>
