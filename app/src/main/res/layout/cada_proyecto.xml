@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/cada_pro_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,7 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/cada_pro_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/img_perfil" />
@@ -30,21 +32,21 @@
             android:layout_weight="0.35">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/cada_pro_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre del proyecto"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/cada_pro_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="publicado por @user"
                 />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/cada_pro_material"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Material" />
