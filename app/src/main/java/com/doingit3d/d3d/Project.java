@@ -7,7 +7,7 @@ import android.media.Image;
  */
 
 public class Project {
-    public enum Genero {poesia, narrativa, cuento, cienciaFiccion};
+
 
     protected String titulo, autor, material;
     protected Image image;
