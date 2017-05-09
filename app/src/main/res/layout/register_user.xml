@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <include
+        layout="@layout/toolbar_reutilizable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -94,6 +99,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_nombre_registro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal">
@@ -106,6 +112,7 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_email_registro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal">
@@ -117,6 +124,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_pass_registro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal">
@@ -128,6 +136,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_repetirpass_registro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal">
@@ -176,7 +185,6 @@
             </LinearLayout>
 
 
-            <!-- Las lineas comentadas que hay mas abajo es porque me daba eror-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

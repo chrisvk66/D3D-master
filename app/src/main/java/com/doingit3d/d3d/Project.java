@@ -10,14 +10,27 @@ public class Project {
 
 
     protected String titulo, autor, material;
-    protected Image image;
+    protected byte[] foto;
 
-    public Project(String titulo, String autor, String material, Image img){
+
+    public Project(String titulo, String autor, String material, byte[] foto){
         this.titulo=titulo;
         this.autor=autor;
         this.material = material;
-        this.image = img;
+        this.foto = foto;
+
     }
+
+
+    public Project(String titulo, String autor, String material){
+        this.titulo=titulo;
+        this.autor=autor;
+        this.material = material;
+
+    }
+
+
+
 
 
 

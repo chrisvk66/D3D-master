@@ -3,6 +3,7 @@ package com.doingit3d.d3d;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,11 +47,19 @@ public class Project_adapter extends ArrayAdapter<Project> {
             row.setTag(vh);
         }
         ViewHolder vh = (ViewHolder) row.getTag();
+        vh.tv_titulo = (TextView) row.findViewById(R.id.cada_pro_titulo);
+        vh.tv_autor = (TextView) row.findViewById(R.id.cada_pro_user);
+        vh.tv_material = (TextView) row.findViewById(R.id.cada_pro_material);
+        vh.tv_image = (ImageView) row.findViewById(R.id.cada_pro_image);
+        vh.ll = (LinearLayout) row.findViewById(R.id.cada_pro_ll);
         Project p = modelo.get(position);
+
+
+        //aqui se mete los texto e imagens a traves de la base de datos cuando este lista
 
         vh.tv_titulo.setText(p.titulo);
         vh.tv_autor.setText(p.autor);
-        vh.tv_autor.setText(p.material);
+        vh.tv_material.setText(p.material);
 
         return row;
 

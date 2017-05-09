@@ -1,6 +1,7 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -79,6 +80,9 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
+                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
                             System.exit(0);
                         }
                     })
@@ -139,6 +143,8 @@ public class MainActivity extends AppCompatActivity
            startActivity(new Intent(this, Profile.class));
        }else if (id==R.id.nav_publicar){
            startActivity(new Intent(this, Publish_Project.class));
+       }else if (id==R.id.nav_publicados){
+           startActivity(new Intent(this, Project_Main.class));
        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

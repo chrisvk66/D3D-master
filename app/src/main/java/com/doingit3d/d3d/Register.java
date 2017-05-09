@@ -2,6 +2,7 @@ package com.doingit3d.d3d;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +23,6 @@ public class Register extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
     }
 
     //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse
@@ -33,7 +33,9 @@ public class Register extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
         startActivity(new Intent(this,MainActivity.class));
     }
 }
