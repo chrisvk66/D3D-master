@@ -40,7 +40,8 @@
                 android:layout_weight="1"
                 android:text="@string/registrarse"
                 tools:layout_editor_absoluteX="57dp"
-                tools:layout_editor_absoluteY="282dp" />
+                tools:layout_editor_absoluteY="282dp"
+                android:onClick="registrarse"/>
 
             <Button
                 android:id="@+id/b_entrar"

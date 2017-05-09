@@ -27,6 +27,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    repositories {
+        mavenCentral()
+    }
+
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'info.hoang8f:fbutton:1.0.5'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.florent37:materialtextfield:1.0.7'
+    compile 'cn.pedant.sweetalert:library:1.3'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
