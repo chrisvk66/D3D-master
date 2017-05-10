@@ -84,4 +84,14 @@
     <string name="terminos_condiciones">I have read and accept the terms of publication</string>
     <string name="publicar_proyecto">PUBLISH PROJECT</string>
     <!-- Fin strings de la pantalla de publicar proyecto-->
+
+
+    <!-- String varios-->
+    <string name="correo_electronico">E-mail</string>
+    <string name="cancelar">Cancel</string>
+    <string name="iniciar_sesion">LOG IN</string>
+    <string name="si">Yes</string>
+    <string name="permanecer">No, stay here</string>
+    <string name="salir_app">Do you want to exit the application?</string>
+    <!-- Fin strings varios-->
 </resources>

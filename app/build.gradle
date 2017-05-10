@@ -28,11 +28,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     repositories {
+        jcenter()
         mavenCentral()
         maven {
             url "https://jitpack.io"
         }
     }
+    compile 'com.mxn.soul:flowingdrawer-core:2.0.0'
+    compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'info.hoang8f:fbutton:1.0.5'

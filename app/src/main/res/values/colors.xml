@@ -11,6 +11,7 @@
     <color name="negro">#000000</color>
     <color name="gris">#a3a0a0</color>
     <color name="verde">#33fa1c</color>
+    <color name="gris_menu">#E1DFDA</color>
 
 <!--Colores para botones de la libreria flat button-->
     <color name="fbutton_color_turquoise">#1abc9c</color>
