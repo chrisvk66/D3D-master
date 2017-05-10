@@ -87,4 +87,19 @@
     <string name="publicar_proyecto">PUBLICAR PROYECTO</string>
     <!-- Fin strings de la pantalla de publicar proyecto-->
 
+    <!-- strings de la pantalla ver proyectos publicados-->
+    <string name="proyectos">Proyectos 3D publiados</string>
+
+    <!-- Fin strings de la pantalla ver proyectos publicados-->
+
+
+    <!-- String varios-->
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="iniciar_sesion">INICIAR SESIÓN</string>
+    <string name="si">Sí</string>
+    <string name="permanecer">No, permanecer aquí</string>
+    <string name="salir_app">¿Desea salir de la aplicación?</string>
+    <!-- Fin strings varios-->
+
 </resources>

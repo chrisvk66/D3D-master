@@ -40,7 +40,8 @@
                 android:layout_weight="1"
                 android:text="@string/registrarse"
                 tools:layout_editor_absoluteX="57dp"
-                tools:layout_editor_absoluteY="282dp" />
+                tools:layout_editor_absoluteY="282dp"
+                android:onClick="registrarse"/>
 
             <Button
                 android:id="@+id/b_entrar"
@@ -49,7 +50,8 @@
                 android:layout_height="40dp"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:text="@string/entrar" />
+                android:text="@string/entrar"
+                android:onClick="loginDialog"/>
         </LinearLayout>
     </LinearLayout>
 
