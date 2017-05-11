@@ -9,7 +9,7 @@ import android.view.View;
 import android.app.DialogFragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import info.hoang8f.widget.FButton;
-import java.sql.Connection;
+
 
 /**
  * Created by David M on 14/04/2017.
