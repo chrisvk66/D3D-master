@@ -46,6 +46,8 @@ public class MenuListFragment extends Fragment {
                     startActivity(new Intent(getActivity(), Publish_Project.class));
                 }else if (id== R.id.nav_publicados){
                     startActivity(new Intent(getActivity(), Project_Main.class));
+                }else if (id== R.id.nav_evaluacion){
+                    startActivity(new Intent(getActivity(), Evaluation.class));
                 }
                 return true;
             }

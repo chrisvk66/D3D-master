@@ -92,6 +92,18 @@
 
     <!-- Fin strings de la pantalla ver proyectos publicados-->
 
+    <!-- String valoracion-->
+    <string name="reputacion">Reputación como contratista</string>
+    <string name="proyectos_presentados">Proyectos presentados</string>
+    <string name="proyectos_finalizados">Proyectos finalizados</string>
+    <string name="proyectos_nulos">Proyectos nulos</string>
+    <string name="pendientes_de_adjudicacion">Pendientes de adjudicacion</string>
+    <string name="ofertas_presentadas">Ofertas presentadas</string>
+    <string name="ofertas_pendientes_de_adjudicar">Ofertas pendientes de adjudicar</string>
+    <string name="trabajos_adjudicados">Trabajos adjudicados</string>
+    <string name="trabajos_no_adjudicados">Trabajos no adjudicados</string>
+    <!-- Fin strings varios-->
+
 
     <!-- String varios-->
     <string name="error">ERROR</string>

@@ -17,7 +17,7 @@ public class Evaluation extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
+        setContentView(R.layout.evaluation);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -25,5 +25,18 @@ public class Evaluation extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();//llama a este metodo
+        return true;
+    }
+
+    public void onBackPressed(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        startActivity(new Intent(this,MainActivity.class));
     }
 }
