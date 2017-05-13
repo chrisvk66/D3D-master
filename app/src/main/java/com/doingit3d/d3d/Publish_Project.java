@@ -51,14 +51,16 @@ public class Publish_Project extends AppCompatActivity {
     public void publicar_proyecto(View v){
         //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
         new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("!Enhorabuena¡")
+                .setTitleText(getString(R.string.enhorabuena))
                 .setContentText("Proyecto publicado con éxito")
-                .setConfirmText("Aceptar")
+                .setConfirmText(getString(R.string.aceptar))
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        finish();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            finishAffinity();
+                        }
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     }
                 })

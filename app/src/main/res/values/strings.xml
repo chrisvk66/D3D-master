@@ -94,12 +94,19 @@
 
 
     <!-- String varios-->
+    <string name="error">ERROR</string>
+    <string name="aceptar">Aceptar</string>
     <string name="correo_electronico">Correo electrónico</string>
     <string name="cancelar">Cancelar</string>
     <string name="iniciar_sesion">INICIAR SESIÓN</string>
     <string name="si">Sí</string>
     <string name="permanecer">No, permanecer aquí</string>
     <string name="salir_app">¿Desea salir de la aplicación?</string>
+    <string name="campo_requerido">Campo requerido</string>
+    <string name="diferente_pass">Las contraseñas no coinciden</string>
+    <string name="enhorabuena">¡Enhorabuena!</string>
+    <string name="registro_exito">Registro con éxito</string>
+    <string name="publicacion_exito">Proyecto publicado con éxito</string>
     <!-- Fin strings varios-->
 
 </resources>
