@@ -87,11 +87,18 @@
 
 
     <!-- String varios-->
+    <string name="error">ERROR</string>
+    <string name="aceptar">Accept</string>
     <string name="correo_electronico">E-mail</string>
     <string name="cancelar">Cancel</string>
     <string name="iniciar_sesion">LOG IN</string>
     <string name="si">Yes</string>
     <string name="permanecer">No, stay here</string>
     <string name="salir_app">Do you want to exit the application?</string>
+    <string name="campo_requerido">Required field</string>
+    <string name="diferente_pass">Passwords do not match</string>
+    <string name="enhorabuena">Congratulations!</string>
+    <string name="registro_exito">Successful registration</string>
+    <string name="publicacion_exito">Project published successfully</string>
     <!-- Fin strings varios-->
 </resources>

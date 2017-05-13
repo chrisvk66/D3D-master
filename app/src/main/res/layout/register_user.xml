@@ -11,204 +11,225 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></include>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/registro"
-            android:textAlignment="center"
-            android:textSize="70px" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="101dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registro"
+                    android:textAlignment="center"
+                    android:textSize="70px" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="101dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="132dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/img_perfil" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="260dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tipo_perfil" />
+
+                            <CheckBox
+                                android:id="@+id/check_scanner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/scanner_3d" />
+
+                            <CheckBox
+                                android:id="@+id/check_impresor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/impresor_3d" />
+
+                            <CheckBox
+                                android:id="@+id/check_diseñador"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/diseñador_3d" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_nombre_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal">
+
+                    <EditText
+                        android:id="@+id/et_nombre_registro"
+                        android:layout_width="292dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/nombre" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_email_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal">
+
+                    <EditText
+                        android:id="@+id/et_email_registro"
+                        android:layout_width="292dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_pass_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal">
+
+                    <EditText
+                        android:id="@+id/et_pass_registro"
+                        android:layout_width="292dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/contraseña"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_repetirpass_registro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal">
+
+                    <EditText
+                        android:id="@+id/et_repetirpass_registro"
+                        android:layout_width="292dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/rep_contraseña"
+                        android:inputType="textPassword" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:gravity="left"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="132dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/img_perfil" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tipo_perfil" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/scanner_3d" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/impresor_3d" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/diseñador_3d" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="vertical">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_nombre_registro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal">
-
-            <EditText
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/nombre" />
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_email_registro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal">
-
-            <EditText
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/email" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_pass_registro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal">
-
-            <EditText
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/contraseña" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_repetirpass_registro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal">
-
-            <EditText
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/rep_contraseña" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:gravity="left"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_weight="0.55"
-                android:gravity="center_vertical|center"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.29"
-                    android:background="@color/boton"
-                    android:text="@string/salvar_perfil"
-                    android:textColor="@color/blanco"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="0.92"
-                android:orientation="horizontal">
-
-                <!--app:srcCompat="@drawable/cab"-->
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/img_cuadros" />
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_weight="0.55"
+                        android:gravity="center_vertical|center"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.29"
+                            android:background="@color/boton"
+                            android:text="@string/salvar_perfil"
+                            android:textColor="@color/blanco"
+                            android:textSize="20dp"
+                            android:onClick="guardar_Perfil"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="0.92"
+                        android:orientation="horizontal">
+
+                        <!--app:srcCompat="@drawable/cab"-->
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/img_cuadros" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="122dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/don" />
+
+                <!-- app:srcCompat="@drawable/don_app"-->
             </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="122dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/don" />
 
-        <!-- app:srcCompat="@drawable/don_app"-->
-    </LinearLayout>
 </LinearLayout>
