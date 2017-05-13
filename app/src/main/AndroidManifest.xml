@@ -31,6 +31,7 @@
         <activity android:name=".Register" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Publish_Project" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Project_Main" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Evaluation" android:theme="@style/AppTheme.NoActionBar"></activity>
 
 
     </application>
