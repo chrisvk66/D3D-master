@@ -5,6 +5,7 @@ package com.doingit3d.d3d;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,7 +33,18 @@ public class MenuListFragment extends Fragment {
 
         NavigationView vNavigation = (NavigationView) view.findViewById(R.id.nav_view);
         nav_menu= vNavigation.getMenu();
-        nav_menu.findItem(R.id.nav_exit).setEnabled(false);
+
+        //ESTAS OPCIONES NO SERAN VISIBLEA HASTA QUE SE INICIE SESION; DE MOMENTO LO COMENTO MIENTRAS HACEMOS PRUEBAS
+        /*nav_menu.findItem(R.id.nav_perfil).setVisible(false);
+        nav_menu.findItem(R.id.nav_buscar).setVisible(false);
+        nav_menu.findItem(R.id.nav_publicar).setVisible(false);
+        nav_menu.findItem(R.id.nav_publicados).setVisible(false);
+        nav_menu.findItem(R.id.nav_mis_proyectos).setVisible(false);
+        nav_menu.findItem(R.id.nav_evaluacion).setVisible(false);
+        nav_menu.findItem(R.id.nav_mensajes).setVisible(false);
+        nav_menu.findItem(R.id.nav_exit).setVisible(false);*/
+
+
         vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

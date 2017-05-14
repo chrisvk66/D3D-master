@@ -1,21 +1,22 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
+import com.afollestad.materialdialogs.MaterialDialog;
+import java.io.ByteArrayOutputStream;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by David M on 14/04/2017.
@@ -26,15 +27,23 @@ public class Register extends AppCompatActivity {
     private TextInputLayout til_nombre,til_email,til_pass, til_repetirpass;
     private EditText nombre,email,pass,repetirpass;
     private CheckBox scanner,disenador,impresor;
+    private CircleImageView civ;
+    private Intent camara;
+    private static final int RESULT_LOAD_IMAGE = 10;
+    private static final int REQUEST_IMAGE_CAPTURE = 20;
+    private Bitmap bm;
+    private Bundle b;
 
-    private Connection con;
-    private PreparedStatement ps;
-    private String insertar;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         nombre =(EditText) findViewById(R.id.et_nombre_registro);
         email =(EditText) findViewById(R.id.et_email_registro);
@@ -54,6 +63,8 @@ public class Register extends AppCompatActivity {
         disenador=(CheckBox) findViewById(R.id.check_diseñador);
         impresor=(CheckBox) findViewById(R.id.check_impresor);
 
+
+        civ=(CircleImageView) findViewById(R.id.foto_registro);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -130,15 +141,12 @@ public class Register extends AppCompatActivity {
                        .setTitleText(getString(R.string.enhorabuena))
                        .setContentText(getString(R.string.registro_exito))
                        .setConfirmText(getString(R.string.aceptar))
-                       .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                           @Override
-                           public void onClick(SweetAlertDialog sDialog) {
-                               sDialog.dismissWithAnimation();
-                               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                   finishAffinity();
-                               }
-                               startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                       .setConfirmClickListener(sDialog -> {
+                           sDialog.dismissWithAnimation();
+                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                               finishAffinity();
                            }
+                           startActivity(new Intent(getApplicationContext(),MainActivity.class));
                        })
                        .show();
            }catch(Exception e){
@@ -147,12 +155,7 @@ public class Register extends AppCompatActivity {
                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                        .setTitleText(getString(R.string.error))
                        .setConfirmText(getString(R.string.aceptar))
-                       .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                           @Override
-                           public void onClick(SweetAlertDialog sDialog) {
-                               sDialog.dismissWithAnimation();
-                           }
-                       })
+                       .setConfirmClickListener(sDialog -> sDialog.dismissWithAnimation())
                        .show();
 
                //pruebas de errores por consola
@@ -166,4 +169,58 @@ public class Register extends AppCompatActivity {
         }
 
     }
+
+    public void ponerFoto(View v){
+
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.elegir_modo)
+                .items(R.array.camara_galeria)
+                .itemsCallback((dialog, view, pos, text) -> {
+
+                    //GALERIA
+                        if (pos==0){
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE);
+
+                            //CAMARA
+                        }else if (pos==1){
+                            camara= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            if (camara.resolveActivity(getPackageManager()) != null) {
+                                startActivityForResult(camara, REQUEST_IMAGE_CAPTURE);
+                            }
+                        }
+                })
+                .show();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
+
+        super.onActivityResult(requestCode, resultCode, i);
+
+        //IMAGEN DE LA GALERIA
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != i) {
+            Uri uri = i.getData();
+           try{
+               Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+               ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
+               bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
+
+               civ.setImageBitmap(bitmap);
+           }catch(Exception e){
+
+           }
+
+           //IMAGEN DE LA CAMARA
+        }else  if(resultCode== RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE){
+            b = i.getExtras();
+            bm=(Bitmap)b.get("data");
+            ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.WEBP, 100,arraybytes);
+            civ.setImageBitmap(bm);
+        }
+    }
+
 }

@@ -85,7 +85,7 @@
     <string name="publicar_proyecto">PUBLISH PROJECT</string>
     <!-- Fin strings de la pantalla de publicar proyecto-->
 
-    <!-- String varios-->
+    <!-- String valoracion-->
     <string name="reputacion">Reputation as a contractor</string>
     <string name="proyectos_presentados">Proyects presented</string>
     <string name="proyectos_finalizados">Proyects finalized</string>
@@ -95,7 +95,7 @@
     <string name="ofertas_pendientes_de_adjudicar">Pending tenders to award</string>
     <string name="trabajos_adjudicados">Awarded jobs</string>
     <string name="trabajos_no_adjudicados">Non-awarded works</string>
-    <!-- Fin strings varios-->
+    <!-- Fin strings valoracion-->
 
     <!-- String varios-->
     <string name="error">ERROR</string>

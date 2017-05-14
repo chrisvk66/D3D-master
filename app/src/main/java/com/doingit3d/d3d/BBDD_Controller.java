@@ -24,9 +24,10 @@ public class BBDD_Controller {
 
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/d3d","root","c100cpb");
+                    con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/d3d","root","c100cpb");
 
-                    insertar="INSERT INTO USUARIO (IMAGEN, NOMBRE, EMAIL, CONTRASENA, IMPRESOR, DISENADOR, SCANNER) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+                    insertar="INSERT INTO usuario (IMAGEN, NOMBRE, EMAIL, CONTRASENA, IMPRESOR, DISENADOR, SCANNER) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     ps=con.prepareStatement(insertar);
 
                     ps.setBytes(1,img);
@@ -39,6 +40,7 @@ public class BBDD_Controller {
 
                     ps.executeUpdate();
 
+                    con.close();
                     System.out.println("----HA ENTRADO AQUI DENTRO----");
 
                     //con.close();

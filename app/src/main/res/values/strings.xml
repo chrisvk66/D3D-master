@@ -102,7 +102,7 @@
     <string name="ofertas_pendientes_de_adjudicar">Ofertas pendientes de adjudicar</string>
     <string name="trabajos_adjudicados">Trabajos adjudicados</string>
     <string name="trabajos_no_adjudicados">Trabajos no adjudicados</string>
-    <!-- Fin strings varios-->
+    <!-- Fin strings valoracion-->
 
 
     <!-- String varios-->
@@ -119,6 +119,13 @@
     <string name="enhorabuena">¡Enhorabuena!</string>
     <string name="registro_exito">Registro con éxito</string>
     <string name="publicacion_exito">Proyecto publicado con éxito</string>
+    <string name="elegir_modo">Elegir Modo</string>
+    <string name="anadir_imagen">¿Cómo quiere añadir una imagen?</string>
+
+    <string-array name="camara_galeria">
+        <item>Galería</item>
+        <item>Cámara</item>
+    </string-array>
     <!-- Fin strings varios-->
 
 </resources>

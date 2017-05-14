@@ -57,11 +57,22 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:id="@+id/imageView2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/img_perfil" />
+                                android:clickable="true"
+                                app:srcCompat="@drawable/img_perfil" />-->
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/foto_registro"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_perfil"
+                                android:clickable="true"
+                                android:onClick="ponerFoto"
+                                app:civ_border_color="#FF000000"
+                                app:civ_border_width="2dp" />
                         </LinearLayout>
 
                         <LinearLayout
