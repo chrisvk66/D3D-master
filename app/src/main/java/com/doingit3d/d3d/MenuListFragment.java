@@ -4,6 +4,7 @@ package com.doingit3d.d3d;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * Created by david.martin on 10/05/2017.
@@ -23,26 +25,28 @@ public class MenuListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_menu, container,
-                false);
-
+        View view = inflater.inflate(R.layout.fragment_menu, container,false);
 
         NavigationView vNavigation = (NavigationView) view.findViewById(R.id.nav_view);
         nav_menu= vNavigation.getMenu();
 
+
         //ESTAS OPCIONES NO SERAN VISIBLEA HASTA QUE SE INICIE SESION; DE MOMENTO LO COMENTO MIENTRAS HACEMOS PRUEBAS
-        /*nav_menu.findItem(R.id.nav_perfil).setVisible(false);
-        nav_menu.findItem(R.id.nav_buscar).setVisible(false);
-        nav_menu.findItem(R.id.nav_publicar).setVisible(false);
-        nav_menu.findItem(R.id.nav_publicados).setVisible(false);
-        nav_menu.findItem(R.id.nav_mis_proyectos).setVisible(false);
-        nav_menu.findItem(R.id.nav_evaluacion).setVisible(false);
-        nav_menu.findItem(R.id.nav_mensajes).setVisible(false);
-        nav_menu.findItem(R.id.nav_exit).setVisible(false);*/
+        /*nav_menu.findItem(R.id.nav_perfil).setEnabled(false);
+        nav_menu.findItem(R.id.nav_buscar).setEnabled(false);
+        nav_menu.findItem(R.id.nav_publicar).setEnabled(false);
+        nav_menu.findItem(R.id.nav_publicados).setEnabled(false);
+        nav_menu.findItem(R.id.nav_mis_proyectos).setEnabled(false);
+        nav_menu.findItem(R.id.nav_evaluacion).setEnabled(false);
+        nav_menu.findItem(R.id.nav_mensajes).setEnabled(false);
+        nav_menu.findItem(R.id.nav_exit).setEnabled(false);*/
+
 
 
         vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

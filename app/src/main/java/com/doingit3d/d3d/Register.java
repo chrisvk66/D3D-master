@@ -1,6 +1,7 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import java.io.ByteArrayOutputStream;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -32,8 +35,10 @@ public class Register extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 10;
     private static final int REQUEST_IMAGE_CAPTURE = 20;
     private Bitmap bm;
+    private byte[] imagen_bbdd;//aqui te almacena los bytes de la imagen para guardarlos en la base de datos
     private Bundle b;
-
+    private SQLiteDatabase db;
+    private BBDD_Controller controller = new BBDD_Controller(this);
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +119,7 @@ public class Register extends AppCompatActivity {
 
     public void guardar_Perfil(View v){
         //si no se crea aqui la instancia de clase da error
-        BBDD_Controller controlador= new BBDD_Controller();
+        //BBDD_Controller controlador= new BBDD_Controller();
 
         //en estos condicionales se comprueba que se rellenen todos los campos y si no sale un mensaje de error
         if (nombre.getText().toString().trim().isEmpty()){
@@ -128,13 +133,20 @@ public class Register extends AppCompatActivity {
 
         }else if (!(pass.getText().toString().equals(repetirpass.getText().toString()))){
             til_repetirpass.setError(getString(R.string.diferente_pass));
+
+        }else if (imagen_bbdd==null){
+            Toast.makeText(getApplicationContext(),getString(R.string.elegir_img),Toast.LENGTH_SHORT).show();
+
+        }else if ((controller.comprobar_email_repetido(email.getText().toString())==true)){
+            til_email.setError(getString(R.string.email_ya_existe));
+
         }else{
 
 
            try{
-               //SE SUPONE QUE AQUI LLAMA AL METODO QUE INSERTARIA LOS DATOS
-               //por ahora dejo la imagen en null para hacer pruebas
-               controlador.registrarse(null,nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),comprobar_scanner(),comprobar_disenador(),comprobar_impresor());
+                //los dos ceros se corresponden con la latitud y la longitud, los he puesto por poner un valor por defecto hasta que hagamos el mapa o algo
+               controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0);
+
 
                //mensaje de que ha funcionado
                new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
@@ -170,15 +182,17 @@ public class Register extends AppCompatActivity {
 
     }
 
+    //cuando se pulsa el icono de la camara te permite elegir una imagen desde la galeria o desde la camara
     public void ponerFoto(View v){
-
 
         new MaterialDialog.Builder(this)
                 .title(R.string.elegir_modo)
                 .items(R.array.camara_galeria)
-                .itemsCallback((dialog, view, pos, text) -> {
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int pos, CharSequence text) {
 
-                    //GALERIA
+                        //GALERIA
                         if (pos==0){
                             Intent intent = new Intent();
                             intent.setType("image/*");
@@ -192,10 +206,15 @@ public class Register extends AppCompatActivity {
                                 startActivityForResult(camara, REQUEST_IMAGE_CAPTURE);
                             }
                         }
+                    }
+
                 })
+
                 .show();
     }
 
+
+    //comprueba si viene de la galeria o desde la camara y recoge los datos
     protected void onActivityResult(int requestCode, int resultCode, Intent i) {
 
         super.onActivityResult(requestCode, resultCode, i);
@@ -209,8 +228,11 @@ public class Register extends AppCompatActivity {
                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
 
                civ.setImageBitmap(bitmap);
-           }catch(Exception e){
 
+               //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
+               imagen_bbdd=arraybytes.toByteArray();
+           }catch(Exception e){
+                e.printStackTrace();
            }
 
            //IMAGEN DE LA CAMARA
@@ -220,6 +242,9 @@ public class Register extends AppCompatActivity {
             ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.WEBP, 100,arraybytes);
             civ.setImageBitmap(bm);
+
+            //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
+            imagen_bbdd=arraybytes.toByteArray();
         }
     }
 

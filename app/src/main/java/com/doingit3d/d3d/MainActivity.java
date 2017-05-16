@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -24,12 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
     private Button b_registrarse, b_login;
     private NavigationView nav;
-    private Menu nav_menu;
+    //private Menu nav_menu;
     private FlowingDrawer mDrawer;
+    //private NavigationView nv;
+    private Bundle b= new Bundle();
+    private BBDD_Controller controller = new BBDD_Controller(this);;
+    private SQLiteDatabase db;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //controller.onCreate(db);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -38,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         b_registrarse=(Button) findViewById(R.id.b_registrarse);
         b_login=(Button) findViewById(R.id.b_entrar) ;
-
-
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -154,61 +167,72 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   /* @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-
-       if (id==R.id.nav_como_funciona){
-           startActivity(new Intent(this,How_does_it_works.class));
-       }else if (id==R.id.nav_perfil){
-           startActivity(new Intent(this, Profile.class));
-       }else if (id==R.id.nav_publicar){
-           startActivity(new Intent(this, Publish_Project.class));
-       }else if (id==R.id.nav_publicados){
-           startActivity(new Intent(this, Project_Main.class));
-       }
-
-       DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
 
     public void loginDialog(View v){
 
         Context context=this;
 
+        LayoutInflater li2 = LayoutInflater.from(context);
+        View lay = li2.inflate(R.layout.nav_header_main, null);
+        final ImageView img=(ImageView)lay.findViewById(R.id.imagen_cabecera);
+
         // get prompts.xml view
         LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.login_dialog, null);
+        View prompt = li.inflate(R.layout.login_dialog, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(prompt);
 
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(promptsView);
-
+        final TextInputLayout til_email=(TextInputLayout)prompt.findViewById(R.id.til_login_email);
+        final TextInputLayout til_pass=(TextInputLayout)prompt.findViewById(R.id.til_login_pass);
 
         // set dialog message
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton(R.string.entrar,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+        alert.setCancelable(false)
+                .setPositiveButton(R.string.entrar, null)
+                .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) { {
                                 //cuando pulsa aceptar
-
-                            }
-                        })
-                .setNegativeButton(R.string.cancelar,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
-                            }
+
+                            }}
+
                         });
 
         // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alert.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    //CUANDO SE PULSA A "ENTRAR" EN LA VENTANA DE LOGIN
+                    @Override
+                    public void onClick(View view) {
+                        //comprueba que exista el email Y la contraseña; y que la contraseña se corresponda con ese email
+                        if ((controller.comprobarusuarios(til_email.getEditText().getText().toString())==true) && (controller.comprobarpass(til_pass.getEditText().getText().toString())==true) && (controller.comprobar_email_pass(til_email.getEditText().getText().toString(),til_pass.getEditText().getText().toString()))==true){
+
+
+                            Toast.makeText(getApplicationContext(),getString(R.string.enhorabuena),Toast.LENGTH_SHORT).show();
+                            alertDialog.dismiss();
+
+                        }else{
+
+                            til_email.setError(getString(R.string.user_pass_incorrectos));
+                            til_pass.setError(getString(R.string.user_pass_incorrectos));
+                        }
+
+
+                        //Dismiss once everything is OK.
+
+                    }
+                });
+            }
+        });
 
         // show it
         alertDialog.show();

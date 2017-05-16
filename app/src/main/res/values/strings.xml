@@ -119,6 +119,7 @@
     <string name="enhorabuena">¡Enhorabuena!</string>
     <string name="registro_exito">Registro con éxito</string>
     <string name="publicacion_exito">Proyecto publicado con éxito</string>
+
     <string name="elegir_modo">Elegir Modo</string>
     <string name="anadir_imagen">¿Cómo quiere añadir una imagen?</string>
 
@@ -126,6 +127,10 @@
         <item>Galería</item>
         <item>Cámara</item>
     </string-array>
+
+    <string name="user_pass_incorrectos">Usuario y/o contraseña incorrectos</string>
+    <string name="elegir_img">Por favor, elija una imagen</string>
+    <string name="email_ya_existe">El email ya existe</string>
     <!-- Fin strings varios-->
 
 </resources>

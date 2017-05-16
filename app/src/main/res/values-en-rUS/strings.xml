@@ -111,5 +111,16 @@
     <string name="enhorabuena">Congratulations!</string>
     <string name="registro_exito">Successful registration</string>
     <string name="publicacion_exito">Project published successfully</string>
+    <string name="elegir_modo">Choose Mode</string>
+    <string name="anadir_imagen">How do you want to add an image?</string>
+
+    <string-array name="camara_galeria">
+        <item>Gallery</item>
+        <item>Camera</item>
+    </string-array>
+
+    <string name="user_pass_incorrectos">Incorrect user and / or password</string>
+    <string name="elegir_img">Please choose an image</string>
+    <string name="email_ya_existe">Email already exists</string>
     <!-- Fin strings varios-->
 </resources>
