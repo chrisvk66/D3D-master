@@ -13,11 +13,20 @@
         android:layout_weight="0.63"
         android:orientation="vertical">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/cada_pro_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/img_perfil" />
+            app:srcCompat="@drawable/img_perfil" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cada_pro_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_perfil"
+            android:clickable="true"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
     </LinearLayout>
 
     <LinearLayout

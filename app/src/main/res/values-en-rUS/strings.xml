@@ -124,5 +124,7 @@
     <string name="email_ya_existe">Email already exists</string>
     <string name="logout_first">You must log out first</string>
     <string name="aceptar_terminos">You must accept the terms and conditions</string>
+    <string name="titulo">Title</string>
+    <string name="autor">Author</string>
     <!-- Fin strings varios-->
 </resources>

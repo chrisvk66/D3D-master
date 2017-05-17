@@ -1,6 +1,7 @@
 package com.doingit3d.d3d;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,9 @@ import java.util.ArrayList;
  */
 
 public class Project_adapter extends ArrayAdapter<Project> {
+
+    private BBDD_Controller controller = new BBDD_Controller(getContext());
+
     static class ViewHolder{
         protected TextView tv_titulo;
         protected TextView tv_autor;
@@ -55,11 +59,13 @@ public class Project_adapter extends ArrayAdapter<Project> {
         Project p = modelo.get(position);
 
 
-        //aqui se mete los texto e imagens a traves de la base de datos cuando este lista
 
         vh.tv_titulo.setText(p.titulo);
         vh.tv_autor.setText(p.autor);
         vh.tv_material.setText(p.material);
+
+        Bitmap escala = controller.obtener_imagen().createScaledBitmap(controller.obtener_imagen(), 650, 500, true);
+        vh.tv_image.setImageBitmap(escala);
 
         return row;
 

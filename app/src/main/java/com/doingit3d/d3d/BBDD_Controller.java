@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 
@@ -431,5 +432,68 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         db.close();
         return bm;
     }
+
+    //obtener la imagen del usuario conectado
+    public Bitmap obtener_imagen_bitmap(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        byte[] img;
+        Bitmap bm=null;
+        ByteArrayInputStream bais;
+
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario WHERE conectado = 1",null);
+            if(cursor.moveToFirst()){
+
+                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
+
+
+                if (img==null){
+                    bm=null;
+
+                }else{
+
+
+                    bais = new ByteArrayInputStream(img);
+                    bm= BitmapFactory.decodeStream(bais);
+
+                }
+
+            }
+
+        }
+        db.close();
+        return bm;
+    }
+
+
+
+    //MAÑANA LO COMPLETO
+    //el método recoge lo que hay en la base de datos para poder llenar la lista
+    /*public void cargar_lista(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        try{
+            if(db!=null){
+
+                Cursor cursor = db.rawQuery("SELECT * FROM proyecto", null);
+                //cursor.moveToFirst();
+                if(cursor.moveToFirst()){
+                    do{
+
+                        Project proyecto = new Project(cursor.getString(cursor.getColumnIndex("titulo")),cursor.getString(cursor.getColumnIndex("titulo")),cursor.getString(cursor.getColumnIndex("material")));
+                        Project_adapter adapter= new Project_adapter();
+                        adapter.add(proyecto);
+
+
+                    }while(cursor.moveToNext());
+                }
+                db.close();
+            }
+        }catch (Exception e){
+           // Toast.makeText(this,"Error en la base de datos", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }*/
 
 }
