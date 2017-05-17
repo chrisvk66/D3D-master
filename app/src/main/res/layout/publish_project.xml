@@ -54,7 +54,7 @@
                 android:entries="@array/tipologia_de_proyecto" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_formato_archivo"
+                android:id="@+id/til_descripcion_proyecto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20sp"
@@ -142,6 +142,7 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_euro"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -155,8 +156,38 @@
                     android:text="@string/dolar" />
             </RadioGroup>
 
+
+            <TextView
+                android:id="@+id/tv_desplazamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/desplazamiento"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_desplazamiento"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20sp">
+
+                <RadioButton
+                    android:id="@+id/radioButton_sidespl"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/si_desplazamiento" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_nodespl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/no_desplazamiento" />
+            </RadioGroup>
+
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_ciudad"
+                android:id="@+id/til_pais"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20sp">
@@ -174,12 +205,14 @@
                 android:text="@string/privacidad" />
 
             <RadioGroup
+                android:id="@+id/radioGroup_privacidad"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20sp">
 
                 <RadioButton
                     android:id="@+id/radioButton_publico"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

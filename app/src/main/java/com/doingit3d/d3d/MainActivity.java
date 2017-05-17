@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,41 +17,46 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button b_registrarse, b_login;
-    private NavigationView nav;
-    //private Menu nav_menu;
     private FlowingDrawer mDrawer;
-    //private NavigationView nv;
-    private Bundle b= new Bundle();
-    private BBDD_Controller controller = new BBDD_Controller(this);;
+    private BBDD_Controller controller = new BBDD_Controller(this);
     private SQLiteDatabase db;
 
+    private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
+            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud INTEGER, longitud INTEGER, conectado INTEGER)";
+
+    private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
+            "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
+            "usuario_id INTEGER ,desplazamiento TEXT ,formato_archivo TEXT, privacidad TEXT)";
+
+   /* private String tabla_oferta ="CREATE TABLE IF NOT EXISTS oferta (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, importe INTEGER, tiempo_estimado INTEGER," +
+            "FOREIGN KEY(usuario_id) REFERENCES usuario (id) , FOREIGN KEY (preyecto_id) REFERENCES preyecto (id), fecha_adjudicacion TEXT, fecha_envio TEXT," +
+            "transporte INTEGER)";
+
+    private String tabla_sms="CREATE TABLE IF NOT EXISTS mensaje_privado (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, from_user INTEGER), to_user INTEGER, fecha TEXT," +
+            "texto TEXT, leido INTEGER";
+
+    private String tabla_comentario="CREATE TABLE IF NOT EXISTS comentario(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,FOREIGN KEY (preyecto_id) REFERENCES preyecto (id),FOREIGN KEY(usuario_id) REFERENCES usuario (id)," +
+            "usuario_destino INTEGER, texto TEXT, fecha TEXT, leido INTEGER, respuesta TEXT )";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //controller.onCreate(db);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
-
-        b_registrarse=(Button) findViewById(R.id.b_registrarse);
-        b_login=(Button) findViewById(R.id.b_entrar) ;
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,6 +69,28 @@ public class MainActivity extends AppCompatActivity {
                 mDrawer.toggleMenu();
             }
         });
+
+
+        //SE CREAN AQUI LAS TABLAS POR QUE SI SE METEN EN EL onCreate DE LA CLASE BBDD_CONTROLLER SOLO DEJA CREAR UNA PEOR SI LO HACEMOS FUERA DE LA CLASE PERO
+        //LLAMANDO AL METODO onCreate, NS PERMITE CREAR LAS TABLAS QUE QUERAMOS
+        db=controller.getWritableDatabase();
+
+        db.execSQL(tabla_usuario);
+        controller.onCreate(db);
+
+        db.execSQL(tabla_proyecto);
+        controller.onCreate(db);
+
+       /* db.execSQL(tabla_oferta);
+        controller.onCreate(db);
+
+        db.execSQL(tabla_sms);
+        controller.onCreate(db);
+
+        db.execSQL(tabla_comentario);
+        controller.onCreate(db);*/
+
+        db.close();
 
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
@@ -89,15 +115,6 @@ public class MainActivity extends AppCompatActivity {
             mMenuFragment = new MenuListFragment();
             fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
         }
-
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
     }
 
 
@@ -172,10 +189,6 @@ public class MainActivity extends AppCompatActivity {
 
         Context context=this;
 
-        LayoutInflater li2 = LayoutInflater.from(context);
-        View lay = li2.inflate(R.layout.nav_header_main, null);
-        final ImageView img=(ImageView)lay.findViewById(R.id.imagen_cabecera);
-
         // get prompts.xml view
         LayoutInflater li = LayoutInflater.from(context);
         View prompt = li.inflate(R.layout.login_dialog, null);
@@ -216,9 +229,20 @@ public class MainActivity extends AppCompatActivity {
                         //comprueba que exista el email Y la contraseña; y que la contraseña se corresponda con ese email
                         if ((controller.comprobarusuarios(til_email.getEditText().getText().toString())==true) && (controller.comprobarpass(til_pass.getEditText().getText().toString())==true) && (controller.comprobar_email_pass(til_email.getEditText().getText().toString(),til_pass.getEditText().getText().toString()))==true){
 
+                            if (controller.comprobar_conectado()==true){
+                                alertDialog.dismiss();
+                                Toast.makeText(getApplicationContext(),getString(R.string.logout_first),Toast.LENGTH_SHORT).show();
+                            }else{
+                                //en esta linea actualiza el estado (mirar la clase BBDD_Controller para mas informacion)
+                                controller.actualizar_estado_conexion(controller.obtener_id_login(til_email.getEditText().getText().toString()),1);
+                                Toast.makeText(getApplicationContext(),getString(R.string.enhorabuena),Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    finishAffinity();
+                                }
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }
 
-                            Toast.makeText(getApplicationContext(),getString(R.string.enhorabuena),Toast.LENGTH_SHORT).show();
-                            alertDialog.dismiss();
 
                         }else{
 
@@ -226,8 +250,6 @@ public class MainActivity extends AppCompatActivity {
                             til_pass.setError(getString(R.string.user_pass_incorrectos));
                         }
 
-
-                        //Dismiss once everything is OK.
 
                     }
                 });

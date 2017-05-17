@@ -1,15 +1,23 @@
 package com.doingit3d.d3d;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.app.DialogFragment;
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import info.hoang8f.widget.FButton;
+import android.widget.CheckBox;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by David M on 14/04/2017.
@@ -17,21 +25,20 @@ import info.hoang8f.widget.FButton;
 
 public class Publish_Project extends AppCompatActivity {
 
-    //boton que al pulsarlo sale un calendario para elegir fecha
-   // private Button b_fecha, b_publicar;
 
     //FButton se llaman asi los botones de la libreria
-    private FButton  b_fecha, b_publicar;
+    private BBDD_Controller controller = new BBDD_Controller(this);
+    private TextInputLayout titulo, descripcion,pais;
+    private Spinner tipo,formato;
+    private RadioGroup moneda,privacidad,desplazamiento;
+    private String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    private TextView fecha;
+    private String moneda_text, privacidad_text, desplazamiento_text;
+    private CheckBox terminos;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_project);
-
-       // b_fecha =(Button) findViewById(R.id.b_fecha_hora);
-       // b_publicar=(Button) findViewById(R.id.b_publicar_proyecto);
-
-        b_fecha =(FButton) findViewById(R.id.b_fecha_hora);
-        b_publicar=(FButton) findViewById(R.id.b_publicar_proyecto);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -39,6 +46,59 @@ public class Publish_Project extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        titulo=(TextInputLayout) findViewById(R.id.til_titulo_proyecto);
+        descripcion=(TextInputLayout) findViewById(R.id.til_descripcion_proyecto);
+        pais=(TextInputLayout) findViewById(R.id.til_pais);
+
+        tipo=(Spinner)findViewById(R.id.spinner_tipologia);
+        formato=(Spinner)findViewById(R.id.spinner_formato_archivo);
+
+        moneda=(RadioGroup) findViewById(R.id.radioGroup_moneda);
+        privacidad=(RadioGroup) findViewById(R.id.radioGroup_privacidad);
+        desplazamiento=(RadioGroup) findViewById(R.id.radioGroup_desplazamiento);
+
+        fecha=(TextView) findViewById(R.id.tv_fecha_seleccionada);
+
+        terminos=(CheckBox) findViewById(R.id.checkBox_terminos);
+
+        moneda.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radioButton_dolar:
+                        moneda_text="dolar";
+                        break;
+                    case R.id.radioButton_euro:
+                        moneda_text="euro";
+                        break;
+                }
+            }
+        });
+
+        privacidad.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radioButton_publico:
+                        privacidad_text="publico";
+                        break;
+                    case R.id.radioButton_privado:
+                        privacidad_text="privado";
+                        break;
+                }
+            }
+        });
+
+        desplazamiento.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radioButton_sidespl:
+                        desplazamiento_text="si";
+                        break;
+                    case R.id.radioButton_nodespl:
+                        desplazamiento_text="no";
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -48,23 +108,41 @@ public class Publish_Project extends AppCompatActivity {
         newFragment.show(getFragmentManager(),"Date Picker");
     }
 
+
     public void publicar_proyecto(View v){
-        //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
-        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText(getString(R.string.enhorabuena))
-                .setContentText("Proyecto publicado con éxito")
-                .setConfirmText(getString(R.string.aceptar))
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.dismissWithAnimation();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            finishAffinity();
+
+        if ((titulo.getEditText().getText().toString().trim().isEmpty())  || (descripcion.getEditText().getText().toString().trim().isEmpty())
+                || ( pais.getEditText().getText().toString().trim().isEmpty()) || (fecha.getText().toString().isEmpty())){
+
+            titulo.setError(getString(R.string.campo_requerido));
+            descripcion.setError(getString(R.string.campo_requerido));
+            pais.setError(getString(R.string.campo_requerido));
+            fecha.setError(getString(R.string.campo_requerido));
+
+        }else if (terminos.isChecked()==false){
+            Toast.makeText(getApplicationContext(),getString(R.string.aceptar_terminos),Toast.LENGTH_SHORT).show();
+        }else {
+
+            //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
+            controller.publicar_proyecto(tipo.getSelectedItem().toString(),titulo.getEditText().getText().toString(),descripcion.getEditText().getText().toString(),fecha.getText().toString(),
+                    pais.getEditText().getText().toString(),moneda_text,date,controller.obtener_id_conectado(),desplazamiento_text,formato.getSelectedItem().toString(),privacidad_text);
+
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(getString(R.string.enhorabuena))
+                    .setContentText(getString(R.string.publicacion_exito))
+                    .setConfirmText(getString(R.string.aceptar))
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                finishAffinity();
+                            }
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }
-                })
-                .show();
+                    })
+                    .show();
+        }
 
     }
 

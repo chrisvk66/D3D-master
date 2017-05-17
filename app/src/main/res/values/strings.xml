@@ -88,7 +88,7 @@
     <!-- Fin strings de la pantalla de publicar proyecto-->
 
     <!-- strings de la pantalla ver proyectos publicados-->
-    <string name="proyectos">Proyectos 3D publiados</string>
+    <string name="proyectos">Proyectos 3D publicados</string>
 
     <!-- Fin strings de la pantalla ver proyectos publicados-->
 
@@ -131,6 +131,8 @@
     <string name="user_pass_incorrectos">Usuario y/o contraseña incorrectos</string>
     <string name="elegir_img">Por favor, elija una imagen</string>
     <string name="email_ya_existe">El email ya existe</string>
+    <string name="logout_first">Debes cerrar sesión primero</string>
+    <string name="aceptar_terminos">Debe aceptar los términos y condiciones</string>
     <!-- Fin strings varios-->
 
 </resources>
