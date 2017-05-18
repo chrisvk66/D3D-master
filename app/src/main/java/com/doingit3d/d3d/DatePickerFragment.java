@@ -45,7 +45,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         //La fecha seleccionada se escribirá en el textview al lado del boton
         String dia,mes , anyo;
         dia=String.valueOf(day);
-        mes=String.valueOf(month);
+        mes=String.valueOf(month+1);
         anyo=String.valueOf(year);
 
 
