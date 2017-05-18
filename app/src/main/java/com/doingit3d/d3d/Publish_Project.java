@@ -159,7 +159,7 @@ public class Publish_Project extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         }
-       // startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this,MainActivity.class));
     }
 
 }
