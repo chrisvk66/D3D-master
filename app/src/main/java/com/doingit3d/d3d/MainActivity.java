@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
-            "usuario_id INTEGER ,desplazamiento TEXT ,formato_archivo TEXT, privacidad TEXT)";
+            "usuario_id INTEGER ,desplazamiento TEXT ,formato_archivo TEXT, privacidad TEXT, material TEXT)";
 
    /* private String tabla_oferta ="CREATE TABLE IF NOT EXISTS oferta (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, importe INTEGER, tiempo_estimado INTEGER," +
             "FOREIGN KEY(usuario_id) REFERENCES usuario (id) , FOREIGN KEY (preyecto_id) REFERENCES preyecto (id), fecha_adjudicacion TEXT, fecha_envio TEXT," +
@@ -127,14 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerlayout);
-         //if (mDrawer.isMenuVisible()) {
-          //  mDrawer.closeMenu();
-       // }
-        //if (drawer.isDrawerOpen(GravityCompat.START)) {
-          //  drawer.closeDrawer(GravityCompat.START);
 
-       // }else {
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText(getString(R.string.salir_app))
                     .setCancelText(getString(R.string.permanecer))
@@ -151,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
                              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            finishAffinity();
+                                finishAffinity();
         }
-                            System.exit(0);
+                                System.exit(0);
                         }
                     })
                     .show();

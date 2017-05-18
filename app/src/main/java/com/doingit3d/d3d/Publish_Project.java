@@ -13,10 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -29,7 +27,7 @@ public class Publish_Project extends AppCompatActivity {
     //FButton se llaman asi los botones de la libreria
     private BBDD_Controller controller = new BBDD_Controller(this);
     private TextInputLayout titulo, descripcion,pais;
-    private Spinner tipo,formato;
+    private Spinner tipo,formato,material;
     private RadioGroup moneda,privacidad,desplazamiento;
     private String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private TextView fecha;
@@ -52,6 +50,7 @@ public class Publish_Project extends AppCompatActivity {
 
         tipo=(Spinner)findViewById(R.id.spinner_tipologia);
         formato=(Spinner)findViewById(R.id.spinner_formato_archivo);
+        material=(Spinner) findViewById(R.id.spinner_material);
 
         moneda=(RadioGroup) findViewById(R.id.radioGroup_moneda);
         privacidad=(RadioGroup) findViewById(R.id.radioGroup_privacidad);
@@ -121,11 +120,14 @@ public class Publish_Project extends AppCompatActivity {
 
         }else if (terminos.isChecked()==false){
             Toast.makeText(getApplicationContext(),getString(R.string.aceptar_terminos),Toast.LENGTH_SHORT).show();
+        }else if ((moneda_text == null) || (desplazamiento_text == null) || (privacidad_text == null)) {
+
+            Toast.makeText(getApplicationContext(),getString(R.string.marcar_radio),Toast.LENGTH_SHORT).show();
         }else {
 
             //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
             controller.publicar_proyecto(tipo.getSelectedItem().toString(),titulo.getEditText().getText().toString(),descripcion.getEditText().getText().toString(),fecha.getText().toString(),
-                    pais.getEditText().getText().toString(),moneda_text,date,controller.obtener_id_conectado(),desplazamiento_text,formato.getSelectedItem().toString(),privacidad_text);
+                    pais.getEditText().getText().toString(),moneda_text,date,controller.obtener_id_conectado(),desplazamiento_text,formato.getSelectedItem().toString(),privacidad_text,material.getSelectedItem().toString());
 
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(getString(R.string.enhorabuena))
@@ -157,7 +159,7 @@ public class Publish_Project extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         }
-        startActivity(new Intent(this,MainActivity.class));
+       // startActivity(new Intent(this,MainActivity.class));
     }
 
 }

@@ -81,6 +81,21 @@
                 android:layout_marginBottom="20sp"
                 android:entries="@array/formato_de_archivo" />
 
+
+            <TextView
+                android:id="@+id/tv_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/material_string"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:entries="@array/material" />
+
             <TextView
                 android:id="@+id/tv_fecha_hora"
                 android:layout_width="match_parent"
@@ -142,7 +157,6 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_euro"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -172,7 +186,6 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_sidespl"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -212,7 +225,6 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_publico"
-                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

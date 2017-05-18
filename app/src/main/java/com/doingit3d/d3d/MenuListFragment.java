@@ -116,14 +116,12 @@ public class MenuListFragment extends Fragment {
                     }else{
                         Toast.makeText(getContext(),"inicia sesion primero",Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
 
                 return true;
             }
         }) ;
-       // setupHeader();
+
         return  view ;
     }
 }

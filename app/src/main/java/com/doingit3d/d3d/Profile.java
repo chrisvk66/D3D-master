@@ -1,6 +1,5 @@
 package com.doingit3d.d3d;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;

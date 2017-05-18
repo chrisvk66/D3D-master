@@ -8,10 +8,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.ByteArrayInputStream;
-
 
 /**
  * Created by David M on 12/05/2017.
@@ -78,7 +77,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
     //inserta en la tabla los datos del registro
     public void publicar_proyecto(String tipo_proyecto, String titulo, String descripcion, String fecha, String pais, String moneda, String fecha_creacion,int usuario_id, String desplazamiento,
-            String formato_archivo, String privacidad ){
+            String formato_archivo, String privacidad, String material ){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -93,11 +92,11 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 values.put("pais",pais);
                 values.put("moneda",moneda);
                 values.put("fecha_creacion",fecha_creacion);
-               // values.put("material",material);
                 values.put("usuario_id",usuario_id);
                 values.put("desplazamiento",desplazamiento);
                 values.put("formato_archivo",formato_archivo);
                 values.put("privacidad",privacidad);
+                values.put("material",material);
 
                 db.insert("proyecto",null,values);
             }
@@ -433,67 +432,82 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return bm;
     }
 
-    //obtener la imagen del usuario conectado
-    public Bitmap obtener_imagen_bitmap(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        byte[] img;
-        Bitmap bm=null;
-        ByteArrayInputStream bais;
 
+    //devuelve el nombre del usuario conectado
+    public String autor_conectado(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String nombre=null;
 
         if(db!=null){
-            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario WHERE conectado = 1",null);
+            Cursor cursor = db.rawQuery("SELECT nombre FROM usuario WHERE conectado = 1",null);
             if(cursor.moveToFirst()){
+                do{
 
-                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
-
-
-                if (img==null){
-                    bm=null;
-
-                }else{
+                    nombre=cursor.getString(cursor.getColumnIndex("nombre"));
 
 
-                    bais = new ByteArrayInputStream(img);
-                    bm= BitmapFactory.decodeStream(bais);
-
-                }
+                }while(cursor.moveToNext());
 
             }
 
+        }else{
+            System.out.println("--------------NO COMPRUEBA USUARIO--------------");
         }
         db.close();
-        return bm;
+
+        return nombre;
     }
 
 
 
-    //MAÑANA LO COMPLETO
-    //el método recoge lo que hay en la base de datos para poder llenar la lista
-    /*public void cargar_lista(){
+    public void resumen_list(int id_proyecto, TextView tv1, TextView tv2, TextView tv3, TextView tv4, TextView tv5, TextView tv6,
+                             TextView tv8, TextView tv9, TextView tv10,TextView tv11){
         SQLiteDatabase db = this.getReadableDatabase();
+
+        String tipo_proyecto,titulo,descripcion,fecha,pais,moneda,
+                desplazamiento,formato_archivo,privacidad,material;
 
         try{
             if(db!=null){
 
-                Cursor cursor = db.rawQuery("SELECT * FROM proyecto", null);
-                //cursor.moveToFirst();
+                Cursor cursor = db.rawQuery("SELECT * FROM proyecto WHERE usuario_id ="+obtener_id_conectado()+" AND id= "+id_proyecto, null);
+
                 if(cursor.moveToFirst()){
                     do{
 
-                        Project proyecto = new Project(cursor.getString(cursor.getColumnIndex("titulo")),cursor.getString(cursor.getColumnIndex("titulo")),cursor.getString(cursor.getColumnIndex("material")));
-                        Project_adapter adapter= new Project_adapter();
-                        adapter.add(proyecto);
+                        tipo_proyecto=cursor.getString(cursor.getColumnIndex("tipo_proyecto"));
+                        titulo=cursor.getString(cursor.getColumnIndex("titulo"));
+                        descripcion=cursor.getString(cursor.getColumnIndex("descripcion"));
+                        fecha=cursor.getString(cursor.getColumnIndex("fecha"));
+                        pais=cursor.getString(cursor.getColumnIndex("pais"));
+                        moneda=cursor.getString(cursor.getColumnIndex("moneda"));
+                        desplazamiento=cursor.getString(cursor.getColumnIndex("desplazamiento"));
+                        formato_archivo=cursor.getString(cursor.getColumnIndex("formato_archivo"));
+                        privacidad=cursor.getString(cursor.getColumnIndex("privacidad"));
+                        material=cursor.getString(cursor.getColumnIndex("material"));
 
 
                     }while(cursor.moveToNext());
+
+                    tv1.setText(tipo_proyecto);
+                    tv2.setText(titulo);
+                    tv3.setText(descripcion);
+                    tv4.setText(fecha);
+                    tv5.setText(pais);
+                    tv6.setText(moneda);
+                    tv8.setText(desplazamiento);
+                    tv9.setText(formato_archivo);
+                    tv10.setText(privacidad);
+                    tv11.setText(material);
+
+
                 }
                 db.close();
             }
         }catch (Exception e){
-           // Toast.makeText(this,"Error en la base de datos", Toast.LENGTH_SHORT).show();
+
             e.printStackTrace();
         }
-    }*/
+    }
 
 }

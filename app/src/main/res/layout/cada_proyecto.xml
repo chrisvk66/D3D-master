@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/fab_margin">
+    android:padding="6dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.63"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <!--<ImageView
@@ -21,10 +20,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cada_pro_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@drawable/img_perfil"
-            android:clickable="true"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
     </LinearLayout>
@@ -33,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.63"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="8dp">
 
         <TextView
             android:id="@+id/cada_pro_titulo"
@@ -53,7 +52,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.63"
@@ -65,6 +64,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             app:srcCompat="@drawable/menu_black" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

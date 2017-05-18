@@ -76,15 +76,24 @@
         <item>Material CDE</item>
     </string-array>
 
+    <string-array name="material">
+        <item>ABS</item>
+        <item>PLA</item>
+        <item>Metal</item>
+        <item>Madera</item>
+    </string-array>
+
     <string name="euro">Euro</string>
     <string name="dolar">Dólar</string>
     <string name="no_desplazamiento">No. Puedo enviar la pieza que quiero enviar</string>
     <string name="si_desplazamiento">Si. Es necesario desplazarse</string>
-    <string name="ciudad_poblacion_pais">Introduzca Ciudad/Población/País</string>
+    <string name="ciudad_poblacion_pais">Ciudad/Población/País</string>
     <string name="privacidad_publico">Público. El proyecto es visible en el Home de DoingIt 3D</string>
     <string name="privacidad_privado">Privado. Solo los usuarios con el perfil de diseñador pueden ver este proyecto</string>
     <string name="terminos_condiciones">He leído y acepto los términos de publicación</string>
     <string name="publicar_proyecto">PUBLICAR PROYECTO</string>
+    <string name="material_string">Material del producto</string>
+    <string name="marcar_radio">Por favor, complete el formulario</string>
     <!-- Fin strings de la pantalla de publicar proyecto-->
 
     <!-- strings de la pantalla ver proyectos publicados-->

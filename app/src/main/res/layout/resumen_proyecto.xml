@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <!-- nuevos botones: https://github.com/hoang8f/android-flat-button-->
+
+    <!-- si quereis una toolbar poned este codigo <include>, si no no saldrá y ponedlo el primero obviamente-->
+    <include
+        layout="@layout/toolbar_reutilizable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_titulo_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp" />
+
+
+            <TextView
+                android:id="@+id/tv_tipologia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tipologia_proyecto"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_tipologia_resumen"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/tv_descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/descripcion_proyecto"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_descripcion_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/tv_formato_archivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/formato_archivo"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_formato_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/material_string"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_material_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/tv_fecha_hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fecha_hora"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_fecha_seleccionada_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="20sp" />
+
+
+            <TextView
+                android:id="@+id/tv_moneda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tipo_moneda"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_moneda_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_desplazamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/desplazamiento"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_desplazamiento_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_pais"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ciudad_poblacion_pais"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_pais_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+            <TextView
+                android:id="@+id/tv_privacidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacidad"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_privacidad_resumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
