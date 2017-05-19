@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
@@ -15,6 +17,7 @@ import android.widget.RatingBar;
 public class Profile extends AppCompatActivity {
     private RatingBar rb1,rb2;
     private ImageView iv_d3d_logo;
+    private Button como_vas;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,7 @@ public class Profile extends AppCompatActivity {
         rb2=(RatingBar) findViewById(R.id.ratingBar_trabajador);
         iv_d3d_logo=(ImageView) findViewById(R.id.iv_logo_black_profile);
         iv_d3d_logo.setImageResource(R.drawable.logo_d3d_small_dark);
+        como_vas=(Button) findViewById(R.id.b_como_vas);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -45,5 +49,13 @@ public class Profile extends AppCompatActivity {
             finishAffinity();
         }
         startActivity(new Intent(this,MainActivity.class));
+    }
+
+
+    public void ir_a_evaulacion(View v){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        startActivity(new Intent(this,Evaluation.class));
     }
 }

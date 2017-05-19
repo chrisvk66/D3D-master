@@ -77,7 +77,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
     //inserta en la tabla los datos del registro
     public void publicar_proyecto(String tipo_proyecto, String titulo, String descripcion, String fecha, String pais, String moneda, String fecha_creacion,int usuario_id, String desplazamiento,
-            String formato_archivo, String privacidad, String material ){
+            String formato_archivo, String privacidad, String material, String nombre_user){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -97,6 +97,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 values.put("formato_archivo",formato_archivo);
                 values.put("privacidad",privacidad);
                 values.put("material",material);
+                values.put("nombre_user",nombre_user);
 
                 db.insert("proyecto",null,values);
             }
@@ -289,6 +290,31 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return id_user;
     }
 
+    //obtiene el id de usuario conectado; es decir, del usuario que tenga un 1 en su columna "conectado"
+    public int obtener_id_no_conectado(){
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int id_user=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT id FROM usuario WHERE conectado = 0",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    id_user=cursor.getInt(cursor.getColumnIndex("id"));
+
+                }while(cursor.moveToNext());
+            }
+
+        }else{
+            System.out.println("--------------NO COMPRUEBA USUARIO--------------");
+        }
+
+        return id_user;
+    }
+
     //obtiene el id de la persona que inicia sesion para poder cambiarle su estado de conectado de 0 a 1
     public int obtener_id_login(String email){
 
@@ -433,30 +459,41 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
 
-    //devuelve el nombre del usuario conectado
-    public String autor_conectado(){
+
+    //obtener la imagen de todos los usuarios
+    public Bitmap obtener_imagen_todos(int id_proyecto){
         SQLiteDatabase db = this.getReadableDatabase();
-        String nombre=null;
+        byte[] img;
+        Bitmap bm=null;
+        ByteArrayInputStream bais;
+
 
         if(db!=null){
-            Cursor cursor = db.rawQuery("SELECT nombre FROM usuario WHERE conectado = 1",null);
+            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario WHERE id=(SELECT usuario_id FROM proyecto WHERE id = "+id_proyecto+" )",null);
             if(cursor.moveToFirst()){
-                do{
 
-                    nombre=cursor.getString(cursor.getColumnIndex("nombre"));
+                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
 
 
-                }while(cursor.moveToNext());
+                if (img==null){
+                    bm=null;
+
+                }else{
+
+
+                    bais = new ByteArrayInputStream(img);
+                    bm= BitmapFactory.decodeStream(bais);
+
+                }
 
             }
 
-        }else{
-            System.out.println("--------------NO COMPRUEBA USUARIO--------------");
         }
         db.close();
-
-        return nombre;
+        return bm;
     }
+
+
 
 
 
@@ -470,7 +507,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         try{
             if(db!=null){
 
-                Cursor cursor = db.rawQuery("SELECT * FROM proyecto WHERE usuario_id ="+obtener_id_conectado()+" AND id= "+id_proyecto, null);
+                Cursor cursor = db.rawQuery("SELECT * FROM proyecto WHERE id= "+id_proyecto, null);
 
                 if(cursor.moveToFirst()){
                     do{

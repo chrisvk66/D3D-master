@@ -47,6 +47,7 @@
     <string name="contraseña">Password</string>
     <string name="rep_contraseña">Repeat password</string>
     <string name="salvar_perfil">Save profile</string>
+    <string name="email_verificar">Not a valid email</string>
     <!-- Fin strings de la pantalla del registro-->
 
     <!-- strings de la pantalla de publicar proyecto-->

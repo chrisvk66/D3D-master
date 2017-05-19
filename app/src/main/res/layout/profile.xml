@@ -128,6 +128,7 @@
 
             <Button
                 android:id="@+id/b_como_vas"
+                android:onClick="ir_a_evaulacion"
                 style="@style/boton_perfil"
                 android:layout_width="150dp"
                 android:layout_height="50dp"

@@ -50,6 +50,7 @@
     <string name="contraseña">Contraseña</string>
     <string name="rep_contraseña">Repetir contraseña</string>
     <string name="salvar_perfil">Guardar Perfil</string>
+    <string name="email_verificar">No es un email válido</string>
     <!-- Fin strings de la pantalla del registro-->
 
     <!-- strings de la pantalla de publicar proyecto-->

@@ -63,8 +63,10 @@ public class Register extends AppCompatActivity {
         til_email.setErrorEnabled(true);
         til_pass=(TextInputLayout) findViewById(R.id.til_pass_registro);
         til_pass.setErrorEnabled(true);
+        til_pass.setPasswordVisibilityToggleEnabled(true);
         til_repetirpass=(TextInputLayout) findViewById(R.id.til_repetirpass_registro);
         til_repetirpass.setErrorEnabled(true);
+        til_repetirpass.setPasswordVisibilityToggleEnabled(true);
 
         scanner=(CheckBox) findViewById(R.id.check_scanner);
         disenador=(CheckBox) findViewById(R.id.check_diseñador);
@@ -78,6 +80,11 @@ public class Register extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    //comprueba que es un email valido
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse
@@ -126,24 +133,48 @@ public class Register extends AppCompatActivity {
         //en estos condicionales se comprueba que se rellenen todos los campos y si no sale un mensaje de error
         if (nombre.getText().toString().trim().isEmpty()){
             til_nombre.setError(getString(R.string.campo_requerido));
+            til_email.setError("");
+            til_pass.setError("");
+            til_repetirpass.setError("");
 
         }else if(email.getText().toString().trim().isEmpty()){
+            til_nombre.setError("");
             til_email.setError(getString(R.string.campo_requerido));
+            til_pass.setError("");
+            til_repetirpass.setError("");
 
         }else if(pass.getText().toString().trim().isEmpty()){
+            til_nombre.setError("");
+            til_email.setError("");
             til_pass.setError(getString(R.string.campo_requerido));
+            til_repetirpass.setError("");
+
 
         }else if (!(pass.getText().toString().equals(repetirpass.getText().toString()))){
+            til_nombre.setError("");
+            til_email.setError("");
+            til_pass.setError("");
             til_repetirpass.setError(getString(R.string.diferente_pass));
 
         }else if (imagen_bbdd==null){
+            til_nombre.setError("");
+            til_email.setError("");
+            til_pass.setError("");
+            til_repetirpass.setError("");
             Toast.makeText(getApplicationContext(),getString(R.string.elegir_img),Toast.LENGTH_SHORT).show();
 
         }else if ((controller.comprobar_email_repetido(email.getText().toString())==true)){
+            til_nombre.setError("");
             til_email.setError(getString(R.string.email_ya_existe));
+            til_pass.setError("");
+            til_repetirpass.setError("");
 
+        }else if (isEmailValid(email.getText().toString())==false){
+            til_nombre.setError("");
+            til_email.setError(getString(R.string.email_verificar));
+            til_pass.setError("");
+            til_repetirpass.setError("");
         }else{
-
 
            try{
                 //los dos ceros se corresponden con la latitud y la longitud, los he puesto por poner un valor por defecto hasta que hagamos el mapa o algo

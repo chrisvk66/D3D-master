@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,6 +31,8 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
     private WaveSwipeRefreshLayout w;
     private BBDD_Controller controller;
     private  final int RESUMEN=55;
+    private Intent i;
+    private int origen;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +44,17 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        i=getIntent();
+        origen=i.getExtras().getInt("origen");
+
         modelo=new ArrayList<Project>();
         lv=(ListView)findViewById(R.id.listview);
         adapter= new Project_adapter(this,modelo);
         lv.setAdapter(adapter);
 
-       /* adapter.clear();
-        cargar_lista();*/
         adapter.notifyDataSetChanged();
 
         lv.setOnItemClickListener(this);
-
-
-
 
         w= (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
         w.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -65,7 +64,13 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
                 adapter.clear();
                 adapter.notifyDataSetChanged();
 
-                cargar_lista();
+                if (origen==0){
+                    cargar__todos_proyectos();
+                }else if (origen==1){
+                    //solo se muestran mis proyectos en la lista
+                    cargar__mis_proyectos();
+                }
+
 
 
                 //llama a la linea de abajo cuando se complete el refresco de la lista
@@ -76,7 +81,7 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //el método recoge lo que hay en la base de datos para poder llenar la lista
-    public void cargar_lista(){
+    public void cargar__mis_proyectos(){
         controller = new BBDD_Controller(this);
         SQLiteDatabase db = controller.getReadableDatabase();
 
@@ -88,7 +93,35 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
                 if(cursor.moveToFirst()){
                     do{
 
-                        p = new Project(cursor.getString(cursor.getColumnIndex("titulo")),controller.autor_conectado(),cursor.getString(cursor.getColumnIndex("material")),cursor.getInt(cursor.getColumnIndex("id")));
+                        p = new Project(cursor.getString(cursor.getColumnIndex("titulo")),controller.username_conectado(),cursor.getString(cursor.getColumnIndex("material")),cursor.getInt(cursor.getColumnIndex("id")));
+
+                        adapter.add(p);
+
+
+                    }while(cursor.moveToNext());
+                }
+                db.close();
+            }
+        }catch (Exception e){
+            // Toast.makeText(this,"Error en la base de datos", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    //el método recoge lo que hay en la base de datos para poder llenar la lista
+    public void cargar__todos_proyectos(){
+        controller = new BBDD_Controller(this);
+        SQLiteDatabase db = controller.getReadableDatabase();
+
+        try{
+            if(db!=null){
+
+                Cursor cursor = db.rawQuery("SELECT * FROM proyecto", null);
+
+                if(cursor.moveToFirst()){
+                    do{
+
+                        p = new Project(cursor.getString(cursor.getColumnIndex("titulo")),cursor.getString(cursor.getColumnIndex("nombre_user")),cursor.getString(cursor.getColumnIndex("material")),cursor.getInt(cursor.getColumnIndex("id")));
 
                         adapter.add(p);
 
@@ -150,7 +183,6 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
         //le paso la posicion de la lista y la posicion en la base de datos del proyecto a la actividad ResumenProyecto.java para que muestre el proyecto correspondiente
         i.putExtra("pos",modelo.get(position).id_proyecto);
         startActivityForResult(i,RESUMEN);
-        //p=modelo.get(position);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent i) {
@@ -159,13 +191,18 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
 
         if (requestCode == RESUMEN && resultCode == RESULT_OK ) {
 
-          // System.out.println("----VIENE DE AQUI------------------");
+
             adapter.clear();
-            cargar_lista();
+            if (origen==0){
+                cargar__todos_proyectos();
+            }else if (origen==1){
+                //solo se muestran mis proyectos en la lista
+                cargar__mis_proyectos();
+            }
             adapter.notifyDataSetChanged();
 
         }else{
-            //System.out.println("----NO VIENE DE AQUI----------------------");
+
         }
     }
 }

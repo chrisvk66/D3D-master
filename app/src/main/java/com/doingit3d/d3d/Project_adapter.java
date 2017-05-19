@@ -64,8 +64,11 @@ public class Project_adapter extends ArrayAdapter<Project> {
         vh.tv_autor.setText(p.autor);
         vh.tv_material.setText(p.material);
 
-        Bitmap escala = controller.obtener_imagen().createScaledBitmap(controller.obtener_imagen(), 650, 500, true);
+
+        Bitmap escala = controller.obtener_imagen_todos( p.id_proyecto).createScaledBitmap(controller.obtener_imagen_todos( p.id_proyecto), 650, 500, true);
         vh.tv_image.setImageBitmap(escala);
+
+
 
         return row;
 

@@ -26,11 +26,13 @@ public class MenuListFragment extends Fragment {
     private ImageView img;
     private TextView email,nombre;
     private Context c;
+    private Intent i;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         c= getActivity().getApplication().getApplicationContext();
+        i=new Intent(getContext(),Project_Main.class);
 
     }
 
@@ -72,7 +74,7 @@ public class MenuListFragment extends Fragment {
 
         }else if (controller.comprobar_conectado()==false){
 
-            //Toast.makeText(getContext(),"NO HAY NADIE CONECTADO",Toast.LENGTH_SHORT).show();
+
             nav_menu.findItem(R.id.nav_perfil).setVisible(false);
             nav_menu.findItem(R.id.nav_buscar).setVisible(false);
             nav_menu.findItem(R.id.nav_publicar).setVisible(false);
@@ -93,16 +95,32 @@ public class MenuListFragment extends Fragment {
             public boolean onNavigationItemSelected(MenuItem item) {
 
                 int id = item.getItemId();
+
                 if (id== R.id.nav_como_funciona){
                     startActivity(new Intent(getActivity(),How_does_it_works.class));
+
+                }else if (id== R.id.nav_inicio){
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+
                 }else if (id== R.id.nav_perfil){
                     startActivity(new Intent(getActivity(), Profile.class));
+
                 }else if (id== R.id.nav_publicar){
                     startActivity(new Intent(getActivity(), Publish_Project.class));
+
+                }else if (id== R.id.nav_mis_proyectos){
+                    //si la actividad se inicia desde aqui se mostraran solo los proyectos del usuario
+                    i.putExtra("origen",1);
+                    startActivity(i);
+
                 }else if (id== R.id.nav_publicados){
-                    startActivity(new Intent(getActivity(), Project_Main.class));
+                    //si la actividad se inicia desde aqui se mostraran todos los proyectos
+                    i.putExtra("origen",0);
+                    startActivity(i);
+
                 }else if (id== R.id.nav_evaluacion){
                     startActivity(new Intent(getActivity(), Evaluation.class));
+
                 }else if (id== R.id.nav_exit){
 
                     if (controller.comprobar_conectado()==true){
