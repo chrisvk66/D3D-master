@@ -68,6 +68,7 @@ public class MenuListFragment extends Fragment {
             nav_menu.findItem(R.id.nav_evaluacion).setVisible(true);
             nav_menu.findItem(R.id.nav_mensajes).setVisible(true);
             nav_menu.findItem(R.id.nav_exit).setVisible(true);
+            img.setVisibility(View.VISIBLE);
 
             //AQUI SE CAMBIA LA IMAGEN, EL NOMBRE Y EL EMAIL DEL MENU LATERAL SEGUN EL USUARIO QUE SE HAYA CONECTADO
             nombre.setText(controller.username_conectado());
@@ -87,6 +88,7 @@ public class MenuListFragment extends Fragment {
             nav_menu.findItem(R.id.nav_evaluacion).setVisible(false);
             nav_menu.findItem(R.id.nav_mensajes).setVisible(false);
             nav_menu.findItem(R.id.nav_exit).setVisible(false);
+            img.setVisibility(View.INVISIBLE);
 
         }else{
             System.out.println("AQUI ES DONDE FALLA Y NO ENTRA");
