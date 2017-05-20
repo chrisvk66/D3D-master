@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class MenuListFragment extends Fragment {
     private TextView email,nombre;
     private Context c;
     private Intent i;
+    private LinearLayout fondo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,10 @@ public class MenuListFragment extends Fragment {
 
         //se usa este view y el metodo getHeaderView para poder encontrar los elementos con findViewById, ya que no son del mismo layout que este fragmento que es el NavigationDrawer
         View vista = vNavigation.getHeaderView(0);
-        img=(ImageView) vista.findViewById(R.id.imagen_cabecera);
+        img=(de.hdodenhof.circleimageview.CircleImageView) vista.findViewById(R.id.imagen_cabecera);
         nombre=(TextView) vista.findViewById(R.id.nav_username);
         email=(TextView) vista.findViewById(R.id.nav_useremail);
+        fondo=(LinearLayout) vista.findViewById(R.id.fondoslider);
 
         controller = new BBDD_Controller(c);
 
@@ -70,6 +73,7 @@ public class MenuListFragment extends Fragment {
             nombre.setText(controller.username_conectado());
             email.setText(controller.useremail_conectado());
             img.setImageBitmap(controller.obtener_imagen());
+            fondo.setBackgroundResource(R.drawable.fondoslider);
 
 
         }else if (controller.comprobar_conectado()==false){

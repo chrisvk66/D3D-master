@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fondoslider"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/doingit3d"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="5dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:weightSum="1">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagen_cabecera"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:adjustViewBounds="false"
+        android:clickable="true"
+        android:src="@drawable/doingit3d"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="15dp"/>
+
     <TextView
         android:id="@+id/nav_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:paddingLeft="8dp"
+        android:paddingTop="15dp"/>
 
     <TextView
         android:id="@+id/nav_useremail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/web_d3d" />
-
-   > <ImageView
-        android:id="@+id/imagen_cabecera"
-        android:layout_width="match_parent"
-        android:layout_height="109dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.57"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/logo_d3d_small" />
+        android:paddingLeft="8dp"/>
 
 </LinearLayout>
