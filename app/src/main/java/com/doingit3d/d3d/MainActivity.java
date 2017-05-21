@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private FlowingDrawer mDrawer;
     private BBDD_Controller controller = new BBDD_Controller(this);
     private SQLiteDatabase db;
+    private Toolbar toolbar;
+    private Button facebook,registro,login;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
             "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER)";
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
             "FOREIGN KEY(usuario_id) REFERENCES usuario (id) , FOREIGN KEY (preyecto_id) REFERENCES preyecto (id), fecha_adjudicacion TEXT, fecha_envio TEXT," +
             "transporte INTEGER)";
 
-    private String tabla_sms="CREATE TABLE IF NOT EXISTS mensaje_privado (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, from_user INTEGER), to_user INTEGER, fecha TEXT," +
-            "texto TEXT, leido INTEGER";
+    private String tabla_sms="CREATE TABLE IF NOT EXISTS mensaje_privado (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, from_user INTEGER, to_user INTEGER, fecha TEXT," +
+            "texto TEXT, leido INTEGER)";
 
     private String tabla_comentario="CREATE TABLE IF NOT EXISTS comentario(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,FOREIGN KEY (preyecto_id) REFERENCES preyecto (id),FOREIGN KEY(usuario_id) REFERENCES usuario (id)," +
             "usuario_destino INTEGER, texto TEXT, fecha TEXT, leido INTEGER, respuesta TEXT )";*/
@@ -48,12 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);*/
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 mDrawer.toggleMenu();
             }
         });
+
+        facebook=(Button) findViewById(R.id.b_facebook);
+        registro=(Button) findViewById(R.id.b_registrarse);
+        login=(Button) findViewById(R.id.b_entrar);
 
 
         //SE CREAN AQUI LAS TABLAS POR QUE SI SE METEN EN EL onCreate DE LA CLASE BBDD_CONTROLLER SOLO DEJA CREAR UNA PEOR SI LO HACEMOS FUERA DE LA CLASE PERO
@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
         //si el usuario esta conectado el menu lateral se habilita y sale el icono en la tollbar
        if (controller.comprobar_conectado()==true){
+           facebook.setVisibility(View.INVISIBLE);
+           registro.setVisibility(View.INVISIBLE);
+           login.setVisibility(View.INVISIBLE);
+
            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
            getSupportActionBar().setDisplayShowHomeEnabled(true);
            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
@@ -123,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
 
            //si no hay usuarios conectados, no se podrá usar el menu lateral ni saldrá el icono en la toolbar
        }else{
+
+           facebook.setVisibility(View.VISIBLE);
+           registro.setVisibility(View.VISIBLE);
+           login.setVisibility(View.VISIBLE);
+
            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
            getSupportActionBar().setDisplayShowHomeEnabled(false);
            mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_NONE);
