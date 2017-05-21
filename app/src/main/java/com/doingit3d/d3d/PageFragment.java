@@ -28,7 +28,7 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //Muestra el layout contenedor segun la seleccion hecha
         if (mPage==1){
 
             view = inflater.inflate(R.layout.recibidos, container, false);

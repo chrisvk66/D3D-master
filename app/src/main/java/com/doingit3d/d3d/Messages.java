@@ -36,9 +36,11 @@ public class Messages extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
+        //muestra el viewpager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), Messages.this));
 
+        //mostramos el tablayout
         tabLayout.setupWithViewPager(viewPager);
     }
 }
