@@ -51,6 +51,7 @@
     <string name="rep_contraseña">Repetir contraseña</string>
     <string name="salvar_perfil">Guardar Perfil</string>
     <string name="email_verificar">No es un email válido</string>
+    <string name="ubicacion_registro">Obtener ubicación (permitirá a otros usuarios localizale)</string>
     <!-- Fin strings de la pantalla del registro-->
 
     <!-- strings de la pantalla de publicar proyecto-->
@@ -145,6 +146,10 @@
     <string name="aceptar_terminos">Debe aceptar los términos y condiciones</string>
     <string name="titulo">Titulo</string>
     <string name="autor">Autor</string>
+    <string name="conectado">Sesión iniciada</string>
+    <string name="desconectado">Desconectado</string>
+    <string name="sms_recibidos">Recibidos</string>
+    <string name="sms_enviados">Enviados</string>
     <!-- Fin strings varios-->
 
 </resources>

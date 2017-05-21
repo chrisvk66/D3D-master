@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,8 +80,6 @@ public class MenuListFragment extends Fragment {
 
 
         }else if (controller.comprobar_conectado()==false){
-
-
             nav_menu.findItem(R.id.nav_perfil).setVisible(false);
             nav_menu.findItem(R.id.nav_buscar).setVisible(false);
             nav_menu.findItem(R.id.nav_publicar).setVisible(false);
@@ -134,12 +133,9 @@ public class MenuListFragment extends Fragment {
 
                 }else if (id== R.id.nav_exit){
 
+
                     if (controller.comprobar_conectado()==true){
                         controller.actualizar_estado_conexion(controller.obtener_id_conectado(),0);
-                        //b_login.setEnabled(true);
-                       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            getActivity().getApplication().getApplicationContext().finishAffinity();
-                        }*/
                         startActivity(new Intent(c,MainActivity.class));
 
                     }else{

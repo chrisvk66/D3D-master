@@ -48,6 +48,7 @@
     <string name="rep_contraseña">Repeat password</string>
     <string name="salvar_perfil">Save profile</string>
     <string name="email_verificar">Not a valid email</string>
+    <string name="ubicacion_registro">Get location (will allow other users to locate you)</string>
     <!-- Fin strings de la pantalla del registro-->
 
     <!-- strings de la pantalla de publicar proyecto-->
@@ -136,5 +137,9 @@
     <string name="aceptar_terminos">You must accept the terms and conditions</string>
     <string name="titulo">Title</string>
     <string name="autor">Author</string>
+    <string name="conectado">Connected</string>
+    <string name="desconectado">Disconnected</string>
+    <string name="sms_recibidos">Received</string>
+    <string name="sms_enviados">Sent</string>
     <!-- Fin strings varios-->
 </resources>

@@ -153,7 +153,7 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
                     lv.setEnabled(true);
                     w.setRefreshing(false);
                 }
-            }, 2500);
+            }, 2000);
            // w.setRefreshing(false);
             super.onPostExecute(result);
         }
@@ -194,6 +194,7 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
 
             adapter.clear();
             if (origen==0){
+                //se muestran los proyectos de todos los usuarios
                 cargar__todos_proyectos();
             }else if (origen==1){
                 //solo se muestran mis proyectos en la lista

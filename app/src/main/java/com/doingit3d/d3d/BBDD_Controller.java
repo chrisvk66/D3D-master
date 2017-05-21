@@ -43,7 +43,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
     //inserta en la tabla los datos del registro
-    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, int latitud, int longitud, int conectado){
+    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -460,7 +460,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
 
 
-    //obtener la imagen de todos los usuarios
+    //obtener la imagen de todos los usuarios y pone la que corresponde con su proyecto
     public Bitmap obtener_imagen_todos(int id_proyecto){
         SQLiteDatabase db = this.getReadableDatabase();
         byte[] img;
@@ -496,7 +496,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
 
 
-
+    //cuando se pulsa un elemento de la lista se muestran los datos del proyectos
     public void resumen_list(int id_proyecto, TextView tv1, TextView tv2, TextView tv3, TextView tv4, TextView tv5, TextView tv6,
                              TextView tv8, TextView tv9, TextView tv10,TextView tv11){
         SQLiteDatabase db = this.getReadableDatabase();

@@ -17,10 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
-            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud INTEGER, longitud INTEGER, conectado INTEGER)";
+            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER)";
 
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
@@ -53,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);*/
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -92,29 +90,46 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
-        mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
-        mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
-            @Override
-            public void onDrawerStateChange(int oldState, int newState) {
-                if (newState == ElasticDrawer.STATE_CLOSED) {
-                    Log.i("MainActivity", "Drawer STATE_CLOSED");
-                }
-            }
 
-            @Override
-            public void onDrawerSlide(float openRatio, int offsetPixels) {
-                Log.i("MainActivity", "openRatio=" + openRatio + " ,offsetPixels=" + offsetPixels);
-            }
-        });
+        //si el usuario esta conectado el menu lateral se habilita y sale el icono en la tollbar
+       if (controller.comprobar_conectado()==true){
+           getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           getSupportActionBar().setDisplayShowHomeEnabled(true);
+           getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
 
-        FragmentManager fm = getSupportFragmentManager();
-        MenuListFragment mMenuFragment = (MenuListFragment) fm.findFragmentById(R.id.id_container_menu);
-        if (mMenuFragment == null) {
-            mMenuFragment = new MenuListFragment();
-            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
-        }
-    }
+           mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
+           mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
+               @Override
+               public void onDrawerStateChange(int oldState, int newState) {
+                   if (newState == ElasticDrawer.STATE_CLOSED) {
+                       Log.i("MainActivity", "Drawer STATE_CLOSED");
+                   }
+               }
+
+               @Override
+               public void onDrawerSlide(float openRatio, int offsetPixels) {
+                   Log.i("MainActivity", "openRatio=" + openRatio + " ,offsetPixels=" + offsetPixels);
+               }
+           });
+
+
+           FragmentManager fm = getSupportFragmentManager();
+           MenuListFragment mMenuFragment = (MenuListFragment) fm.findFragmentById(R.id.id_container_menu);
+           if (mMenuFragment == null) {
+               mMenuFragment = new MenuListFragment();
+               fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
+           }
+
+           //si no hay usuarios conectados, no se podrá usar el menu lateral ni saldrá el icono en la toolbar
+       }else{
+           getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+           getSupportActionBar().setDisplayShowHomeEnabled(false);
+           mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_NONE);
+
+       }
+
+       }
 
 
     public void registrarse(View v){
@@ -183,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
         final TextInputLayout til_email=(TextInputLayout)prompt.findViewById(R.id.til_login_email);
         final TextInputLayout til_pass=(TextInputLayout)prompt.findViewById(R.id.til_login_pass);
+        til_pass.setPasswordVisibilityToggleEnabled(true);
 
         // set dialog message
         alert.setCancelable(false)

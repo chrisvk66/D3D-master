@@ -15,11 +15,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.io.ByteArrayOutputStream;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,9 +26,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Register extends AppCompatActivity {
 
-    private TextInputLayout til_nombre,til_email,til_pass, til_repetirpass;
-    private EditText nombre,email,pass,repetirpass;
-    private CheckBox scanner,disenador,impresor;
+    private TextInputLayout til_nombre, til_email, til_pass, til_repetirpass;
+    private EditText nombre, email, pass, repetirpass;
+    private CheckBox scanner, disenador, impresor, ubicacion;
     private CircleImageView civ;
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
@@ -52,28 +49,29 @@ public class Register extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        nombre =(EditText) findViewById(R.id.et_nombre_registro);
-        email =(EditText) findViewById(R.id.et_email_registro);
-        pass =(EditText) findViewById(R.id.et_pass_registro);
-        repetirpass =(EditText) findViewById(R.id.et_repetirpass_registro);
+        nombre = (EditText) findViewById(R.id.et_nombre_registro);
+        email = (EditText) findViewById(R.id.et_email_registro);
+        pass = (EditText) findViewById(R.id.et_pass_registro);
+        repetirpass = (EditText) findViewById(R.id.et_repetirpass_registro);
 
-        til_nombre=(TextInputLayout) findViewById(R.id.til_nombre_registro);
+        til_nombre = (TextInputLayout) findViewById(R.id.til_nombre_registro);
         til_nombre.setErrorEnabled(true);
-        til_email=(TextInputLayout) findViewById(R.id.til_email_registro);
+        til_email = (TextInputLayout) findViewById(R.id.til_email_registro);
         til_email.setErrorEnabled(true);
-        til_pass=(TextInputLayout) findViewById(R.id.til_pass_registro);
+        til_pass = (TextInputLayout) findViewById(R.id.til_pass_registro);
         til_pass.setErrorEnabled(true);
         til_pass.setPasswordVisibilityToggleEnabled(true);
-        til_repetirpass=(TextInputLayout) findViewById(R.id.til_repetirpass_registro);
+        til_repetirpass = (TextInputLayout) findViewById(R.id.til_repetirpass_registro);
         til_repetirpass.setErrorEnabled(true);
         til_repetirpass.setPasswordVisibilityToggleEnabled(true);
 
-        scanner=(CheckBox) findViewById(R.id.check_scanner);
-        disenador=(CheckBox) findViewById(R.id.check_diseñador);
-        impresor=(CheckBox) findViewById(R.id.check_impresor);
+        scanner = (CheckBox) findViewById(R.id.check_scanner);
+        disenador = (CheckBox) findViewById(R.id.check_diseñador);
+        impresor = (CheckBox) findViewById(R.id.check_impresor);
+        impresor = (CheckBox) findViewById(R.id.check_impresor);
+        ubicacion = (CheckBox) findViewById(R.id.posicionGPS);
 
-
-        civ=(CircleImageView) findViewById(R.id.foto_registro);
+        civ = (CircleImageView) findViewById(R.id.foto_registro);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -94,89 +92,93 @@ public class Register extends AppCompatActivity {
         return true;
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         }
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     //si el checkbox esta marcado se pondra un 1 y si no esta marcado pues un 0
-    public int comprobar_scanner(){
-        if (scanner.isChecked()==true){
+    public int comprobar_scanner() {
+        if (scanner.isChecked() == true) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
 
-    public int comprobar_disenador(){
-        if (disenador.isChecked()==true){
+    public int comprobar_disenador() {
+        if (disenador.isChecked() == true) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
 
-    public int comprobar_impresor(){
-        if (impresor.isChecked()==true){
+    public int comprobar_impresor() {
+        if (impresor.isChecked() == true) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
 
-    public void guardar_Perfil(View v){
+
+
+    public void guardar_Perfil(View v) {
         //si no se crea aqui la instancia de clase da error
         //BBDD_Controller controlador= new BBDD_Controller();
 
         //en estos condicionales se comprueba que se rellenen todos los campos y si no sale un mensaje de error
-        if (nombre.getText().toString().trim().isEmpty()){
+        if (nombre.getText().toString().trim().isEmpty()) {
             til_nombre.setError(getString(R.string.campo_requerido));
             til_email.setError("");
             til_pass.setError("");
             til_repetirpass.setError("");
 
-        }else if(email.getText().toString().trim().isEmpty()){
+        } else if (email.getText().toString().trim().isEmpty()) {
             til_nombre.setError("");
             til_email.setError(getString(R.string.campo_requerido));
             til_pass.setError("");
             til_repetirpass.setError("");
 
-        }else if(pass.getText().toString().trim().isEmpty()){
+        } else if (pass.getText().toString().trim().isEmpty()) {
             til_nombre.setError("");
             til_email.setError("");
             til_pass.setError(getString(R.string.campo_requerido));
             til_repetirpass.setError("");
 
 
-        }else if (!(pass.getText().toString().equals(repetirpass.getText().toString()))){
+        } else if (!(pass.getText().toString().equals(repetirpass.getText().toString()))) {
             til_nombre.setError("");
             til_email.setError("");
             til_pass.setError("");
             til_repetirpass.setError(getString(R.string.diferente_pass));
 
-        }else if (imagen_bbdd==null){
+        } else if (imagen_bbdd == null) {
             til_nombre.setError("");
             til_email.setError("");
             til_pass.setError("");
             til_repetirpass.setError("");
-            Toast.makeText(getApplicationContext(),getString(R.string.elegir_img),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.elegir_img), Toast.LENGTH_SHORT).show();
 
-        }else if ((controller.comprobar_email_repetido(email.getText().toString())==true)){
+        } else if ((controller.comprobar_email_repetido(email.getText().toString()) == true)) {
             til_nombre.setError("");
             til_email.setError(getString(R.string.email_ya_existe));
             til_pass.setError("");
             til_repetirpass.setError("");
 
-        }else if (isEmailValid(email.getText().toString())==false){
+        } else if (isEmailValid(email.getText().toString()) == false) {
             til_nombre.setError("");
             til_email.setError(getString(R.string.email_verificar));
             til_pass.setError("");
             til_repetirpass.setError("");
-        }else{
+        } else {
 
-           try{
+            try {
+
+
                 //los dos ceros se corresponden con la latitud y la longitud, los he puesto por poner un valor por defecto hasta que hagamos el mapa o algo
                controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0);
 
