@@ -68,6 +68,7 @@ public class MenuListFragment extends Fragment {
             nav_menu.findItem(R.id.nav_evaluacion).setVisible(true);
             nav_menu.findItem(R.id.nav_mensajes).setVisible(true);
             nav_menu.findItem(R.id.nav_exit).setVisible(true);
+            nav_menu.findItem(R.id.nav_inicio).setVisible(false);
             img.setVisibility(View.VISIBLE);
 
             //AQUI SE CAMBIA LA IMAGEN, EL NOMBRE Y EL EMAIL DEL MENU LATERAL SEGUN EL USUARIO QUE SE HAYA CONECTADO
@@ -88,6 +89,7 @@ public class MenuListFragment extends Fragment {
             nav_menu.findItem(R.id.nav_evaluacion).setVisible(false);
             nav_menu.findItem(R.id.nav_mensajes).setVisible(false);
             nav_menu.findItem(R.id.nav_exit).setVisible(false);
+            nav_menu.findItem(R.id.nav_inicio).setVisible(true);
             img.setVisibility(View.INVISIBLE);
 
         }else{
@@ -126,6 +128,9 @@ public class MenuListFragment extends Fragment {
 
                 }else if (id== R.id.nav_evaluacion){
                     startActivity(new Intent(getActivity(), Evaluation.class));
+
+                }else if (id== R.id.nav_mensajes){
+                    startActivity(new Intent(getActivity(), Messages.class));
 
                 }else if (id== R.id.nav_exit){
 

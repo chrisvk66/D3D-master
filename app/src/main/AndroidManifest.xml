@@ -33,6 +33,7 @@
         <activity android:name=".Project_Main" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Evaluation" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ResumenProyecto" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Messages" android:theme="@style/AppTheme.NoActionBar"></activity>
 
     </application>
 

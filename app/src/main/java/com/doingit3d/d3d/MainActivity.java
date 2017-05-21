@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                     finishAffinity();
                                 }
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             }
 
 
