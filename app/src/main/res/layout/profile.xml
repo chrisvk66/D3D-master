@@ -111,7 +111,8 @@
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginTop="20sp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <TextView
             android:id="@+id/tv_experiencia_profile"
@@ -153,9 +154,80 @@
             android:id="@+id/tv_portafolios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="7sp"
             android:layout_marginTop="20sp"
-            android:text="@string/portafolios"
+            android:text="@string/info_personal"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.63"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="156dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/proyectos_presentados" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/foto" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_nombre_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_email_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_presentados_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/foto_info_personal"
+                    android:layout_width="100sp"
+                    android:layout_height="95sp"
+                    android:adjustViewBounds="false"
+                    android:clickable="true"
+                    android:src="@drawable/img_perfil"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <!--<Button
@@ -176,6 +248,7 @@
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:drawableLeft="@drawable/edit_black"
+        android:onClick="editar_perfil"
         android:text="@string/editar_perfil"
         android:textSize="18sp"
         fbutton:buttonColor="@color/fbutton_color_sun_flower"

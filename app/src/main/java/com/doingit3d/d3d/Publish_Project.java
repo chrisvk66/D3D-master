@@ -131,6 +131,12 @@ public class Publish_Project extends AppCompatActivity {
             controller.publicar_proyecto(tipo.getSelectedItem().toString(),titulo.getEditText().getText().toString(),descripcion.getEditText().getText().toString(),fecha.getText().toString(),
                     pais.getEditText().getText().toString(),moneda_text,date,controller.obtener_id_conectado(),desplazamiento_text,formato.getSelectedItem().toString(),privacidad_text,material.getSelectedItem().toString(),controller.username_conectado());
 
+            if (controller.obtener_proyectos_presentados()==0){
+                controller.aumentar_proyectos_presentados();
+            }else if (controller.obtener_proyectos_presentados()>0){
+                controller.aumentar_proyectos_presentados2();
+            }
+
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(getString(R.string.enhorabuena))
                     .setContentText(getString(R.string.publicacion_exito))

@@ -33,6 +33,7 @@
     <string name="historial">RECORD</string>
     <string name="portafolios">PORTAFOLIO OF WORKS</string>
     <string name="editar_perfil">EDIT PROFILE</string>
+    <string name="info_personal">Personal information</string>
     <!-- Fin strings de la pantalla del perfil-->
 
 
@@ -108,6 +109,18 @@
     <string name="trabajos_no_adjudicados">Non-awarded works</string>
     <!-- Fin strings valoracion-->
 
+    <!-- String editar perfil-->
+    <string name="nombre_publico">Public profile name</string>
+    <string name="email_contacto">Contact email</string>
+    <string name="servicios_asociados">Services associated to your profile</string>
+    <string name="activar_design">Activate profile as 3D Designer</string>
+    <string name="activar_scanner">Activate profile as a professional 3D scanning</string>
+    <string name="activar_impresion">Enable 3D Printing Profile</string>
+    <string name="guardar_cambios">Save changes</string>
+    <string name="cambios_guardados">Changes saved</string>
+    <string name="nueva_pass">New password</string>
+    <!-- Fin strings editar perfil-->
+
     <!-- String varios-->
     <string name="error">ERROR</string>
     <string name="aceptar">Accept</string>
@@ -141,5 +154,7 @@
     <string name="desconectado">Disconnected</string>
     <string name="sms_recibidos">Received</string>
     <string name="sms_enviados">Sent</string>
+    <string name="sesion_iniciada">Session started</string>
+    <string name="foto">Photo</string>
     <!-- Fin strings varios-->
 </resources>

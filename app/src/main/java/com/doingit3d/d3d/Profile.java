@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 /**
  * Created by David M on 14/04/2017.
@@ -18,6 +19,10 @@ public class Profile extends AppCompatActivity {
     private RatingBar rb1,rb2;
     private ImageView iv_d3d_logo;
     private Button como_vas;
+    private TextView nombre,email,presentados;
+    BBDD_Controller controller= new BBDD_Controller(this);
+    private ImageView foto;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,16 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        nombre =(TextView) findViewById(R.id.tv_nombre_info);
+        email=(TextView) findViewById(R.id.tv_email_info);
+        presentados=(TextView) findViewById(R.id.tv_presentados_info);
+        nombre.setText(controller.username_conectado());
+        email.setText(controller.useremail_conectado());
+        presentados.setText(String.valueOf(controller.obtener_proyectos_presentados()));
+
+        foto=(ImageView) findViewById(R.id.foto_info_personal);
+        foto.setImageBitmap(controller.obtener_imagen());
+
     }
 
     //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse
@@ -48,7 +63,7 @@ public class Profile extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         }
-        startActivity(new Intent(this,Publish_Project.class));
+        startActivity(new Intent(this,MainActivity.class));
     }
 
 
@@ -57,5 +72,10 @@ public class Profile extends AppCompatActivity {
             finishAffinity();
         }
         startActivity(new Intent(this,Evaluation.class));
+    }
+
+    public void editar_perfil(View v){
+
+        startActivity(new Intent(this,Editar_Perfil.class));
     }
 }

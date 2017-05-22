@@ -17,8 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
             "usuario_id INTEGER ,desplazamiento TEXT ,formato_archivo TEXT, privacidad TEXT, material TEXT, nombre_user TEXT)";
+
+    private String tabla_evaluacion="CREATE TABLE IF NOT EXISTS evaluacion (id_usuario INTEGER,p_presentados INTEGER, p_finalizados INTEGER,p_nulos INTEGER, p_adjudicacion INTEGER,o_presentados INTEGER," +
+            "o_pendientes INTEGER, t_adjudicacion INTEGER, t_no_adjudicacion INTEGER)";
 
    /* private String tabla_oferta ="CREATE TABLE IF NOT EXISTS oferta (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, importe INTEGER, tiempo_estimado INTEGER," +
             "FOREIGN KEY(usuario_id) REFERENCES usuario (id) , FOREIGN KEY (preyecto_id) REFERENCES preyecto (id), fecha_adjudicacion TEXT, fecha_envio TEXT," +
@@ -76,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         controller.onCreate(db);
 
         db.execSQL(tabla_proyecto);
+        controller.onCreate(db);
+
+        db.execSQL(tabla_evaluacion);
         controller.onCreate(db);
 
        /* db.execSQL(tabla_oferta);
@@ -245,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                             }else{
                                 //en esta linea actualiza el estado (mirar la clase BBDD_Controller para mas informacion)
                                 controller.actualizar_estado_conexion(controller.obtener_id_login(til_email.getEditText().getText().toString()),1);
-                                Toast.makeText(getApplicationContext(),getString(R.string.enhorabuena),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),getString(R.string.sesion_iniciada),Toast.LENGTH_SHORT).show();
                                 alertDialog.dismiss();
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                     finishAffinity();
@@ -268,7 +276,9 @@ public class MainActivity extends AppCompatActivity {
 
         // show it
         alertDialog.show();
+    }
 
-
+    public void ir_a_perfil(View v){
+        startActivity(new Intent(this,Profile.class));
     }
 }

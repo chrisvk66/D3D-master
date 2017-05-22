@@ -37,7 +37,8 @@
     <string name="historial">HISTORIAL</string>
     <string name="portafolios">Portafolio de trabajos</string>
     <string name="editar_perfil">EDITAR PERFIL</string>
-    <!-- Fin strings de la pantalla del perrfil-->
+    <string name="info_personal">Información personal</string>
+    <!-- Fin strings de la pantalla del perfil-->
 
     <!-- strings de la pantalla del registro-->
     <string name="registro">Registro</string>
@@ -115,6 +116,18 @@
     <string name="trabajos_no_adjudicados">Trabajos no adjudicados</string>
     <!-- Fin strings valoracion-->
 
+    <!-- String editar perfil-->
+    <string name="nombre_publico">Nombre de perfil público</string>
+    <string name="email_contacto">Email de contacto</string>
+    <string name="servicios_asociados">Servicios asociados a tu perfil</string>
+    <string name="activar_design">Activar perfil como Diseñador 3D</string>
+    <string name="activar_scanner">Activar perfil como profesional Scanneado 3D</string>
+    <string name="activar_impresion">Activar perfil de Impresión 3D</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="cambios_guardados">Cambios Guardados</string>
+    <string name="nueva_pass">Nueva contraseña</string>
+    <!-- Fin strings editar perfil-->
+
 
     <!-- String varios-->
     <string name="error">ERROR</string>
@@ -150,6 +163,8 @@
     <string name="desconectado">Desconectado</string>
     <string name="sms_recibidos">Recibidos</string>
     <string name="sms_enviados">Enviados</string>
+    <string name="sesion_iniciada">Sesión Iniciada</string>
+    <string name="foto">Foto</string>
     <!-- Fin strings varios-->
 
 </resources>

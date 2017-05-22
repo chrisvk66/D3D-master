@@ -15,8 +15,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.io.ByteArrayOutputStream;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -69,7 +72,7 @@ public class Register extends AppCompatActivity {
         disenador = (CheckBox) findViewById(R.id.check_diseñador);
         impresor = (CheckBox) findViewById(R.id.check_impresor);
         impresor = (CheckBox) findViewById(R.id.check_impresor);
-        ubicacion = (CheckBox) findViewById(R.id.posicionGPS);
+        //ubicacion = (CheckBox) findViewById(R.id.posicionGPS);
 
         civ = (CircleImageView) findViewById(R.id.foto_registro);
 

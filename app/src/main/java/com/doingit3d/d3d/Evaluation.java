@@ -5,12 +5,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 /**
  * Created by chris on 13/05/2017.
  */
 
 public class Evaluation extends AppCompatActivity {
+
+    private TextView proyectos_presentados;
+    private BBDD_Controller controller = new BBDD_Controller(this);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +25,9 @@ public class Evaluation extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        proyectos_presentados=(TextView) findViewById(R.id.proyectos_presentados);
+        proyectos_presentados.setText(String.valueOf(controller.obtener_proyectos_presentados()));
 
     }
 

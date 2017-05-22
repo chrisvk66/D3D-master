@@ -215,7 +215,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return igual;
     }
 
-    //comprueba que el email introducido al registrarse no existe
+    //comprueba que el email introducido no existe
     public boolean comprobar_email_repetido(String email){
         SQLiteDatabase db = this.getReadableDatabase();
         String email_tabla;
@@ -547,4 +547,76 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }
     }
 
+
+    //actualiza el perfil
+    public void actualizar_perfil(String nombre,String email,int design, int scanner, int impresion, String pass){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("nombre", nombre);
+        values.put("email", email);
+        values.put("disenador", design);
+        values.put("scanner", scanner);
+        values.put("impresor", impresion);
+        values.put("contrasena",pass);
+        db.update("usuario",values,"id = "+obtener_id_conectado(),null);
+        db.close();
+    }
+
+    //devuelve la cantidad de proyectos publicados
+    public int obtener_proyectos_presentados(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int num=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT p_presentados FROM evaluacion WHERE id_usuario = "+obtener_id_conectado() ,null);
+            if(cursor.moveToFirst()){
+
+                num=cursor.getInt(cursor.getColumnIndex("p_presentados"));
+
+            }
+
+        }
+        // db.close();
+        return num;
+    }
+
+    //si no hay proyectos
+    public void aumentar_proyectos_presentados(){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("id_usuario",obtener_id_conectado());
+                values.put("p_presentados",obtener_proyectos_presentados()+1);
+
+                db.insert("evaluacion",null,values);
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    //si hay 1 o mas proyectos, se actualiza el numero
+    public void aumentar_proyectos_presentados2(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("id_usuario", obtener_id_conectado());
+        values.put("p_presentados", obtener_proyectos_presentados()+1);
+
+        db.update("evaluacion",values,"id_usuario= "+obtener_id_conectado(),null);
+        db.close();
+    }
 }

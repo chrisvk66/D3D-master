@@ -13,6 +13,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagen_cabecera"
+        android:onClick="ir_a_perfil"
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:adjustViewBounds="false"
