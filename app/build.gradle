@@ -46,6 +46,8 @@ dependencies {
     }
 
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.github.halysongoncalves:pugnotification:1.8.1'
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.afollestad.material-dialogs:core:0.9.4.4'
     compile files('mysql-connector-java-5.1.42-bin.jar')

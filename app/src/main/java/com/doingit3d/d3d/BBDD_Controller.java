@@ -43,7 +43,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
     //inserta en la tabla los datos del registro
-    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado){
+    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado, int tutorial){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -61,6 +61,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 values.put("latitud",latitud);
                 values.put("longitud",longitud);
                 values.put("conectado",conectado);
+                values.put("tutorial",tutorial);
 
                 db.insert("usuario",null,values);
 
@@ -618,5 +619,37 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
         db.update("evaluacion",values,"id_usuario= "+obtener_id_conectado(),null);
         db.close();
+    }
+
+
+
+    public void actualizar_tutorial(int tutorial){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("tutorial", tutorial);
+
+        db.update("usuario",values,"id= "+obtener_id_conectado(),null);
+        db.close();
+    }
+
+
+    public int obtener_tutorial(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int tutorial=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT tutorial FROM usuario WHERE id = "+obtener_id_conectado() ,null);
+            if(cursor.moveToFirst()){
+
+                tutorial=cursor.getInt(cursor.getColumnIndex("tutorial"));
+
+            }
+
+        }
+        // db.close();
+        return tutorial;
     }
 }

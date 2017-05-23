@@ -1,26 +1,33 @@
 package com.doingit3d.d3d;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
+import br.com.goncalves.pugnotification.notification.PugNotification;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Toolbar toolbar;
     private Button facebook,registro,login;
+    private Rect r;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
-            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER)";
+            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER)";
 
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
@@ -109,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
            getSupportActionBar().setDisplayShowHomeEnabled(true);
            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
+           Context c = getApplicationContext();
 
            mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
            mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
@@ -116,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                public void onDrawerStateChange(int oldState, int newState) {
                    if (newState == ElasticDrawer.STATE_CLOSED) {
                        Log.i("MainActivity", "Drawer STATE_CLOSED");
+                   }else if (newState==ElasticDrawer.STATE_OPEN){
+                       //cuando el menu lateral se abra, se iniciara el tutorial de los items del menu lateral
+                       tuto();
                    }
                }
 
@@ -146,8 +158,207 @@ public class MainActivity extends AppCompatActivity {
 
        }
 
+
+        r = new Rect(0,0,100,130);
+        //tutorial de la toolbar
+       if (controller.obtener_tutorial()==0 && controller.comprobar_conectado()==true){
+           TapTargetView.showFor(this,
+                   TapTarget.forBounds(r,"Menu Lateral","Pulsa aquí para ver las opciones")
+                           // All options below are optional
+                           .dimColor(android.R.color.holo_red_dark)
+                           .transparentTarget(true)
+                           //.outerCircleColor(R.color.transparente)
+                           .targetCircleColor(R.color.verde)
+                           .cancelable(false)
+                           .textColor(android.R.color.black),
+                   new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                       @Override
+                       public void onTargetClick(TapTargetView view) {
+                           super.onTargetClick(view);      // This call is optional
+
+                       }
+                   });
+       }else{
+
        }
 
+       }//onCreate
+
+
+    //metodo que inicia el tutorial
+    public void tuto() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int alto = metrics.heightPixels;
+        //float ancho = metrics.widthPixels;
+
+        Rect r1, r2, r3, r4, r5, r6, r7, r8, r9;
+
+        //diferentes resoluciones de pantalla para que el tutorial salga bien
+
+        //pantalla 1280x720
+        if (alto == 1280) {
+
+            r1 = new Rect(105, 850, 0, 0);
+            r2 = new Rect(105, 1070, 0, 0);
+            r3 = new Rect(105, 1260, 0, 0);
+            r4 = new Rect(105, 1450, 0, 0);
+            r5 = new Rect(105, 1620, 0, 0);
+            r6 = new Rect(105, 1810, 0, 0);
+            r7 = new Rect(105, 2020, 0, 0);
+            r8 = new Rect(105, 2230, 0, 0);
+            r9 = new Rect(105, 2420, 0, 0);
+
+            //pantalla 1920x1080
+        } else if (alto == 1920) {
+
+            r1 = new Rect(158, 1275, 0, 0);
+            r2 = new Rect(158, 1605, 0, 0);
+            r3 = new Rect(158, 1890, 0, 0);
+            r4 = new Rect(158, 2175, 0, 0);
+            r5 = new Rect(158, 2430, 0, 0);
+            r6 = new Rect(158, 2715, 0, 0);
+            r7 = new Rect(158, 3030, 0, 0);
+            r8 = new Rect(158, 3345, 0, 0);
+            r9 = new Rect(158, 3630, 0, 0);
+
+            //800x480
+        }else if(alto == 800){
+            r1= new Rect(66,532,0,0);
+            r2= new Rect(66,670,0,0);
+            r3= new Rect(66,787,0,0);
+            r4= new Rect(66,906,0,0);
+            r5= new Rect(66,1013,0,0);
+            r6= new Rect(66,1132,0,0);
+            r7= new Rect(66,1263,0,0);
+            r8= new Rect(66,1394,0,0);
+            r9= new Rect(66,1513,0,0);
+
+            //1024x768
+        }else if(alto == 1024){
+            r1= new Rect(35,680,0,0);
+            r2= new Rect(35,856,0,0);
+            r3= new Rect(35,1008,0,0);
+            r4= new Rect(35,1160,0,0);
+            r5= new Rect(35,1296,0,0);
+            r6= new Rect(35,1448,0,0);
+            r7= new Rect(35,1616,0,0);
+            r8= new Rect(35,1784,0,0);
+            r9= new Rect(35,1936,0,0);
+
+            //por defecto pantalla de 1920x1080
+        }else{
+            r1 = new Rect(158, 1275, 0, 0);
+            r2 = new Rect(158, 1605, 0, 0);
+            r3 = new Rect(158, 1890, 0, 0);
+            r4 = new Rect(158, 2175, 0, 0);
+            r5 = new Rect(158, 2430, 0, 0);
+            r6 = new Rect(158, 2715, 0, 0);
+            r7 = new Rect(158, 3030, 0, 0);
+            r8 = new Rect(158, 3345, 0, 0);
+            r9 = new Rect(158, 3630, 0, 0);
+        }
+
+
+        //si nunca ha visto el tutorial se iguala a 0
+        if (controller.obtener_tutorial()==0){
+
+            new TapTargetSequence(this)
+                    .targets(
+                            TapTarget.forBounds(r1, "Perfil","Entra y mira tu perfil")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .cancelable(false)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r2, "Buscar profesionales", "Puedes buscar a otros profesionales según su email")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r3, "Publicar Proyecto","Publica tus proyectos profesionales")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .cancelable(false)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r4, "Proyectos Publicados", "Mira los proyectos de los demás usuarios")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r5, "Mis Proyectos", "Mira tus proyectos")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r6, "Evaluación", "Aquí encontraras las estadisticas de tus proyectos")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r7, "Mensajes", "Envia y recibe mensajes de otros usuarios")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r8, "Cómo Funciona", "Si tienes alguna duda de como funciona la aplicación pulsa aquí")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r9, "Cerrar Sesión", "Cierra la sesión actual")
+                                    .dimColor(android.R.color.holo_red_dark)
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black))
+
+                    .listener(new TapTargetSequence.Listener() {
+
+                        @Override
+                        public void onSequenceFinish() {
+                            //cuando termine la secuencia del tutorial, se iguala a 1 para que no vuelva a salir
+                            controller.actualizar_tutorial(1);
+                        }
+
+                        @Override
+                        public void onSequenceStep(TapTarget ultimo, boolean algo) {
+
+                        }
+
+                        @Override
+                        public void onSequenceCanceled(TapTarget lastTarget) {
+
+                        }
+                    }).start();
+        }else{
+
+        }
+    }
 
     public void registrarse(View v){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -183,22 +394,6 @@ public class MainActivity extends AppCompatActivity {
                     .show();
 
 
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            //startActivity(new Intent(this,How_does_it_works.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
