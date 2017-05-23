@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Button facebook,registro,login;
     private Rect r;
+    private Intent i;
+    private  PendingIntent pi;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
             "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER)";
@@ -80,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         registro=(Button) findViewById(R.id.b_registrarse);
         login=(Button) findViewById(R.id.b_entrar);
 
+        i = new Intent(this,Messages.class);
+
+         pi = PendingIntent.getActivity( getBaseContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         //SE CREAN AQUI LAS TABLAS POR QUE SI SE METEN EN EL onCreate DE LA CLASE BBDD_CONTROLLER SOLO DEJA CREAR UNA PEOR SI LO HACEMOS FUERA DE LA CLASE PERO
         //LLAMANDO AL METODO onCreate, NS PERMITE CREAR LAS TABLAS QUE QUERAMOS
@@ -104,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
         controller.onCreate(db);*/
 
         db.close();
+
+
+
+
 
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
 

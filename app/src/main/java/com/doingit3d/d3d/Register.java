@@ -3,6 +3,8 @@ package com.doingit3d.d3d;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -32,7 +35,6 @@ public class Register extends AppCompatActivity {
     private TextInputLayout til_nombre, til_email, til_pass, til_repetirpass;
     private EditText nombre, email, pass, repetirpass;
     private CheckBox scanner, disenador, impresor, ubicacion;
-    private CircleImageView civ;
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
     private static final int REQUEST_IMAGE_CAPTURE = 20;
@@ -41,6 +43,8 @@ public class Register extends AppCompatActivity {
     private Bundle b;
     private SQLiteDatabase db;
     private BBDD_Controller controller = new BBDD_Controller(this);
+    private CircleImageView civ;
+    private Bitmap bitmap;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class Register extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        civ=(CircleImageView) findViewById(R.id.foto_registro);
 
         nombre = (EditText) findViewById(R.id.et_nombre_registro);
         email = (EditText) findViewById(R.id.et_email_registro);
@@ -159,14 +164,14 @@ public class Register extends AppCompatActivity {
             til_pass.setError("");
             til_repetirpass.setError(getString(R.string.diferente_pass));
 
-        } else if (imagen_bbdd == null) {
+        } /*else if (imagen_bbdd == null) {
             til_nombre.setError("");
             til_email.setError("");
             til_pass.setError("");
             til_repetirpass.setError("");
             Toast.makeText(getApplicationContext(), getString(R.string.elegir_img), Toast.LENGTH_SHORT).show();
 
-        } else if ((controller.comprobar_email_repetido(email.getText().toString()) == true)) {
+        } */else if ((controller.comprobar_email_repetido(email.getText().toString()) == true)) {
             til_nombre.setError("");
             til_email.setError(getString(R.string.email_ya_existe));
             til_pass.setError("");
@@ -181,9 +186,22 @@ public class Register extends AppCompatActivity {
 
             try {
 
+                if (imagen_bbdd == null) {
+                    civ.setImageResource(R.drawable.nofoto);
+                    bitmap = ((BitmapDrawable)civ.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    imagen_bbdd = stream.toByteArray();
 
-                //los dos ceros se corresponden con la latitud y la longitud, los he puesto por poner un valor por defecto hasta que hagamos el mapa o algo
-               controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+                    Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
+                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+                }
+
+
 
 
                //mensaje de que ha funcionado
