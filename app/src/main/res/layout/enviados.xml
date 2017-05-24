@@ -11,4 +11,18 @@
         android:layout_height="wrap_content"
         android:text="Mensajes enviados"
         android:gravity="center" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="365dp"
+        android:id="@+id/lista2"
+        android:layout_weight="0.05"></ListView>
+
+    <Button
+        android:id="@+id/button77"
+        android:onClick="nuevo_mensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nuevo mensaje" />
+
 </LinearLayout>

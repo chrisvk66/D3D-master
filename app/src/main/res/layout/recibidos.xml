@@ -17,4 +17,12 @@
         android:layout_height="365dp"
         android:id="@+id/lista"
         android:layout_weight="0.05"></ListView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="nuevo_mensaje"
+        android:text="Nuevo mensaje" />
+
 </LinearLayout>

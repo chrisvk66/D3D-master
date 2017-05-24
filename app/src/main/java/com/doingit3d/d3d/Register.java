@@ -3,7 +3,6 @@ package com.doingit3d.d3d;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -16,11 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -38,13 +35,12 @@ public class Register extends AppCompatActivity {
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
     private static final int REQUEST_IMAGE_CAPTURE = 20;
-    private Bitmap bm;
+    private Bitmap bm,bitmap;
     private byte[] imagen_bbdd;//aqui te almacena los bytes de la imagen para guardarlos en la base de datos
     private Bundle b;
     private SQLiteDatabase db;
     private BBDD_Controller controller = new BBDD_Controller(this);
     private CircleImageView civ;
-    private Bitmap bitmap;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +131,6 @@ public class Register extends AppCompatActivity {
 
 
     public void guardar_Perfil(View v) {
-        //si no se crea aqui la instancia de clase da error
-        //BBDD_Controller controlador= new BBDD_Controller();
 
         //en estos condicionales se comprueba que se rellenen todos los campos y si no sale un mensaje de error
         if (nombre.getText().toString().trim().isEmpty()) {
@@ -194,10 +188,10 @@ public class Register extends AppCompatActivity {
                     imagen_bbdd = stream.toByteArray();
 
                     controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
-                    Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
                     controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
                 }
 

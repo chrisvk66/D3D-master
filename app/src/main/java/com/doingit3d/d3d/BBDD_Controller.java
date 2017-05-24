@@ -394,9 +394,34 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }else{
             System.out.println("--------------NO COMPRUEBA USUARIO--------------");
         }
-        db.close();
+        //db.close();
 
         return nombre;
+    }
+
+    //devuelve el id del usuario a partir de un email
+    public int obtener_id_con_email(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT id FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    id=cursor.getInt(cursor.getColumnIndex("id"));
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+           // System.out.println("--------------NO COMPRUEBA USUARIO--------------");
+        }
+        db.close();
+
+        return id;
     }
 
 
@@ -420,7 +445,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }else{
             System.out.println("--------------NO COMPRUEBA USUARIO--------------");
         }
-        db.close();
+        //db.close();
 
         return email;
     }
@@ -550,7 +575,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
 
     //actualiza el perfil
-    public void actualizar_perfil(String nombre,String email,int design, int scanner, int impresion, String pass){
+    public void actualizar_perfil(String nombre,String email,int design, int scanner, int impresion, String pass, byte [] foto){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -562,6 +587,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         values.put("scanner", scanner);
         values.put("impresor", impresion);
         values.put("contrasena",pass);
+        values.put("imagen",foto);
         db.update("usuario",values,"id = "+obtener_id_conectado(),null);
         db.close();
     }
@@ -622,7 +648,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
 
-
+    //cuando se ve el tutorial una vez, se cambia este valor para que no vuelva a aparecer
     public void actualizar_tutorial(int tutorial){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -635,7 +661,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         db.close();
     }
 
-
+    //comprueba si se a iniciado sesion por primera vez para que salga el tutorial o no
     public int obtener_tutorial(){
         SQLiteDatabase db = this.getReadableDatabase();
         int tutorial=0;
@@ -651,5 +677,167 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }
         // db.close();
         return tutorial;
+    }
+
+    //mete el mensaje en la bbdd
+    public void enviar_mensaje( String from, String to,String mensaje,int leido,String asunto,String fecha){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("from_user",from);
+                values.put("to_user",to);
+                values.put("fecha",fecha);
+                values.put("texto",mensaje);
+                values.put("leido",leido);
+                values.put("asunto",asunto);
+
+                db.insert("mensaje_privado",null,values);
+
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    /*public int obtener_texto_mensaje(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int tutorial=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT tutorial FROM usuario WHERE id = "+obtener_id_conectado() ,null);
+            if(cursor.moveToFirst()){
+
+                tutorial=cursor.getInt(cursor.getColumnIndex("tutorial"));
+
+            }
+
+        }
+        // db.close();
+        return tutorial;
+    }*/
+
+    //cuando se pulsa un mensaje recibido se cambia a "leido" para que no salga la notificacion
+    public void actualizar_leido(int leido,int id_mensaje){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("leido", leido);
+
+        db.update("mensaje_privado",values,"to_user= "+"'"+useremail_conectado()+"'"+" AND id ="+id_mensaje,null);
+        db.close();
+    }
+
+
+    //obtiene si se ha leido o no el mensaje recibido para que salga la notificacion
+    public boolean obtener_leido(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int cero;
+        boolean igual=false;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT leido FROM mensaje_privado WHERE to_user = "+"'"+useremail_conectado()+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    cero=cursor.getInt(cursor.getColumnIndex("leido"));
+
+                    if (cero==0){
+                        igual=true;
+
+                        break;
+                    }else{
+                        igual=false;
+
+                    }
+
+                }while(cursor.moveToNext());
+            }
+
+        }else{
+        }
+        return igual;
+    }
+
+    //para poner las imagenes correspondientes en los mensajes
+    public Bitmap obtener_imagnes_mensajes(int id_mensajes){
+        SQLiteDatabase db = this.getReadableDatabase();
+        byte[] img;
+        Bitmap bm=null;
+        ByteArrayInputStream bais;
+
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario WHERE email=(SELECT from_user FROM mensaje_privado WHERE id = "+id_mensajes+" )",null);
+            if(cursor.moveToFirst()){
+
+                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
+
+
+                if (img==null){
+                    bm=null;
+
+                }else{
+
+
+                    bais = new ByteArrayInputStream(img);
+                    bm= BitmapFactory.decodeStream(bais);
+
+                }
+
+            }
+
+        }
+        db.close();
+        return bm;
+    }
+
+
+    //cuando se pulsa un elemento de la lista se muestran los datos del mensaje
+    public void ver_mensaje(int id_mensaje,TextView tv1, TextView tv2, TextView tv3,TextView tv4,TextView tv5){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String from,to,asunto,mensaje,fecha;
+
+        try{
+            if(db!=null){
+
+                Cursor cursor = db.rawQuery("SELECT * FROM mensaje_privado WHERE id= "+id_mensaje, null);
+
+                if(cursor.moveToFirst()){
+                    do{
+
+                        from=cursor.getString(cursor.getColumnIndex("from_user"));
+                        to=cursor.getString(cursor.getColumnIndex("to_user"));
+                        asunto=cursor.getString(cursor.getColumnIndex("asunto"));
+                        mensaje=cursor.getString(cursor.getColumnIndex("texto"));
+                        fecha=cursor.getString(cursor.getColumnIndex("fecha"));
+
+
+                    }while(cursor.moveToNext());
+
+                    tv1.setText(from);
+                    tv2.setText(to);
+                    tv3.setText(asunto);
+                    tv4.setText(mensaje);
+                    tv5.setText(fecha);
+
+                }
+                db.close();
+            }
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
     }
 }

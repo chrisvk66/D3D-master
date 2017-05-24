@@ -37,6 +37,8 @@
         <activity android:name=".ResumenProyecto"></activity>
         <activity android:name=".Messages"></activity>
         <activity android:name=".Editar_Perfil"></activity>
+        <activity android:name=".Enviar_Mensajes"></activity>
+        <activity android:name=".Ver_mensajes"></activity>
 
     </application>
 

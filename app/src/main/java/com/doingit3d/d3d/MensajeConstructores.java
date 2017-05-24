@@ -7,7 +7,13 @@ package com.doingit3d.d3d;
 public class MensajeConstructores {
     protected String email, asunto, genero, descripcion;
     protected byte[] imagen;
-    protected int njuego;
+    protected int njuego,id;
+
+    public MensajeConstructores(String email, String asunto, int id){
+        this.email = email;
+        this.asunto = asunto;
+        this.id=id;
+    }
 
     public MensajeConstructores(int njuego, String email, String asunto, String genero, String descripcion){
         this.email = email;

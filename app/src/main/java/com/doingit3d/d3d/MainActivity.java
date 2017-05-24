@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
    /* private String tabla_oferta ="CREATE TABLE IF NOT EXISTS oferta (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, importe INTEGER, tiempo_estimado INTEGER," +
             "FOREIGN KEY(usuario_id) REFERENCES usuario (id) , FOREIGN KEY (preyecto_id) REFERENCES preyecto (id), fecha_adjudicacion TEXT, fecha_envio TEXT," +
-            "transporte INTEGER)";
+            "transporte INTEGER)";*/
 
     private String tabla_sms="CREATE TABLE IF NOT EXISTS mensaje_privado (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, from_user INTEGER, to_user INTEGER, fecha TEXT," +
-            "texto TEXT, leido INTEGER)";
+            "texto TEXT, asunto INTEGER,leido INTEGER, foto BLOB)";
 
-    private String tabla_comentario="CREATE TABLE IF NOT EXISTS comentario(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,FOREIGN KEY (preyecto_id) REFERENCES preyecto (id),FOREIGN KEY(usuario_id) REFERENCES usuario (id)," +
+   /* private String tabla_comentario="CREATE TABLE IF NOT EXISTS comentario(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,FOREIGN KEY (preyecto_id) REFERENCES preyecto (id),FOREIGN KEY(usuario_id) REFERENCES usuario (id)," +
             "usuario_destino INTEGER, texto TEXT, fecha TEXT, leido INTEGER, respuesta TEXT )";*/
 
     @Override
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawer.toggleMenu();
             }
         });
+
 
         facebook=(Button) findViewById(R.id.b_facebook);
         registro=(Button) findViewById(R.id.b_registrarse);
@@ -101,17 +102,30 @@ public class MainActivity extends AppCompatActivity {
         controller.onCreate(db);
 
        /* db.execSQL(tabla_oferta);
-        controller.onCreate(db);
+        controller.onCreate(db);*/
 
         db.execSQL(tabla_sms);
         controller.onCreate(db);
 
-        db.execSQL(tabla_comentario);
+
+        /*db.execSQL(tabla_comentario);
         controller.onCreate(db);*/
 
         db.close();
 
 
+        if (controller.obtener_leido()==true){
+            PugNotification.with(this)
+                    .load()
+                    .title("Proyectos")
+                    .message("Tienes mensajes nuevos")
+                    .smallIcon(R.drawable.ic_notification_icon)
+                    .largeIcon(R.drawable.ic_launcher_icon)
+                    .flags(Notification.DEFAULT_ALL)
+                    .button(R.drawable.ic_menu_send,"Abrir",pi)
+                    .simple()
+                    .build();
+        }
 
 
 
@@ -255,6 +269,18 @@ public class MainActivity extends AppCompatActivity {
             r7= new Rect(35,1616,0,0);
             r8= new Rect(35,1784,0,0);
             r9= new Rect(35,1936,0,0);
+
+            //pantalla de 960 x 540
+        }else if(alto == 960){
+            r1 = new Rect(79, 638, 0, 0);
+            r2 = new Rect(79, 803, 0, 0);
+            r3 = new Rect(79, 945, 0, 0);
+            r4 = new Rect(79, 1088, 0, 0);
+            r5 = new Rect(79, 1215, 0, 0);
+            r6 = new Rect(79, 1358, 0, 0);
+            r7 = new Rect(79, 1515, 0, 0);
+            r8 = new Rect(79, 1673, 0, 0);
+            r9 = new Rect(79, 1815, 0, 0);
 
             //por defecto pantalla de 1920x1080
         }else{
@@ -484,6 +510,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ir_a_perfil(View v){
-        startActivity(new Intent(this,Profile.class));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        startActivity(new Intent(getApplicationContext(),Profile.class));
     }
 }

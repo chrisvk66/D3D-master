@@ -1,22 +1,30 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PageFragment extends Fragment {
+public class PageFragment extends Fragment{
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
     private View view;
+    private ListView lista;
+    private BBDD_Controller controller;
+    private MensajeConstructores m;
+    private ArrayList<MensajeConstructores> modelo;
+    private  ArrayAdapter<MensajeConstructores> adapter;
+    private Intent i;
 
     public static PageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -39,8 +47,6 @@ public class PageFragment extends Fragment {
 
             view = inflater.inflate(R.layout.recibidos, container, false);
 
-            //startActivity( new Intent(PageFragment.this, Message.class));
-
         }else{
 
             view = inflater.inflate(R.layout.enviados, container, false);
@@ -54,30 +60,113 @@ public class PageFragment extends Fragment {
 
         if(mPage==1){
 
-            /*TextView texto = (TextView) getView().findViewById(R.id.textView2);
+            modelo=new ArrayList<MensajeConstructores>();
 
-            texto.setText("Croqueta ojala supieras lo que siento");*/
-
-            ArrayList<MensajeConstructores> modelo=new ArrayList<MensajeConstructores>();
-
-            modelo.add(new MensajeConstructores(1, "realmadrid@hotmail.com", "Sin asunto bro", "XXX", "Holaaaaa"));
-
-            ListView lista=(ListView)getView().findViewById(R.id.lista);
-
-            ArrayAdapter<MensajeConstructores> adapter= new ListAdapter(getActivity(),modelo);
-
+            adapter= new ListAdapter(getActivity(),modelo);
+            lista=(ListView)getView().findViewById(R.id.lista);
             lista.setAdapter(adapter);
 
+            cargar_mensajes_recibidos ();
             adapter.notifyDataSetChanged();
 
+
             registerForContextMenu(lista);
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override public void onItemClick(AdapterView<?> arg0, View v,int position, long id){
+                    controller.actualizar_leido(1,modelo.get(position).id);
+
+                   i= new Intent(getContext(),Ver_mensajes.class);
+                   // i.putExtra("sms",0);
+                    i.putExtra("id_sms",modelo.get(position).id);
+                    startActivity(i);
+
+                }
+            });
+
+
+        }else if (mPage==2){
+
+            modelo=new ArrayList<MensajeConstructores>();
+
+            adapter= new ListAdapter(getActivity(),modelo);
+            lista=(ListView)getView().findViewById(R.id.lista2);
+            lista.setAdapter(adapter);
+
+           cargar_mensajes_enviados();
+            adapter.notifyDataSetChanged();
+            registerForContextMenu(lista);
+
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override public void onItemClick(AdapterView<?> arg0, View v,int position, long id){
+                    controller.actualizar_leido(1,modelo.get(position).id);
+
+                    i= new Intent(getContext(),Ver_mensajes.class);
+                   // i.putExtra("sms",1);
+                    i.putExtra("id_sms",modelo.get(position).id);
+                    startActivity(i);
+
+                }
+            });
         }
-        /*
-
-        */
-        //lista.setOnItemClickListener(this);
-
 
 
     }
+
+    public void cargar_mensajes_enviados(){
+
+        controller = new BBDD_Controller(getContext());
+        SQLiteDatabase db = controller.getReadableDatabase();
+
+        try{
+            if(db!=null){
+
+                Cursor cursor = db.rawQuery("SELECT * FROM mensaje_privado WHERE from_user= "+"'"+controller.useremail_conectado()+"'", null);
+
+                if(cursor.moveToFirst()){
+                    do{
+
+                        m = new MensajeConstructores(cursor.getString(cursor.getColumnIndex("to_user")),cursor.getString(cursor.getColumnIndex("asunto")),cursor.getInt(cursor.getColumnIndex("id")));
+
+                        adapter.add(m);
+
+
+                    }while(cursor.moveToNext());
+                }
+                db.close();
+            }
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+    }
+
+    public void cargar_mensajes_recibidos(){
+
+        controller = new BBDD_Controller(getContext());
+        SQLiteDatabase db = controller.getReadableDatabase();
+
+        try{
+            if(db!=null){
+
+                Cursor cursor = db.rawQuery("SELECT * FROM mensaje_privado WHERE to_user= "+"'"+controller.useremail_conectado()+"'", null);
+
+                if(cursor.moveToFirst()){
+                    do{
+
+                        m = new MensajeConstructores(cursor.getString(cursor.getColumnIndex("from_user")),cursor.getString(cursor.getColumnIndex("asunto")),cursor.getInt(cursor.getColumnIndex("id")));
+
+                        adapter.add(m);
+
+
+                    }while(cursor.moveToNext());
+                }
+                db.close();
+            }
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+    }
+
+
 }

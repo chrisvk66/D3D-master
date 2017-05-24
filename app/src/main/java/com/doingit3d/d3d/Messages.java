@@ -60,4 +60,7 @@ public class Messages extends AppCompatActivity {
         startActivity(new Intent(this,MainActivity.class));
     }
 
+    public void nuevo_mensaje(View v){
+        startActivity(new Intent(this,Enviar_Mensajes.class));
+    }
 }
