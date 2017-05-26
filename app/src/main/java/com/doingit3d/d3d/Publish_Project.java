@@ -12,7 +12,8 @@ import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -121,10 +122,12 @@ public class Publish_Project extends AppCompatActivity {
             fecha.setError(getString(R.string.campo_requerido));
 
         }else if (terminos.isChecked()==false){
-            Toast.makeText(getApplicationContext(),getString(R.string.aceptar_terminos),Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),getString(R.string.aceptar_terminos),Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(),getString(R.string.aceptar_terminos),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
         }else if ((moneda_text == null) || (desplazamiento_text == null) || (privacidad_text == null)) {
 
-            Toast.makeText(getApplicationContext(),getString(R.string.marcar_radio),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),getString(R.string.marcar_radio),Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(),getString(R.string.marcar_radio),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
         }else {
 
             //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :

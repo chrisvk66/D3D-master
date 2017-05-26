@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.widget.TextView;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 
 /**
  * Created by David M on 12/05/2017.
@@ -399,17 +400,18 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return nombre;
     }
 
-    //devuelve el id del usuario a partir de un email
-    public int obtener_id_con_email(String email){
+
+    //devuelve el nombre del usuario a partir de un email
+    public String obtener_nombre_con_email(String email){
         SQLiteDatabase db = this.getReadableDatabase();
-        int id=0;
+        String nombre=null;
 
         if(db!=null){
-            Cursor cursor = db.rawQuery("SELECT id FROM usuario WHERE email = "+"'"+email+"'",null);
+            Cursor cursor = db.rawQuery("SELECT nombre FROM usuario WHERE email = "+"'"+email+"'",null);
             if(cursor.moveToFirst()){
                 do{
 
-                    id=cursor.getInt(cursor.getColumnIndex("id"));
+                    nombre=cursor.getString(cursor.getColumnIndex("nombre"));
 
 
                 }while(cursor.moveToNext());
@@ -421,7 +423,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }
         db.close();
 
-        return id;
+        return nombre;
     }
 
 
@@ -448,6 +450,32 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         //db.close();
 
         return email;
+    }
+
+    //devuelve todos los email
+    public ArrayList<String> obtener_todos_email(ArrayList<String> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String email=null;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT email FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    email=cursor.getString(cursor.getColumnIndex("email"));
+                    arrayList.add(email);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return arrayList;
     }
 
 
@@ -483,6 +511,40 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         db.close();
         return bm;
     }
+
+    //obtener la imagen del usuario conectado
+    public Bitmap obtener_imagen_con_email(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        byte[] img;
+        Bitmap bm=null;
+        ByteArrayInputStream bais;
+
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+
+                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
+
+
+                if (img==null){
+                    bm=null;
+
+                }else{
+
+
+                    bais = new ByteArrayInputStream(img);
+                    bm= BitmapFactory.decodeStream(bais);
+
+                }
+
+            }
+
+        }
+        db.close();
+        return bm;
+    }
+
 
 
 
@@ -610,6 +672,24 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return num;
     }
 
+    //devuelve la cantidad de proyectos publicados segun email
+    public int obtener_proyectos_presentados_con_email(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int num=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT p_presentados FROM evaluacion WHERE id_usuario = "+obtener_id_login(email) ,null);
+            if(cursor.moveToFirst()){
+
+                num=cursor.getInt(cursor.getColumnIndex("p_presentados"));
+
+            }
+
+        }
+        // db.close();
+        return num;
+    }
+
     //si no hay proyectos
     public void aumentar_proyectos_presentados(){
         try {
@@ -706,23 +786,6 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }
     }
 
-
-    /*public int obtener_texto_mensaje(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        int tutorial=0;
-
-        if(db!=null){
-            Cursor cursor = db.rawQuery("SELECT tutorial FROM usuario WHERE id = "+obtener_id_conectado() ,null);
-            if(cursor.moveToFirst()){
-
-                tutorial=cursor.getInt(cursor.getColumnIndex("tutorial"));
-
-            }
-
-        }
-        // db.close();
-        return tutorial;
-    }*/
 
     //cuando se pulsa un mensaje recibido se cambia a "leido" para que no salga la notificacion
     public void actualizar_leido(int leido,int id_mensaje){
@@ -840,4 +903,224 @@ public class BBDD_Controller extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
+
+    public boolean comprobar_design(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int design;
+        boolean igual=false;
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT disenador FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    design=cursor.getInt(cursor.getColumnIndex("disenador"));
+
+                    if (design==1){
+
+                        igual=true;
+                        break;
+
+                    }else{
+                        igual=false;
+
+                    }
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return igual;
+    }
+
+
+    public boolean comprobar_impresor(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int impresor;
+        boolean igual=false;
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT impresor FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    impresor=cursor.getInt(cursor.getColumnIndex("impresor"));
+
+                    if (impresor==1){
+
+                        igual=true;
+                        break;
+
+                    }else{
+                        igual=false;
+
+                    }
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return igual;
+    }
+
+
+    public boolean comprobar_scanner(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int impresor;
+        boolean igual=false;
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT scanner FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    impresor=cursor.getInt(cursor.getColumnIndex("scanner"));
+
+                    if (impresor==1){
+
+                        igual=true;
+                        break;
+
+                    }else{
+                        igual=false;
+
+                    }
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return igual;
+    }
+
+
+    public void poner_valoracion(double valoracion,String email){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("valoracion",valoracion);
+
+                db.update("usuario",values,"email = "+"'"+email+"'",null);
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+    public float obtener_valoracion(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        float num=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT valoracion FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    num=cursor.getFloat(cursor.getColumnIndex("valoracion"));
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return num;
+    }
+
+    public void aumentar_valoracion(double valoracion,String email){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("valoracion",obtener_valoracion(email)+valoracion);
+
+                db.update("usuario",values,"email = "+"'"+email+"'",null);
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void num_veces_valorado(int veces,String email){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("veces_valorado",veces);
+
+                db.update("usuario",values,"email = "+"'"+email+"'",null);
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void aumentar_num_veces_valorado(String email){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("veces_valorado",obtener_num_veces_valorado(email)+1);
+
+                db.update("usuario",values,"email = "+"'"+email+"'",null);
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+    public int obtener_num_veces_valorado(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int num=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT veces_valorado FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    num=cursor.getInt(cursor.getColumnIndex("veces_valorado"));
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return num;
+    }
+
 }

@@ -106,6 +106,9 @@ public class MenuListFragment extends Fragment {
                 }else if (id== R.id.nav_inicio){
                     startActivity(new Intent(getActivity(), MainActivity.class));
 
+                }else if (id== R.id.nav_buscar){
+                    startActivity(new Intent(getActivity(), Buscar_profesionales.class));
+
                 }else if (id== R.id.nav_perfil){
                     startActivity(new Intent(getActivity(), Profile.class));
 

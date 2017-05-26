@@ -26,6 +26,7 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private  PendingIntent pi;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
-            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER)";
+            "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER," +
+            " valoracion REAL, veces_valorado INTEGER)";
 
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
@@ -463,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
 
         // create alert dialog
         AlertDialog alertDialog = alert.create();
-
+        alertDialog.setIcon(R.drawable.ic_launcher_icon);
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
             @Override
@@ -484,7 +486,9 @@ public class MainActivity extends AppCompatActivity {
                             }else{
                                 //en esta linea actualiza el estado (mirar la clase BBDD_Controller para mas informacion)
                                 controller.actualizar_estado_conexion(controller.obtener_id_login(til_email.getEditText().getText().toString()),1);
-                                Toast.makeText(getApplicationContext(),getString(R.string.sesion_iniciada),Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),getString(R.string.sesion_iniciada),Toast.LENGTH_SHORT).show();
+                                TastyToast.makeText(getApplicationContext(), getString(R.string.sesion_iniciada), TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+
                                 alertDialog.dismiss();
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                     finishAffinity();

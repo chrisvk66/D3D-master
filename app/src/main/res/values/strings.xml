@@ -44,8 +44,8 @@
     <string name="registro">Registro</string>
     <string name="tipo_perfil">Servicios asociados a tu perfil</string>
     <string name="diseñador_3d">Soy diseñador 3D</string>
-    <string name="impresor_3d">Tengo una impresora 3D</string>
-    <string name="scanner_3d">Tengo un scanner 3D</string>
+    <string name="impresor_3d">Tengo impresora 3D</string>
+    <string name="scanner_3d">Tengo scanner 3D</string>
     <string name="nombre">Nombre</string>
     <string name="email">E-Mail</string>
     <string name="contraseña">Contraseña</string>

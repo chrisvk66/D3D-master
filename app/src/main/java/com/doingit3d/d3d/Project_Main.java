@@ -66,6 +66,7 @@ public class Project_Main extends AppCompatActivity implements AdapterView.OnIte
 
                 if (origen==0){
                     cargar__todos_proyectos();
+
                 }else if (origen==1){
                     //solo se muestran mis proyectos en la lista
                     cargar__mis_proyectos();

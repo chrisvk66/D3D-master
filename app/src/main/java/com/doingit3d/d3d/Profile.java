@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 
 public class Profile extends AppCompatActivity {
-    private RatingBar rb1,rb2;
+    private RatingBar perfil;
     private ImageView iv_d3d_logo;
     private Button como_vas;
     private TextView nombre,email,presentados;
@@ -28,8 +28,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        rb1=(RatingBar) findViewById(R.id.ratingBar_contratista);
-        rb2=(RatingBar) findViewById(R.id.ratingBar_trabajador);
         iv_d3d_logo=(ImageView) findViewById(R.id.iv_logo_black_profile);
         iv_d3d_logo.setImageResource(R.drawable.logo_d3d_small_dark);
         como_vas=(Button) findViewById(R.id.b_como_vas);
@@ -50,6 +48,9 @@ public class Profile extends AppCompatActivity {
         foto=(ImageView) findViewById(R.id.foto_info_personal);
         foto.setImageBitmap(controller.obtener_imagen());
 
+        perfil=(RatingBar) findViewById(R.id.rating_perfil);
+        perfil.setEnabled(false);
+        perfil.setRating(controller.obtener_valoracion(controller.useremail_conectado())/controller.obtener_num_veces_valorado(controller.useremail_conectado()));
     }
 
     //metodo para que la flecha de la toolbar vaya hacia atras cuando se pulse
@@ -72,6 +73,16 @@ public class Profile extends AppCompatActivity {
             finishAffinity();
         }
         startActivity(new Intent(this,Evaluation.class));
+    }
+
+    public void historial(View v){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        Intent i= new Intent(this,Project_Main.class);
+        i.putExtra("origen",1);
+
+        startActivity(i);
     }
 
     public void editar_perfil(View v){

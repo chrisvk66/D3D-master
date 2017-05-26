@@ -3,14 +3,23 @@ package com.doingit3d.d3d;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 
@@ -25,6 +34,7 @@ public class PageFragment extends Fragment{
     private ArrayList<MensajeConstructores> modelo;
     private  ArrayAdapter<MensajeConstructores> adapter;
     private Intent i;
+
 
     public static PageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -60,6 +70,8 @@ public class PageFragment extends Fragment{
 
         if(mPage==1){
 
+
+
             modelo=new ArrayList<MensajeConstructores>();
 
             adapter= new ListAdapter(getActivity(),modelo);
@@ -86,14 +98,17 @@ public class PageFragment extends Fragment{
 
         }else if (mPage==2){
 
+
             modelo=new ArrayList<MensajeConstructores>();
 
             adapter= new ListAdapter(getActivity(),modelo);
             lista=(ListView)getView().findViewById(R.id.lista2);
             lista.setAdapter(adapter);
+            lista.setAdapter(adapter);
 
            cargar_mensajes_enviados();
             adapter.notifyDataSetChanged();
+
             registerForContextMenu(lista);
 
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -110,7 +125,9 @@ public class PageFragment extends Fragment{
         }
 
 
+
     }
+
 
     public void cargar_mensajes_enviados(){
 

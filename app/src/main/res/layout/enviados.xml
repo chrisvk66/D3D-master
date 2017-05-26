@@ -12,11 +12,11 @@
         android:text="Mensajes enviados"
         android:gravity="center" />
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:layout_width="match_parent"
         android:layout_height="365dp"
         android:id="@+id/lista2"
-        android:layout_weight="0.05"></ListView>
+        android:layout_weight="0.05"/>
 
     <Button
         android:id="@+id/button77"

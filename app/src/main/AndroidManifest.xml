@@ -39,6 +39,8 @@
         <activity android:name=".Editar_Perfil"></activity>
         <activity android:name=".Enviar_Mensajes"></activity>
         <activity android:name=".Ver_mensajes"></activity>
+        <activity android:name=".Buscar_profesionales" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".Ver_usuario"></activity>
 
     </application>
 
