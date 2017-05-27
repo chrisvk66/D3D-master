@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -14,7 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -95,6 +99,58 @@ public class PageFragment extends Fragment{
                 }
             });
 
+            lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+
+
+
+                    new MaterialDialog.Builder(getContext())
+                            .title("Borrar mensaje")
+                            .content("¿Desea borrar el mensaje?")
+                            .positiveText("si")
+                            .negativeText("no")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    new MaterialDialog.Builder(getContext())
+                                            .title("¿Estas seguro?")
+                                            .content("No se podrá deshacer")
+                                            .positiveText("si")
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    controller.eliminar_mensaje(modelo.get(pos).id);
+                                                    modelo.remove(modelo.get(pos));
+                                                    adapter.notifyDataSetChanged();
+                                                    TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+                                                }
+                                            })
+                                            .negativeText("no")
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+
+                                            .show();
+
+
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                }
+                            })
+                            .show();
+
+                    return false;
+                }
+            });
+
 
         }else if (mPage==2){
 
@@ -120,6 +176,58 @@ public class PageFragment extends Fragment{
                     i.putExtra("id_sms",modelo.get(position).id);
                     startActivity(i);
 
+                }
+            });
+
+            lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+
+
+
+                    new MaterialDialog.Builder(getContext())
+                            .title("Borrar mensaje")
+                            .content("¿Desea borrar el mensaje?")
+                            .positiveText("si")
+                            .negativeText("no")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    new MaterialDialog.Builder(getContext())
+                                            .title("¿Estas seguro?")
+                                            .content("No se podrá deshacer")
+                                            .positiveText("si")
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    controller.eliminar_mensaje(modelo.get(pos).id);
+                                                    modelo.remove(modelo.get(pos));
+                                                    adapter.notifyDataSetChanged();
+                                                    TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+                                                }
+                                            })
+                                            .negativeText("no")
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+
+                                            .show();
+
+
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                }
+                            })
+                            .show();
+
+                    return false;
                 }
             });
         }

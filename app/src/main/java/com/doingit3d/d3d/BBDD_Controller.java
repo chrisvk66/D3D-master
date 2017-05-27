@@ -1123,4 +1123,10 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return num;
     }
 
+    public void eliminar_mensaje(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("mensaje_privado","id = "+id, null);
+    }
+
 }
