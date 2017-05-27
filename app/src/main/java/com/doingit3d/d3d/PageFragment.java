@@ -142,7 +142,8 @@ public class PageFragment extends Fragment{
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                    //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                    dialog.dismiss();
                                 }
                             })
                             .show();
@@ -222,7 +223,8 @@ public class PageFragment extends Fragment{
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                    //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                    dialog.dismiss();
                                 }
                             })
                             .show();
