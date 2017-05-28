@@ -7,10 +7,8 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**

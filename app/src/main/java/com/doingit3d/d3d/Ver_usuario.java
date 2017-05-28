@@ -9,9 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.sdsmdg.tastytoast.TastyToast;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

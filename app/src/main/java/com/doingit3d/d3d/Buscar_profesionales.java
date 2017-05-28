@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-
 import java.util.ArrayList;
 
 /**
@@ -73,6 +72,14 @@ public class Buscar_profesionales extends AppCompatActivity{
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void onBackPressed(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     public void volver(View v){

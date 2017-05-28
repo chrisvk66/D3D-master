@@ -73,7 +73,7 @@ public class MenuListFragment extends Fragment {
             nombre.setText(controller.username_conectado());
             email.setText(controller.useremail_conectado());
             img.setImageBitmap(controller.obtener_imagen());
-            fondo.setBackgroundResource(R.drawable.fondoslider);
+            fondo.setBackgroundResource(R.drawable.fondoslider2);
 
 
         }else if (controller.comprobar_conectado()==false){
