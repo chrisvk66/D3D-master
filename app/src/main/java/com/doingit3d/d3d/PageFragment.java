@@ -3,29 +3,25 @@ package com.doingit3d.d3d;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
+
 
 public class PageFragment extends Fragment{
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -38,6 +34,10 @@ public class PageFragment extends Fragment{
     private ArrayList<MensajeConstructores> modelo;
     private  ArrayAdapter<MensajeConstructores> adapter;
     private Intent i;
+    private BoomMenuButton bmb;
+    private int fotos[]={R.drawable.mail_black, R.drawable.ic_delete_black};
+    private String frases[]={"Nuevo mensaje","Borrar mensaje"};
+    private boolean borrar=false;
 
 
     public static PageFragment newInstance(int page) {
@@ -52,10 +52,14 @@ public class PageFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
+        borrar=false;
+
+
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         //Muestra el layout contenedor segun la seleccion hecha
         if (mPage==1){
 
@@ -73,8 +77,8 @@ public class PageFragment extends Fragment{
         super.onActivityCreated(state);
 
         if(mPage==1){
-
-
+            borrar=false;
+            bmb=(BoomMenuButton)getView().findViewById(R.id.bmb);
 
             modelo=new ArrayList<MensajeConstructores>();
 
@@ -85,8 +89,9 @@ public class PageFragment extends Fragment{
             cargar_mensajes_recibidos ();
             adapter.notifyDataSetChanged();
 
-
             registerForContextMenu(lista);
+
+
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override public void onItemClick(AdapterView<?> arg0, View v,int position, long id){
                     controller.actualizar_leido(1,modelo.get(position).id);
@@ -96,66 +101,89 @@ public class PageFragment extends Fragment{
                     i.putExtra("id_sms",modelo.get(position).id);
                     startActivity(i);
 
+
                 }
             });
+
+
+            for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+                TextOutsideCircleButton.Builder builder = new TextOutsideCircleButton.Builder()
+                        .normalImageRes(fotos[i])
+                        .normalText(frases[i])
+                        .listener(new OnBMClickListener() {
+                            @Override
+                            public void onBoomButtonClick(int index) {
+                                if (index==0){
+                                    startActivity(new Intent(getContext(),Enviar_Mensajes.class));
+                                }else if (index==1){
+                                    borrar=true;
+                                    TastyToast.makeText(getContext(),"Mantenga pulsado un mensaje para borrarlo",TastyToast.LENGTH_LONG,TastyToast.DEFAULT);
+                                }
+                            }
+                        });
+
+                bmb.addBuilder(builder);
+            }
 
             lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    if (borrar==true){
+                        new MaterialDialog.Builder(getContext())
+                                .title("Borrar mensaje")
+                                .content("¿Desea borrar el mensaje?")
+                                .positiveText("si")
+                                .negativeText("no")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        new MaterialDialog.Builder(getContext())
+                                                .title("¿Estas seguro?")
+                                                .content("No se podrá deshacer")
+                                                .positiveText("si")
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        borrar=false;
+                                                        controller.eliminar_mensaje(modelo.get(pos).id);
+                                                        modelo.remove(modelo.get(pos));
+                                                        adapter.notifyDataSetChanged();
+                                                        TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+                                                    }
+                                                })
+                                                .negativeText("no")
+                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        borrar=false;
+                                                        dialog.dismiss();
+                                                    }
+                                                })
 
+                                                .show();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                        borrar=false;
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                    }else{
 
+                    }
 
-                    new MaterialDialog.Builder(getContext())
-                            .title("Borrar mensaje")
-                            .content("¿Desea borrar el mensaje?")
-                            .positiveText("si")
-                            .negativeText("no")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    new MaterialDialog.Builder(getContext())
-                                            .title("¿Estas seguro?")
-                                            .content("No se podrá deshacer")
-                                            .positiveText("si")
-                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                @Override
-                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    controller.eliminar_mensaje(modelo.get(pos).id);
-                                                    modelo.remove(modelo.get(pos));
-                                                    adapter.notifyDataSetChanged();
-                                                    TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
-                                                }
-                                            })
-                                            .negativeText("no")
-                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                @Override
-                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    dialog.dismiss();
-                                                }
-                                            })
-
-                                            .show();
-
-
-                                }
-                            })
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
 
                     return false;
                 }
             });
 
-
         }else if (mPage==2){
 
-
+            bmb=(BoomMenuButton)getView().findViewById(R.id.bmb2);
             modelo=new ArrayList<MensajeConstructores>();
 
             adapter= new ListAdapter(getActivity(),modelo);
@@ -183,59 +211,78 @@ public class PageFragment extends Fragment{
             lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    if (borrar==true){
+                        new MaterialDialog.Builder(getContext())
+                                .title("Borrar mensaje")
+                                .content("¿Desea borrar el mensaje?")
+                                .positiveText("si")
+                                .negativeText("no")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        new MaterialDialog.Builder(getContext())
+                                                .title("¿Estas seguro?")
+                                                .content("No se podrá deshacer")
+                                                .positiveText("si")
+                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        borrar=false;
+                                                        controller.eliminar_mensaje(modelo.get(pos).id);
+                                                        modelo.remove(modelo.get(pos));
+                                                        adapter.notifyDataSetChanged();
+                                                        TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+                                                    }
+                                                })
+                                                .negativeText("no")
+                                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                    @Override
+                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                        borrar=false;
+                                                        dialog.dismiss();
+                                                    }
+                                                })
 
+                                                .show();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+                                        borrar=false;
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                    }else{
 
+                    }
 
-                    new MaterialDialog.Builder(getContext())
-                            .title("Borrar mensaje")
-                            .content("¿Desea borrar el mensaje?")
-                            .positiveText("si")
-                            .negativeText("no")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    new MaterialDialog.Builder(getContext())
-                                            .title("¿Estas seguro?")
-                                            .content("No se podrá deshacer")
-                                            .positiveText("si")
-                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                @Override
-                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    controller.eliminar_mensaje(modelo.get(pos).id);
-                                                    modelo.remove(modelo.get(pos));
-                                                    adapter.notifyDataSetChanged();
-                                                    TastyToast.makeText(getContext(),"Mensaje eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
-                                                }
-                                            })
-                                            .negativeText("no")
-                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                @Override
-                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    dialog.dismiss();
-                                                }
-                                            })
-
-                                            .show();
-
-
-                                }
-                            })
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
 
                     return false;
                 }
             });
+
+            for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+                TextOutsideCircleButton.Builder builder = new TextOutsideCircleButton.Builder()
+                        .normalImageRes(fotos[i])
+                        .normalText(frases[i])
+                        .listener(new OnBMClickListener() {
+                            @Override
+                            public void onBoomButtonClick(int index) {
+                                if (index==0){
+                                    startActivity(new Intent(getContext(),Enviar_Mensajes.class));
+                                }else if (index==1){
+                                    borrar=true;
+                                    TastyToast.makeText(getContext(),"Mantenga pulsado un mensaje para borrarlo",TastyToast.LENGTH_LONG,TastyToast.DEFAULT);
+                                }
+                            }
+                        });
+
+                bmb.addBuilder(builder);
+            }
         }
-
-
-
     }
 
 

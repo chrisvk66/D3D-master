@@ -18,10 +18,10 @@ import android.widget.TextView;
 public class Profile extends AppCompatActivity {
     private RatingBar perfil;
     private ImageView iv_d3d_logo;
-    private Button como_vas;
     private TextView nombre,email,presentados;
     BBDD_Controller controller= new BBDD_Controller(this);
     private ImageView foto;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,13 @@ public class Profile extends AppCompatActivity {
 
         iv_d3d_logo=(ImageView) findViewById(R.id.iv_logo_black_profile);
         iv_d3d_logo.setImageResource(R.drawable.logo_d3d_small_dark);
-        como_vas=(Button) findViewById(R.id.b_como_vas);
 
         //poned en todas las actividades que querais la toolbar este codigo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         nombre =(TextView) findViewById(R.id.tv_nombre_info);
         email=(TextView) findViewById(R.id.tv_email_info);
@@ -47,6 +47,7 @@ public class Profile extends AppCompatActivity {
 
         foto=(ImageView) findViewById(R.id.foto_info_personal);
         foto.setImageBitmap(controller.obtener_imagen());
+
 
         perfil=(RatingBar) findViewById(R.id.rating_perfil);
         perfil.setEnabled(false);

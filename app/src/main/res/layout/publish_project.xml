@@ -257,7 +257,7 @@
                 android:gravity="center_vertical|center"
                 android:text="@string/publicar_proyecto" />-->
 
-            <info.hoang8f.widget.FButton
+            <!--<info.hoang8f.widget.FButton
                 android:id="@+id/b_publicar_proyecto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,7 +268,24 @@
                 fbutton:shadowColor="@color/fbutton_color_belize_hole"
                 fbutton:shadowEnabled="true"
                 fbutton:shadowHeight="5dp"
-                android:onClick="publicar_proyecto"/>
+                android:onClick="publicar_proyecto"/>-->
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/b_publicar_proyecto"
+                android:onClick="publicar_proyecto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Publicar"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:pb_colorComplete="@color/green_complete"
+                app:pb_colorNormal="@color/blue_normal"
+                app:pb_colorPressed="@color/blue_pressed"
+                app:pb_colorProgress="@color/negro"
+                app:pb_textComplete="Publicado"
+                app:pb_textProgress="Publicando"
+                app:pb_textError="Error"
+                app:pb_colorError="@color/red_error" />
 
         </LinearLayout>
     </ScrollView>

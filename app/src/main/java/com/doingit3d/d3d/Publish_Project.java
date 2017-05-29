@@ -13,18 +13,17 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 /**
  * Created by David M on 14/04/2017.
  */
 
-public class Publish_Project extends AppCompatActivity {
+public class Publish_Project extends AppCompatActivity implements ProgressGenerator.OnCompleteListener{
 
 
     //FButton se llaman asi los botones de la libreria
@@ -36,6 +35,8 @@ public class Publish_Project extends AppCompatActivity {
     private TextView fecha;
     private String moneda_text, privacidad_text, desplazamiento_text;
     private CheckBox terminos;
+    private ProgressGenerator progressGenerator;
+    private ActionProcessButton apb;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,10 @@ public class Publish_Project extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        progressGenerator = new ProgressGenerator(this);
+        apb=(ActionProcessButton) findViewById(R.id.b_publicar_proyecto);
+        apb.setMode(ActionProcessButton.Mode.PROGRESS);
 
         titulo=(TextInputLayout) findViewById(R.id.til_titulo_proyecto);
         descripcion=(TextInputLayout) findViewById(R.id.til_descripcion_proyecto);
@@ -130,6 +135,7 @@ public class Publish_Project extends AppCompatActivity {
             TastyToast.makeText(getApplicationContext(),getString(R.string.marcar_radio),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
         }else {
 
+            progressGenerator.start(apb);
             //cuando el proyecto se publique bien sin que haya ningun error, saldra un mensaje, finalizará la actividad y volverá al home :
             controller.publicar_proyecto(tipo.getSelectedItem().toString(),titulo.getEditText().getText().toString(),descripcion.getEditText().getText().toString(),fecha.getText().toString(),
                     pais.getEditText().getText().toString(),moneda_text,date,controller.obtener_id_conectado(),desplazamiento_text,formato.getSelectedItem().toString(),privacidad_text,material.getSelectedItem().toString(),controller.username_conectado());
@@ -140,7 +146,7 @@ public class Publish_Project extends AppCompatActivity {
                 controller.aumentar_proyectos_presentados2();
             }
 
-            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+          /*  new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(getString(R.string.enhorabuena))
                     .setContentText(getString(R.string.publicacion_exito))
                     .setConfirmText(getString(R.string.aceptar))
@@ -154,7 +160,7 @@ public class Publish_Project extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }
                     })
-                    .show();
+                    .show();*/
         }
 
     }
@@ -173,4 +179,13 @@ public class Publish_Project extends AppCompatActivity {
         startActivity(new Intent(this,MainActivity.class));
     }
 
+    @Override
+    public void onComplete() {
+
+        TastyToast.makeText(getApplicationContext(),"Proyecto publicado con éxito",TastyToast.LENGTH_LONG,TastyToast.SUCCESS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
 }

@@ -18,11 +18,24 @@
         android:id="@+id/lista2"
         android:layout_weight="0.05"/>
 
-    <Button
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        app:bmb_buttonEnum="textOutsideCircle"
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_2_1"
+        app:bmb_piecePlaceEnum="piecePlace_dot_2_1"
+        app:bmb_use3DTransformAnimation="true"
+        app:bmb_cancelable="true"
+        app:bmb_frames="60"
+        app:bmb_draggable="true"/>
+
+    <!--<Button
         android:id="@+id/button77"
         android:onClick="nuevo_mensaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevo mensaje" />
+        android:text="Nuevo mensaje" />-->
 
 </LinearLayout>
