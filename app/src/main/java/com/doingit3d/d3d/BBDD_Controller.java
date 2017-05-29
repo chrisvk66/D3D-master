@@ -1129,4 +1129,56 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         db.delete("mensaje_privado","id = "+id, null);
     }
 
+    //Obtiene l latitud
+    public ArrayList<Double> obtener_todos_latitud(ArrayList<Double> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double latitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT latitud FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    latitud=cursor.getDouble(cursor.getColumnIndex("latitud"));
+                    arrayList.add(latitud);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return arrayList;
+    }
+
+    //Obtiene l longitud
+    public ArrayList<Double> obtener_todos_longitud(ArrayList<Double> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double longitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT longitud FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    longitud=cursor.getDouble(cursor.getColumnIndex("longitud"));
+                    arrayList.add(longitud);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return arrayList;
+    }
+
 }

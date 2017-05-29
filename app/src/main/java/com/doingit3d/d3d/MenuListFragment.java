@@ -59,6 +59,7 @@ public class MenuListFragment extends Fragment {
 
            // Toast.makeText(getContext(),"HAY ALGUIEN CONECTADO",Toast.LENGTH_SHORT).show();
             nav_menu.findItem(R.id.nav_perfil).setVisible(true);
+            nav_menu.findItem(R.id.nav_map).setVisible(true);
             nav_menu.findItem(R.id.nav_buscar).setVisible(true);
             nav_menu.findItem(R.id.nav_publicar).setVisible(true);
             nav_menu.findItem(R.id.nav_publicados).setVisible(true);
@@ -78,6 +79,7 @@ public class MenuListFragment extends Fragment {
 
         }else if (controller.comprobar_conectado()==false){
             nav_menu.findItem(R.id.nav_perfil).setVisible(false);
+            nav_menu.findItem(R.id.nav_map).setVisible(false);
             nav_menu.findItem(R.id.nav_buscar).setVisible(false);
             nav_menu.findItem(R.id.nav_publicar).setVisible(false);
             nav_menu.findItem(R.id.nav_publicados).setVisible(false);
@@ -105,6 +107,10 @@ public class MenuListFragment extends Fragment {
 
                 }else if (id== R.id.nav_inicio){
                     startActivity(new Intent(getActivity(), MainActivity.class));
+
+                }else if (id== R.id.nav_map){
+                    startActivity(new Intent(getActivity(), MapsActivity.class));
+
 
                 }else if (id== R.id.nav_buscar){
                     startActivity(new Intent(getActivity(), Buscar_profesionales.class));

@@ -11,6 +11,7 @@
     <!-- strings del menu lateral-->
     <string name="nav_inicio">Inicio</string>
     <string name="nav_perfil">Perfil</string>
+    <string name="nav_map">Mapa</string>
     <string name="nav_buscar">Buscar profesionales</string>
     <string name="nav_publicar">Publicar proyectos</string>
     <string name="nav_publicados">Proyectos publicados</string>

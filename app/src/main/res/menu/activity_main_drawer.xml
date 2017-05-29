@@ -11,6 +11,10 @@
             android:icon="@drawable/user_black"
             android:title="@string/nav_perfil" />
         <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/user_black"
+            android:title="@string/nav_map" />
+        <item
             android:id="@+id/nav_buscar"
             android:icon="@drawable/search_black"
             android:title="@string/nav_buscar" />

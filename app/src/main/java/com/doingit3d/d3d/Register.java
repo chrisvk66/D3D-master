@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 
@@ -36,7 +38,6 @@ public class Register extends AppCompatActivity {
 
     private TextInputLayout til_nombre, til_email, til_pass, til_repetirpass;
     private EditText nombre, email, pass, repetirpass;
-    double latitud, longitud;
     private CheckBox scanner, disenador, impresor, ubicacion;
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
@@ -48,7 +49,7 @@ public class Register extends AppCompatActivity {
     private BBDD_Controller controller = new BBDD_Controller(this);
     private CircleImageView civ;
 
-    private TextView tv21;
+     private double latitud, longitud;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,15 @@ public class Register extends AppCompatActivity {
         }
         civ=(CircleImageView) findViewById(R.id.foto_registro);
 
+        latitud = 0;
+        longitud = 0;
+
         nombre = (EditText) findViewById(R.id.et_nombre_registro);
         email = (EditText) findViewById(R.id.et_email_registro);
         pass = (EditText) findViewById(R.id.et_pass_registro);
         repetirpass = (EditText) findViewById(R.id.et_repetirpass_registro);
 
-        tv21 = (TextView)findViewById(R.id.textView21);
+
         til_nombre = (TextInputLayout) findViewById(R.id.til_nombre_registro);
         til_nombre.setErrorEnabled(true);
         til_email = (TextInputLayout) findViewById(R.id.til_email_registro);
@@ -149,8 +153,10 @@ public class Register extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                tv21.setText(place.getName());
-                System.out.print("Place: " + place.getName());
+                Location l = new Location((Location) place);
+                longitud = l.getLongitude();
+                latitud = l.getLatitude();
+
             }
 
             @Override
@@ -220,12 +226,12 @@ public class Register extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     imagen_bbdd = stream.toByteArray();
 
-                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0);
                     //Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
 
                 }else{
                     // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
-                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0);
                 }
 
 
