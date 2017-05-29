@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">D3D</string>
 
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="ciudad">Introduce tu ciudad</string>
     <string name="action_settings">Settings</string>
 
 
@@ -165,6 +166,7 @@
     <string name="sms_enviados">Enviados</string>
     <string name="sesion_iniciada">Sesión Iniciada</string>
     <string name="foto">Foto</string>
+    <string name="title_activity_maps">Map</string>
     <!-- Fin strings varios-->
 
 </resources>

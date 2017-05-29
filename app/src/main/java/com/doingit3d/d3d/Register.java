@@ -15,8 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
 import java.io.ByteArrayOutputStream;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,6 +36,7 @@ public class Register extends AppCompatActivity {
 
     private TextInputLayout til_nombre, til_email, til_pass, til_repetirpass;
     private EditText nombre, email, pass, repetirpass;
+    double latitud, longitud;
     private CheckBox scanner, disenador, impresor, ubicacion;
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
@@ -38,6 +47,8 @@ public class Register extends AppCompatActivity {
     private SQLiteDatabase db;
     private BBDD_Controller controller = new BBDD_Controller(this);
     private CircleImageView civ;
+
+    private TextView tv21;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,7 @@ public class Register extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.et_pass_registro);
         repetirpass = (EditText) findViewById(R.id.et_repetirpass_registro);
 
+        tv21 = (TextView)findViewById(R.id.textView21);
         til_nombre = (TextInputLayout) findViewById(R.id.til_nombre_registro);
         til_nombre.setErrorEnabled(true);
         til_email = (TextInputLayout) findViewById(R.id.til_email_registro);
@@ -129,6 +141,30 @@ public class Register extends AppCompatActivity {
 
     public void guardar_Perfil(View v) {
 
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                tv21.setText(place.getName());
+                System.out.print("Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                System.out.print("An error occurred: " + status);
+            }
+        });
+
+
+
+
+
+
         //en estos condicionales se comprueba que se rellenen todos los campos y si no sale un mensaje de error
         if (nombre.getText().toString().trim().isEmpty()) {
             til_nombre.setError(getString(R.string.campo_requerido));
@@ -188,41 +224,41 @@ public class Register extends AppCompatActivity {
                     //Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
 
                 }else{
-                   // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
                     controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
                 }
 
 
 
 
-               //mensaje de que ha funcionado
-               new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                       .setTitleText(getString(R.string.enhorabuena))
-                       .setContentText(getString(R.string.registro_exito))
-                       .setConfirmText(getString(R.string.aceptar))
-                       .setConfirmClickListener(sDialog -> {
-                           sDialog.dismissWithAnimation();
-                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                               finishAffinity();
-                           }
-                           startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                       })
-                       .show();
-           }catch(Exception e){
+                //mensaje de que ha funcionado
+                new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText(getString(R.string.enhorabuena))
+                        .setContentText(getString(R.string.registro_exito))
+                        .setConfirmText(getString(R.string.aceptar))
+                        .setConfirmClickListener(sDialog -> {
+                            sDialog.dismissWithAnimation();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                finishAffinity();
+                            }
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        })
+                        .show();
+            }catch(Exception e){
 
-               //mensaje de error
-               new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                       .setTitleText(getString(R.string.error))
-                       .setConfirmText(getString(R.string.aceptar))
-                       .setConfirmClickListener(sDialog -> sDialog.dismissWithAnimation())
-                       .show();
+                //mensaje de error
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText(getString(R.string.error))
+                        .setConfirmText(getString(R.string.aceptar))
+                        .setConfirmClickListener(sDialog -> sDialog.dismissWithAnimation())
+                        .show();
 
-               //pruebas de errores por consola
-               e.printStackTrace();
-               System.out.println("---FALLO BBDD CONTROLLER----");
-               System.out.println(nombre.getText().toString()+" "+email.getText().toString()+" "+pass.getText().toString()+" "+repetirpass.getText().toString()+" "+comprobar_scanner()+" "+comprobar_disenador()
-                       +" "+comprobar_impresor());
-           }
+                //pruebas de errores por consola
+                e.printStackTrace();
+                System.out.println("---FALLO BBDD CONTROLLER----");
+                System.out.println(nombre.getText().toString()+" "+email.getText().toString()+" "+pass.getText().toString()+" "+repetirpass.getText().toString()+" "+comprobar_scanner()+" "+comprobar_disenador()
+                        +" "+comprobar_impresor());
+            }
 
 
         }
@@ -269,20 +305,20 @@ public class Register extends AppCompatActivity {
         //IMAGEN DE LA GALERIA
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != i) {
             Uri uri = i.getData();
-           try{
-               Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-               ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
-               bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
+            try{
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
 
-               civ.setImageBitmap(bitmap);
+                civ.setImageBitmap(bitmap);
 
-               //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
-               imagen_bbdd=arraybytes.toByteArray();
-           }catch(Exception e){
+                //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
+                imagen_bbdd=arraybytes.toByteArray();
+            }catch(Exception e){
                 e.printStackTrace();
-           }
+            }
 
-           //IMAGEN DE LA CAMARA
+            //IMAGEN DE LA CAMARA
         }else  if(resultCode== RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE){
             b = i.getExtras();
             bm=(Bitmap)b.get("data");

@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/D3D.iml" filepath="$PROJECT_DIR$/D3D.iml" />
       <module fileurl="file://$PROJECT_DIR$/D3D-master.iml" filepath="$PROJECT_DIR$/D3D-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/D3D-master.iml" filepath="$PROJECT_DIR$/D3D-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.42-bin/mysql-connector-java-5.1.42-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.42-bin/mysql-connector-java-5.1.42-bin.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.42-bin/mysql-connector-java-5.1.42-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.42-bin/mysql-connector-java-5.1.42-bin.iml" />
     </modules>
   </component>
