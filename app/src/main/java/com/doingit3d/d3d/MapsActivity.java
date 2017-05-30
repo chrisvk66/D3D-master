@@ -61,7 +61,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         i= new Intent(this,Ver_usuario.class);
 
 
-
     }
 
     public void onBackPressed(){
@@ -88,6 +87,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
         public void onMapReady(GoogleMap map) {
+
+        //mMap=map;
+
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.setBuildingsEnabled(true);
 
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
