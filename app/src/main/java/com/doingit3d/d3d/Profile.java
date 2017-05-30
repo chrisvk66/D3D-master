@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 public class Profile extends AppCompatActivity {
     private RatingBar perfil;
     private ImageView iv_d3d_logo;
-    private TextView nombre,email,presentados;
+    private TextView nombre,email,presentados,lugar;
     BBDD_Controller controller= new BBDD_Controller(this);
     private ImageView foto;
 
@@ -40,10 +39,13 @@ public class Profile extends AppCompatActivity {
 
         nombre =(TextView) findViewById(R.id.tv_nombre_info);
         email=(TextView) findViewById(R.id.tv_email_info);
+        lugar=(TextView) findViewById(R.id.tv_lugar_info);
         presentados=(TextView) findViewById(R.id.tv_presentados_info);
+
         nombre.setText(controller.username_conectado());
         email.setText(controller.useremail_conectado());
         presentados.setText(String.valueOf(controller.obtener_proyectos_presentados()));
+        lugar.setText(controller.obtener_lugar(controller.useremail_conectado()));
 
         foto=(ImageView) findViewById(R.id.foto_info_personal);
         foto.setImageBitmap(controller.obtener_imagen());
