@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class BBDD_Controller extends SQLiteOpenHelper {
 
     static  final String NOMBREBBDD="d3d";
-    static final int VERSION=1;
+    static final int VERSION=2;
 
     public BBDD_Controller(Context c, String nombre, SQLiteDatabase.CursorFactory f, int version){
 
@@ -44,7 +44,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
     //inserta en la tabla los datos del registro
-    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado, int tutorial){
+    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado, int tutorial,String lugar){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -63,6 +63,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 values.put("longitud",longitud);
                 values.put("conectado",conectado);
                 values.put("tutorial",tutorial);
+                values.put("lugar",lugar);
 
                 db.insert("usuario",null,values);
 
@@ -455,7 +456,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     //devuelve todos los email
     public ArrayList<String> obtener_todos_email(ArrayList<String> arrayList){
         SQLiteDatabase db = this.getReadableDatabase();
-        String email=null;
+        String email;
 
         if(db!=null){
             Cursor cursor = db.rawQuery("SELECT email FROM usuario",null);
@@ -469,8 +470,6 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 }while(cursor.moveToNext());
 
             }
-
-        }else{
 
         }
         db.close();
@@ -1127,6 +1126,140 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete("mensaje_privado","id = "+id, null);
+    }
+
+    //Obtiene l latitud
+    public ArrayList<Double> obtener_todos_latitud(ArrayList<Double> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double latitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT latitud FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    latitud=cursor.getDouble(cursor.getColumnIndex("latitud"));
+                    arrayList.add(latitud);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return arrayList;
+    }
+
+    //Obtiene l longitud
+    public ArrayList<Double> obtener_todos_longitud(ArrayList<Double> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double longitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT longitud FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    longitud=cursor.getDouble(cursor.getColumnIndex("longitud"));
+                    arrayList.add(longitud);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return arrayList;
+    }
+
+
+    public String obtener_lugar(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String lugar=null;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT lugar FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    lugar=cursor.getString(cursor.getColumnIndex("lugar"));
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        return lugar;
+    }
+
+    public ArrayList<String> obtener_todos_nombres(ArrayList<String> arrayList){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String nombre;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT nombre FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    nombre=cursor.getString(cursor.getColumnIndex("nombre"));
+                    arrayList.add(nombre);
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }
+        db.close();
+
+        return arrayList;
+    }
+
+    public ArrayList<Bitmap> obtener_imagen_todos(ArrayList<Bitmap> bit, String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        byte[] img;
+        Bitmap bm=null;
+        ByteArrayInputStream bais;
+
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT imagen FROM usuario  WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+
+                img=cursor.getBlob(cursor.getColumnIndex("imagen"));
+
+                do{
+
+                    if (img==null){
+                        bm=null;
+
+                    }else{
+
+
+                        bais = new ByteArrayInputStream(img);
+                        bm= BitmapFactory.decodeStream(bais);
+                        bit.add(bm);
+
+                    }
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }
+        db.close();
+        return bit;
     }
 
 }

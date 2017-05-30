@@ -70,6 +70,14 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Localización:"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,6 +127,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_lugar_verusuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <RatingBar
                     android:id="@+id/rating_veusuario"

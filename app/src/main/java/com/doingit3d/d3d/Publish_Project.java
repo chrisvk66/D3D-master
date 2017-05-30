@@ -12,10 +12,8 @@ import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.sdsmdg.tastytoast.TastyToast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.sdsmdg.tastytoast.TastyToast;
-
 import java.util.ArrayList;
 
 
@@ -274,6 +272,7 @@ public class PageFragment extends Fragment{
                                 if (index==0){
                                     startActivity(new Intent(getContext(),Enviar_Mensajes.class));
                                 }else if (index==1){
+
                                     borrar=true;
                                     TastyToast.makeText(getContext(),"Mantenga pulsado un mensaje para borrarlo",TastyToast.LENGTH_LONG,TastyToast.DEFAULT);
                                 }

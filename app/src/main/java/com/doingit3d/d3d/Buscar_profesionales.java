@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+
 import java.util.ArrayList;
 
 /**
@@ -43,6 +44,7 @@ public class Buscar_profesionales extends AppCompatActivity{
               //  Toast.makeText(getApplicationContext(),"pos: "+pos,Toast.LENGTH_SHORT).show();
                 itemText= lista.getItemAtPosition(pos).toString();
                 i.putExtra("nom_usuario",itemText);
+                i.putExtra("origen2",1);
                 startActivity(i);
                 //Toast.makeText(getApplicationContext(),"nom: "+itemText,Toast.LENGTH_SHORT).show();
             }

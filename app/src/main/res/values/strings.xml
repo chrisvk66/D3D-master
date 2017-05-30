@@ -11,6 +11,7 @@
     <!-- strings del menu lateral-->
     <string name="nav_inicio">Inicio</string>
     <string name="nav_perfil">Perfil</string>
+    <string name="nav_map">Mapa</string>
     <string name="nav_buscar">Buscar profesionales</string>
     <string name="nav_publicar">Publicar proyectos</string>
     <string name="nav_publicados">Proyectos publicados</string>
@@ -44,9 +45,9 @@
     <!-- strings de la pantalla del registro-->
     <string name="registro">Registro</string>
     <string name="tipo_perfil">Servicios asociados a tu perfil</string>
-    <string name="diseñador_3d">Soy diseñador 3D</string>
-    <string name="impresor_3d">Tengo impresora 3D</string>
-    <string name="scanner_3d">Tengo scanner 3D</string>
+    <string name="diseñador_3d">Diseñador 3D</string>
+    <string name="impresor_3d">Impresora 3D</string>
+    <string name="scanner_3d">Scanner 3D</string>
     <string name="nombre">Nombre</string>
     <string name="email">E-Mail</string>
     <string name="contraseña">Contraseña</string>
@@ -107,7 +108,7 @@
 
     <!-- String valoracion-->
     <string name="reputacion">Reputación como contratista</string>
-    <string name="proyectos_presentados">Proyectos presentados</string>
+    <string name="proyectos_presentados">Proyectos</string>
     <string name="proyectos_finalizados">Proyectos finalizados</string>
     <string name="proyectos_nulos">Proyectos nulos</string>
     <string name="pendientes_de_adjudicacion">Pendientes de adjudicacion</string>

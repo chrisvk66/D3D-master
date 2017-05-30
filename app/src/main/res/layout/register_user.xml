@@ -188,13 +188,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="137dp"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="106dp"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <!--app:srcCompat="@drawable/cab"-->
@@ -203,39 +202,32 @@
                             android:id="@+id/textView21"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/ciudad"
-                            android:textSize="18dp"/>
+                            android:textSize="18dp" />
 
                         <fragment
                             android:id="@+id/place_autocomplete_fragment"
                             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="2.99"
                             tools:layout_editor_absoluteX="8dp"
                             tools:layout_editor_absoluteY="0dp" />
 
-                        <LinearLayout
+                        <Button
+                            android:id="@+id/button"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:weightSum="1">
-
-
-                            <Button
-                                android:id="@+id/button"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@color/boton"
-                                android:onClick="guardar_Perfil"
-                                android:text="@string/salvar_perfil"
-                                android:textColor="@color/blanco"
-                                android:textSize="20dp" />
-                        </LinearLayout>
+                            android:layout_height="54dp"
+                            android:layout_marginTop="15sp"
+                            android:background="@color/boton"
+                            android:onClick="guardar_Perfil"
+                            android:text="@string/salvar_perfil"
+                            android:textColor="@color/blanco"
+                            android:textSize="20dp" />
 
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- app:srcCompat="@drawable/don_app"-->

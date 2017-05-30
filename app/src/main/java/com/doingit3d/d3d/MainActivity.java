@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
             "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER," +
-            " valoracion REAL, veces_valorado INTEGER)";
+            " valoracion REAL, veces_valorado INTEGER, lugar TEXT)";
 
     private String tabla_proyecto="CREATE TABLE IF NOT EXISTS proyecto (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_proyecto TEXT, titulo TEXT, descripcion TEXT," +
             "fecha TEXT, pais TEXT, moneda TEXT, fecha_creacion TEXT, \n" +
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         int alto = metrics.heightPixels;
         //float ancho = metrics.widthPixels;
 
-        Rect r1, r2, r3, r4, r5, r6, r7, r8, r9;
+        Rect r1, r2, r3, r4, r5, r6, r7, r8, r9,r10;
 
         //diferentes resoluciones de pantalla para que el tutorial salga bien
 
@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(105, 2020, 0, 0);
             r8 = new Rect(105, 2230, 0, 0);
             r9 = new Rect(105, 2420, 0, 0);
+            r10 = new Rect(105, 2630, 0, 0);
 
             //pantalla 1920x1080
         } else if (alto == 1920) {
@@ -247,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(158, 3030, 0, 0);
             r8 = new Rect(158, 3345, 0, 0);
             r9 = new Rect(158, 3630, 0, 0);
+            r10 = new Rect(158, 3945, 0, 0);
 
             //800x480
         }else if(alto == 800){
@@ -259,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
             r7= new Rect(66,1263,0,0);
             r8= new Rect(66,1394,0,0);
             r9= new Rect(66,1513,0,0);
+            r10 = new Rect(66, 1643, 0, 0);
 
             //1024x768
         }else if(alto == 1024){
@@ -271,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             r7= new Rect(35,1616,0,0);
             r8= new Rect(35,1784,0,0);
             r9= new Rect(35,1936,0,0);
+            r10 = new Rect(35, 2150, 0, 0);
 
             //pantalla de 960 x 540
         }else if(alto == 960){
@@ -283,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(79, 1515, 0, 0);
             r8 = new Rect(79, 1673, 0, 0);
             r9 = new Rect(79, 1815, 0, 0);
+            r10 = new Rect(79, 2050, 0, 0);
 
             //por defecto pantalla de 1920x1080
         }else{
@@ -295,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(158, 3030, 0, 0);
             r8 = new Rect(158, 3345, 0, 0);
             r9 = new Rect(158, 3630, 0, 0);
+            r10 = new Rect(158, 3945, 0, 0);
         }
 
 
@@ -311,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                                     .cancelable(false)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r2, "Buscar profesionales", "Puedes buscar a otros profesionales según su email")
+                            TapTarget.forBounds(r2, "Mapas", "Localiza a otros usuarios usando el mapa")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
@@ -319,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r3, "Publicar Proyecto","Publica tus proyectos profesionales")
+                            TapTarget.forBounds(r3,"Buscar profesionales", "Puedes buscar a otros profesionales según su email")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .targetRadius(30)
@@ -327,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                                     .cancelable(false)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r4, "Proyectos Publicados", "Mira los proyectos de los demás usuarios")
+                            TapTarget.forBounds(r4,"Publicar Proyecto","Publica tus proyectos profesionales")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
@@ -335,7 +341,14 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r5, "Mis Proyectos", "Mira tus proyectos")
+                            TapTarget.forBounds(r5, "Proyectos Publicados", "Mira los proyectos de los demás usuarios")
+                                    .transparentTarget(true)
+                                    .cancelable(false)
+                                    .targetRadius(30)
+                                    .targetCircleColor(R.color.azul_facebook)
+                                    .textColor(android.R.color.black),
+
+                            TapTarget.forBounds(r6,"Mis Proyectos", "Mira tus proyectos")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
@@ -343,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r6, "Evaluación", "Aquí encontraras las estadisticas de tus proyectos")
+                            TapTarget.forBounds(r7, "Evaluación", "Aquí encontraras las estadisticas de tus proyectos")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
@@ -351,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r7, "Mensajes", "Envia y recibe mensajes de otros usuarios")
+                            TapTarget.forBounds(r8, "Mensajes", "Envia y recibe mensajes de otros usuarios")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
@@ -359,21 +372,21 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r8, "Cómo Funciona", "Si tienes alguna duda de como funciona la aplicación pulsa aquí")
+                            TapTarget.forBounds(r9, "Cómo Funciona", "Si tienes alguna duda de como funciona la aplicación pulsa aquí")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
                                     .targetRadius(30)
                                     .targetCircleColor(R.color.azul_facebook)
-                                    .textColor(android.R.color.black),
+                                    .textColor(android.R.color.black)
 
-                            TapTarget.forBounds(r9, "Cerrar Sesión", "Cierra la sesión actual")
+                           /* TapTarget.forBounds(r10, "Cerrar Sesión", "Cierra la sesión actual")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
                                     .targetRadius(30)
                                     .targetCircleColor(R.color.azul_facebook)
-                                    .textColor(android.R.color.black))
+                                    .textColor(android.R.color.black)*/)
 
                     .listener(new TapTargetSequence.Listener() {
 

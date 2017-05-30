@@ -1,6 +1,7 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +10,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.sdsmdg.tastytoast.TastyToast;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -20,13 +23,14 @@ public class Ver_usuario extends AppCompatActivity{
 
     private Intent i;
     private String email_usuario;
-    private TextView nombre,email,proyectos;
+    private TextView nombre,email,proyectos,lugar;
     private CircleImageView civ;
     private BBDD_Controller controller = new BBDD_Controller(this);
     private RatingBar rb ;
     private CheckBox design,impresora,scanner;
     private RatingBar valorar_usuario,rating_verusuario;
     private Button b_valorar;
+    private int origen2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,12 @@ public class Ver_usuario extends AppCompatActivity{
 
         i=getIntent();
         email_usuario=i.getExtras().getString("nom_usuario");
+        origen2=i.getExtras().getInt("origen2");
 
         nombre=(TextView) findViewById(R.id.tv_nombre_verusuario);
         email=(TextView) findViewById(R.id.tv_email_versusuario);
         proyectos=(TextView) findViewById(R.id.tv_proyectos_versusuario);
+        lugar=(TextView) findViewById(R.id.tv_lugar_verusuario);
         civ=(CircleImageView) findViewById(R.id.civ_verusuario);
         rb=(RatingBar)findViewById(R.id.rating_veusuario);
         rb.setEnabled(false);
@@ -83,6 +89,7 @@ public class Ver_usuario extends AppCompatActivity{
         nombre.setText(controller.obtener_nombre_con_email(email_usuario));
         email.setText(email_usuario);
         proyectos.setText(String.valueOf(controller.obtener_proyectos_presentados_con_email(email_usuario)));
+        lugar.setText(controller.obtener_lugar(email_usuario));
         civ.setImageBitmap(controller.obtener_imagen_con_email(email_usuario));
     }
 
@@ -94,8 +101,19 @@ public class Ver_usuario extends AppCompatActivity{
     }
 
     public void onBackPressed(){
-        //finish();
-        startActivity(new Intent(this,Buscar_profesionales.class));
+       if (origen2==0){
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+               finishAffinity();
+           }
+           startActivity(new Intent(this,MapsActivity.class));
+
+       }else if (origen2==1){
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+               finishAffinity();
+           }
+           startActivity(new Intent(this,Buscar_profesionales.class));
+       }
+
     }
 
     public void valorar_usuario(View v){

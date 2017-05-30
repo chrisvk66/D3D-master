@@ -15,13 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 
@@ -32,11 +32,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by David M on 14/04/2017.
  */
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity{
 
     private TextInputLayout til_nombre, til_email, til_pass, til_repetirpass;
     private EditText nombre, email, pass, repetirpass;
-    double latitud, longitud;
     private CheckBox scanner, disenador, impresor, ubicacion;
     private Intent camara;
     private static final int RESULT_LOAD_IMAGE = 10;
@@ -47,8 +46,8 @@ public class Register extends AppCompatActivity {
     private SQLiteDatabase db;
     private BBDD_Controller controller = new BBDD_Controller(this);
     private CircleImageView civ;
-
-    private TextView tv21;
+    private double latitud, longitud;
+    private String lugar;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +60,15 @@ public class Register extends AppCompatActivity {
         }
         civ=(CircleImageView) findViewById(R.id.foto_registro);
 
+        latitud = 0;
+        longitud = 0;
+
         nombre = (EditText) findViewById(R.id.et_nombre_registro);
         email = (EditText) findViewById(R.id.et_email_registro);
         pass = (EditText) findViewById(R.id.et_pass_registro);
         repetirpass = (EditText) findViewById(R.id.et_repetirpass_registro);
 
-        tv21 = (TextView)findViewById(R.id.textView21);
+
         til_nombre = (TextInputLayout) findViewById(R.id.til_nombre_registro);
         til_nombre.setErrorEnabled(true);
         til_email = (TextInputLayout) findViewById(R.id.til_email_registro);
@@ -91,6 +93,37 @@ public class Register extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                LatLng coordeadas=place.getLatLng();
+                latitud=coordeadas.latitude;
+                longitud=coordeadas.longitude;
+
+                lugar=place.getName().toString();
+
+                /*Location l = new Location();
+                longitud = l.getLongitude();
+                latitud = l.getLatitude();*/
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                System.out.print("An error occurred: " + status);
+            }
+        });
+
+
+
     }
 
     //comprueba que es un email valido
@@ -140,25 +173,6 @@ public class Register extends AppCompatActivity {
 
 
     public void guardar_Perfil(View v) {
-
-
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                tv21.setText(place.getName());
-                System.out.print("Place: " + place.getName());
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                System.out.print("An error occurred: " + status);
-            }
-        });
 
 
 
@@ -220,12 +234,20 @@ public class Register extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     imagen_bbdd = stream.toByteArray();
 
-                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+
+                       System.out.print("------LATITUD: " +latitud+"------------");
+                       System.out.print("------LONGITUD: " +longitud+"------------");
+
+                       controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar);
+
                     //Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
 
                 }else{
                     // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
-                    controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,0,0,0,0);
+
+                        controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar);
+
+
                 }
 
 
@@ -330,5 +352,6 @@ public class Register extends AppCompatActivity {
             imagen_bbdd=arraybytes.toByteArray();
         }
     }
+
 
 }
