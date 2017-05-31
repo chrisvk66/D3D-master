@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.sdsmdg.tastytoast.TastyToast;
+
 import java.io.ByteArrayOutputStream;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -79,6 +84,58 @@ public class Editar_Perfil extends AppCompatActivity {
             finishAffinity();
         }
         startActivity(new Intent(this,Profile.class));
+    }
+
+    public void eliminar_usuario(View v){
+
+
+        new MaterialDialog.Builder(Editar_Perfil.this)
+                .title("Borrar mensaje")
+                .content("¿Desea borrar el usuario?")
+                .positiveText("si")
+                .negativeText("no")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        new MaterialDialog.Builder(Editar_Perfil.this)
+                                .title("¿Estas seguro?")
+                                .content("No se podrá deshacer")
+                                .positiveText("si")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        controller.eliminar_usuario(controller.obtener_id_conectado());
+                                        controller.eliminar_proyecto(controller.obtener_id_conectado());
+                                        //controller.actualizar_estado_conexion(controller.obtener_id_conectado(),0);
+                                        TastyToast.makeText(Editar_Perfil.this,"Usuario eliminado",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                            finishAffinity();
+                                        }
+                                        startActivity(new Intent(Editar_Perfil.this,MainActivity.class));
+                                    }
+                                })
+                                .negativeText("no")
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                        dialog.dismiss();
+                                    }
+                                })
+
+                                .show();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        //TastyToast.makeText(getContext(),"Has pulsado no",TastyToast.LENGTH_SHORT,TastyToast.INFO);
+
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     public void cancelar(View v){
