@@ -238,14 +238,14 @@ public class Register extends AppCompatActivity{
                        System.out.print("------LATITUD: " +latitud+"------------");
                        System.out.print("------LONGITUD: " +longitud+"------------");
 
-                       controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar);
+                       controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar,"0");
 
                     //Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
 
                 }else{
                     // Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
 
-                        controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar);
+                        controller.registrarse(comprobar_scanner(),comprobar_impresor(),comprobar_disenador(), nombre.getText().toString(),email.getText().toString(),pass.getText().toString(),imagen_bbdd,latitud,longitud,0,0,lugar,"0");
 
 
                 }

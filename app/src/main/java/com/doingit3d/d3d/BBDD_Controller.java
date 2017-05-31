@@ -44,7 +44,8 @@ public class BBDD_Controller extends SQLiteOpenHelper {
     }
 
     //inserta en la tabla los datos del registro
-    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud, int conectado, int tutorial,String lugar){
+    public void registrarse(int scanner, int impresora, int design, String nombre, String email, String pass, byte[]imagen, double latitud, double longitud,
+                            int conectado, int tutorial,String lugar,String id_face){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -64,6 +65,7 @@ public class BBDD_Controller extends SQLiteOpenHelper {
                 values.put("conectado",conectado);
                 values.put("tutorial",tutorial);
                 values.put("lugar",lugar);
+                values.put("id_face",id_face);
 
                 db.insert("usuario",null,values);
 
@@ -1260,6 +1262,97 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         }
         db.close();
         return bit;
+    }
+
+
+    public void eliminar_usuario(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("usuario","id = "+id, null);
+    }
+
+    public void eliminar_proyecto(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("proyecto","usuario_id = "+id, null);
+    }
+
+    public void insertar_id_facebook(String idface,String email){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+
+            if (db!=null){
+                ContentValues values = new ContentValues();
+
+                values.put("id_face",idface);
+
+                db.update("usuario",values,"email = "+"'"+email+"'",null);
+
+            }
+
+            db.close();
+
+        }catch(SQLiteException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean comprobar_id_face(String pass){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String id;
+        boolean igual=false;
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT id_face FROM usuario",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    id=cursor.getString(cursor.getColumnIndex("id_face"));
+                    System.out.println("--------------NOMBRE PASS: "+id+"--------------");
+
+                    if (id.equals(pass)){
+
+                        igual=true;
+                        break;
+
+                    }else{
+                        igual=false;
+
+                    }
+
+                }while(cursor.moveToNext());
+                System.out.println("--------------NOMBRE IGUALPASS: "+igual+"--------------");
+            }
+
+        }else{
+            System.out.println("--------------NO COMPRUEBA USUARIO--------------");
+        }
+        return igual;
+    }
+
+
+
+    public int obtener_id_face(String id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int id_user=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT id FROM usuario WHERE id_face = "+"'"+id+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    id_user=cursor.getInt(cursor.getColumnIndex("id"));
+
+                }while(cursor.moveToNext());
+            }
+
+        }else{
+            System.out.println("--------------NO COMPRUEBA USUARIO--------------");
+        }
+
+        return id_user;
     }
 
 }

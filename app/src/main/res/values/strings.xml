@@ -170,4 +170,6 @@
     <string name="title_activity_maps">Map</string>
     <!-- Fin strings varios-->
 
+    <string name="facebook_app_id">1857317244591701</string>
+    <string name="fb_login_protocol_scheme">fb1857317244591701</string>
 </resources>

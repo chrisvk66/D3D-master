@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+
 /**
  * Created by david.martin on 10/05/2017.
  */
@@ -141,8 +144,17 @@ public class MenuListFragment extends Fragment {
 
 
                     if (controller.comprobar_conectado()==true){
-                        controller.actualizar_estado_conexion(controller.obtener_id_conectado(),0);
-                        startActivity(new Intent(c,MainActivity.class));
+                        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null){
+                            //Logged in so show the login button
+                            controller.actualizar_estado_conexion(controller.obtener_id_conectado(),0);
+                            LoginManager.getInstance().logOut();
+                            startActivity(new Intent(c,MainActivity.class));
+
+                        }else{
+                            controller.actualizar_estado_conexion(controller.obtener_id_conectado(),0);
+                            startActivity(new Intent(c,MainActivity.class));
+                        }
+
 
                     }else{
                         Toast.makeText(getContext(),"inicia sesion primero",Toast.LENGTH_SHORT).show();
