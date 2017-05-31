@@ -171,7 +171,8 @@
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/foto" />
+                    android:text="@string/foto"
+                    android:layout_marginTop="40dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -203,13 +204,13 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/foto_info_personal"
-                    android:layout_width="100sp"
-                    android:layout_height="95sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="76dp"
                     android:adjustViewBounds="false"
                     android:clickable="true"
                     android:src="@drawable/img_perfil"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
+                    app:civ_border_width="2dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

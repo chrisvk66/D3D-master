@@ -222,6 +222,11 @@ public class MainActivity extends AppCompatActivity {
 
         //diferentes resoluciones de pantalla para que el tutorial salga bien
 
+        if(alto >= 870 && alto <= 970){
+
+            alto = 960;
+        }
+
         //pantalla 1280x720
         if (alto == 1280) {
 
@@ -252,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
             //800x480
         }else if(alto == 800){
-            r1= new Rect(66,532,0,0);
+            r1= new Rect(66,638,0,0);
             r2= new Rect(66,670,0,0);
             r3= new Rect(66,787,0,0);
             r4= new Rect(66,906,0,0);
