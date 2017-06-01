@@ -8,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,13 +23,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.facebook.AccessToken;
+
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -37,9 +40,22 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 import com.sdsmdg.tastytoast.TastyToast;
+
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Random;
+
 import br.com.goncalves.pugnotification.notification.PugNotification;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,10 +71,15 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
-    //private DownloadImage downloadImage = new DownloadImage();
+    private URL imagen_user=null;
     private Bitmap bitmap;
     private byte[] imagen_bbdd;
-
+    private Random random = new Random();
+    private InputStream input;
+    private String num1=String.valueOf(random.nextInt(1000+10)+10);
+    private String num2=String.valueOf(random.nextInt(1000+10)+10);
+    private Shimmer shimmer;
+    private ShimmerTextView shimmerTextView;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
             "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER," +
@@ -84,78 +105,84 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         FacebookSdk.getApplicationContext();
         FacebookSdk.setApplicationId(getResources().getString(R.string.facebook_app_id));
 
-        loginButton=(LoginButton) findViewById(R.id.login_button);
-
-
         callbackManager = CallbackManager.Factory.create();
+        setContentView(R.layout.activity_main);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        loginButton=(LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                /*AccessToken accessToken =*/ loginResult.getAccessToken();
-                accessTokenTracker = new AccessTokenTracker() {
-                    @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject jsonObject,
+                                                    GraphResponse response) {
 
-                    }
-                };
-                accessTokenTracker.startTracking();
+                                // Getting FB User Data
+                                Bundle facebookData = getFacebookData(jsonObject);
+                                String id =facebookData.getString("idFacebook");
+                                String nombre = facebookData.getString("first_name");
+                                String email= facebookData.getString("email");
 
-                profileTracker = new ProfileTracker() {
-                    @Override
-                    protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        try{
+                                            imagen_user=new URL("https://graph.facebook.com/"+id+"/picture?type=large");
+                                            bitmap= BitmapFactory.decodeStream(imagen_user.openConnection().getInputStream());
+                                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                            imagen_bbdd = stream.toByteArray();
 
-                    }
-                };
-                profileTracker.startTracking();
+                                        }catch(Exception e){
+                                            e.printStackTrace();
+                                        }
 
-                Profile profile = Profile.getCurrentProfile();
-               /* bitmap=downloadImage.doInBackground(profile.getProfilePictureUri(200,200).toString());
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                imagen_bbdd = stream.toByteArray();*/
-
-                String id=null;
-                if (profile!=null){
-                    id=profile.getId();
-                }else{
-                    System.out.println("-----STRING NULO---------");
-                }
+                                    }
+                                });
 
 
-                try{
-                    if ((controller.comprobar_id_face(id)==true) && (profile!=null)){
-                        //Toast.makeText(getApplicationContext(),"El id1 "+profile.getId(),Toast.LENGTH_SHORT).show();
-                        controller.actualizar_estado_conexion(controller.obtener_id_face(id),1);
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }else{
-                        //Toast.makeText(getApplicationContext(),"El id2 "+profile.getId(),Toast.LENGTH_SHORT).show();
-                        controller.registrarse(0,0,0,profile.getFirstName(),profile.getFirstName()+"@email.com","a",null,0,0,1,0,"",id);
-                        controller.insertar_id_facebook(id,profile.getFirstName()+"@email.com");
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }
-                }catch(Exception e){
-
-                    System.out.println("Esto es el catch");
-                    //controller.registrarse(0,0,0,"abc","abc"+"@email.com","a",null,0,0,1,0,"",id);
-                    //controller.insertar_id_facebook(id,"abc"+"@email.com");
-                    //startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    //this.onSuccess(loginResult);
-                    LoginManager.getInstance().logOut();
-                    //facebook(loginButton);
-                    loginButton.performClick();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-
-                    e.printStackTrace();
-                }
+                                try{
 
 
-                //nextActivity(profile);
+                                    if ((controller.comprobar_id_face(id))){
+                                        //Toast.makeText(getApplicationContext(),"El id1 "+profile.getId(),Toast.LENGTH_SHORT).show();
+                                        controller.actualizar_estado_conexion(controller.obtener_id_face(id),1);
+                                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                                    }else{
+
+
+                                        controller.registrarse(0,0,0,nombre,email,num1+num2,imagen_bbdd,0,0,1,0,"",id);
+                                        controller.insertar_id_facebook(id,email);
+                                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                                    }
+
+                                }catch(Exception e){
+                                    System.out.println("Esto es el catch");
+                                    LoginManager.getInstance().logOut();
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,first_name,last_name,email,gender");
+                request.setParameters(parameters);
+                request.executeAsync();
+
 
             }
 
@@ -218,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
 
-        if (controller.obtener_leido()==true){
+        if (controller.obtener_leido()){
             PugNotification.with(this)
                     .load()
                     .title("Proyectos")
@@ -234,13 +261,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         mDrawer = (FlowingDrawer) findViewById(R.id.drawerlayout);
-
+        shimmer= new Shimmer();
+        shimmerTextView= (ShimmerTextView)findViewById(R.id.shimmer_tv);
         //si el usuario esta conectado el menu lateral se habilita y sale el icono en la tollbar
-       if (controller.comprobar_conectado()==true){
+       if (controller.comprobar_conectado()){
           // facebook.setVisibility(View.INVISIBLE);
            loginButton.setVisibility(View.INVISIBLE);
            registro.setVisibility(View.INVISIBLE);
            login.setVisibility(View.INVISIBLE);
+           shimmerTextView.setVisibility(View.VISIBLE);
+           shimmerTextView.setText("¡Bienvenido!\n"+controller.username_conectado());
+           shimmer.start(shimmerTextView);
 
            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
            getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -281,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
            loginButton.setVisibility(View.VISIBLE);
            registro.setVisibility(View.VISIBLE);
            login.setVisibility(View.VISIBLE);
+           shimmerTextView.setVisibility(View.INVISIBLE);
 
            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
            getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -291,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
         r = new Rect(0,0,100,130);
         //tutorial de la toolbar
-       if (controller.obtener_tutorial()==0 && controller.comprobar_conectado()==true){
+       if (controller.obtener_tutorial()==0 && controller.comprobar_conectado()){
            TapTargetView.showFor(this,
                    TapTarget.forBounds(r,"Menu Lateral","Pulsa aquí para ver las opciones")
                            // All options below are optional
@@ -308,89 +340,49 @@ public class MainActivity extends AppCompatActivity {
 
                        }
                    });
-       }else{
-
        }
+
+
+
+
 
        }//onCreate
 
-    public void facebook(View v){
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
+    private Bundle getFacebookData(JSONObject object) {
+        Bundle bundle = new Bundle();
 
-                /*AccessToken accessToken =*/ loginResult.getAccessToken();
-                accessTokenTracker = new AccessTokenTracker() {
-                    @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
-
-                    }
-                };
-                accessTokenTracker.startTracking();
-
-                profileTracker = new ProfileTracker() {
-                    @Override
-                    protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
-
-                    }
-                };
-                profileTracker.startTracking();
-
-                Profile profile = Profile.getCurrentProfile();
-               /* bitmap=downloadImage.doInBackground(profile.getProfilePictureUri(200,200).toString());
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                imagen_bbdd = stream.toByteArray();*/
-
-                String id=null;
-                if (profile!=null){
-                    id=profile.getId();
-                }else{
-                    System.out.println("-----STRING NULO---------");
-                }
-
-
-                try{
-                    if ((controller.comprobar_id_face(id)==true) && (profile!=null)){
-                        //Toast.makeText(getApplicationContext(),"El id1 "+profile.getId(),Toast.LENGTH_SHORT).show();
-                        controller.actualizar_estado_conexion(controller.obtener_id_face(id),1);
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }else{
-                        //Toast.makeText(getApplicationContext(),"El id2 "+profile.getId(),Toast.LENGTH_SHORT).show();
-                        controller.registrarse(0,0,0,profile.getFirstName(),profile.getFirstName()+"@email.com","a",null,0,0,1,0,"",id);
-                        controller.insertar_id_facebook(id,profile.getFirstName()+"@email.com");
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    }
-                }catch(Exception e){
-
-                    System.out.println("Esto es el catch");
-                    //controller.registrarse(0,0,0,"abc","abc"+"@email.com","a",null,0,0,1,0,"",id);
-                    //controller.insertar_id_facebook(id,"abc"+"@email.com");
-                    //startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    //this.onSuccess(loginResult);
-                    LoginManager.getInstance().logOut();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-
-                    e.printStackTrace();
-                }
-
-
-                //nextActivity(profile);
-
+        try {
+            String id = object.getString("id");
+            URL profile_pic;
+            try {
+                profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
+                Log.i("profile_pic", profile_pic + "");
+                bundle.putString("profile_pic", profile_pic.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return null;
             }
 
-            @Override
-            public void onCancel() {
+            bundle.putString("idFacebook", id);
+            if (object.has("first_name"))
+                bundle.putString("first_name", object.getString("first_name"));
+            if (object.has("last_name"))
+                bundle.putString("last_name", object.getString("last_name"));
+            if (object.has("email"))
+                bundle.putString("email", object.getString("email"));
+            if (object.has("gender"))
+                bundle.putString("gender", object.getString("gender"));
 
-            }
 
-            @Override
-            public void onError(FacebookException error) {
+          /*  prefUtil.saveFacebookUserInfo(object.getString("first_name"),
+                    object.getString("last_name"),object.getString("email"),
+                    object.getString("gender"), profile_pic.toString());*/
 
-            }
-        });
+        } catch (Exception e) {
+            //Log.d(TAG, "BUNDLE Exception : "+e.toString());
+        }
+
+        return bundle;
     }
 
 
@@ -445,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
         int alto = metrics.heightPixels;
         //float ancho = metrics.widthPixels;
 
-        Rect r1, r2, r3, r4, r5, r6, r7, r8, r9,r10;
+        Rect r1, r2, r3, r4, r5, r6, r7, r8, r9;
 
         //diferentes resoluciones de pantalla para que el tutorial salga bien
 
@@ -466,7 +458,6 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(105, 2020, 0, 0);
             r8 = new Rect(105, 2230, 0, 0);
             r9 = new Rect(105, 2420, 0, 0);
-            r10 = new Rect(105, 2630, 0, 0);
 
             //pantalla 1920x1080
         } else if (alto == 1920) {
@@ -480,7 +471,6 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(158, 3030, 0, 0);
             r8 = new Rect(158, 3345, 0, 0);
             r9 = new Rect(158, 3630, 0, 0);
-            r10 = new Rect(158, 3945, 0, 0);
 
             //800x480
         }else if(alto == 800){
@@ -493,7 +483,6 @@ public class MainActivity extends AppCompatActivity {
             r7= new Rect(66,1263,0,0);
             r8= new Rect(66,1394,0,0);
             r9= new Rect(66,1513,0,0);
-            r10 = new Rect(66, 1643, 0, 0);
 
             //1024x768
         }else if(alto == 1024){
@@ -506,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
             r7= new Rect(35,1616,0,0);
             r8= new Rect(35,1784,0,0);
             r9= new Rect(35,1936,0,0);
-            r10 = new Rect(35, 2150, 0, 0);
 
             //pantalla de 960 x 540
         }else if(alto == 960){
@@ -519,7 +507,6 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(79, 1515, 0, 0);
             r8 = new Rect(79, 1673, 0, 0);
             r9 = new Rect(79, 1815, 0, 0);
-            r10 = new Rect(79, 2050, 0, 0);
 
             //por defecto pantalla de 1920x1080
         }else{
@@ -532,7 +519,7 @@ public class MainActivity extends AppCompatActivity {
             r7 = new Rect(158, 3030, 0, 0);
             r8 = new Rect(158, 3345, 0, 0);
             r9 = new Rect(158, 3630, 0, 0);
-            r10 = new Rect(158, 3945, 0, 0);
+
         }
 
 
@@ -723,9 +710,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         //comprueba que exista el email Y la contraseña; y que la contraseña se corresponda con ese email
-                        if ((controller.comprobarusuarios(til_email.getEditText().getText().toString())==true) && (controller.comprobarpass(til_pass.getEditText().getText().toString())==true) && (controller.comprobar_email_pass(til_email.getEditText().getText().toString(),til_pass.getEditText().getText().toString()))==true){
+                        if ((controller.comprobarusuarios(til_email.getEditText().getText().toString())) && (controller.comprobarpass(til_pass.getEditText().getText().toString())) && (controller.comprobar_email_pass(til_email.getEditText().getText().toString(),til_pass.getEditText().getText().toString()))){
 
-                            if (controller.comprobar_conectado()==true){
+                            if (controller.comprobar_conectado()){
                                 alertDialog.dismiss();
                                 Toast.makeText(getApplicationContext(),getString(R.string.logout_first),Toast.LENGTH_SHORT).show();
                             }else{
@@ -762,6 +749,6 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         }
-        startActivity(new Intent(getApplicationContext(),Profile.class));
+        startActivity(new Intent(getApplicationContext(), com.doingit3d.d3d.Profile.class));
     }
 }

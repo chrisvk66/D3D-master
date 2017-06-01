@@ -12,13 +12,25 @@
     tools:showIn="@layout/app_bar_main"
     android:weightSum="1">
 
+    <com.romainpiel.shimmer.ShimmerTextView
+        android:id="@+id/shimmer_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center"
+        android:layout_weight="0.41"
+        android:gravity="center_horizontal"
+        android:text="Bienvenido¡!"
+        android:textColor="@color/negro"
+        android:textSize="50sp" />
+
     <LinearLayout
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.41"
         android:orientation="vertical">
 
-       <!-- <Button
+
+        <!-- <Button
             android:id="@+id/b_facebook"
             style="@style/boton_facebook"
             android:layout_width="match_parent"

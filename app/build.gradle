@@ -47,6 +47,8 @@ dependencies {
 
     compile files('mysql-connector-java-5.1.42-bin.jar')
     compile files('libs/mysql-connector-java-5.1.42-bin.jar')
+    compile 'tyrantgit:explosionfield:1.0.1'
+    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.0'

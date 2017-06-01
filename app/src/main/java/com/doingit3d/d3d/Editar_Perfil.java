@@ -1,11 +1,16 @@
 package com.doingit3d.d3d;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -22,8 +27,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import tyrantgit.explosionfield.ExplosionField;
 
 /**
  * Created by david.martin on 22/05/2017.
@@ -42,10 +50,14 @@ public class Editar_Perfil extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 22;
     private static final int REQUEST_IMAGE_CAPTURE = 33;
     private Bundle b;
+    private ExplosionField mExplosionField;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_perfil);
+
+
+        mExplosionField = ExplosionField.attach2Window(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -53,9 +65,10 @@ public class Editar_Perfil extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         civ=(CircleImageView) findViewById(R.id.foto_editar);
+        civ.setImageBitmap(controller.obtener_imagen());
 
         img=(ImageView) findViewById(R.id.foto_editar);
-        img.setImageResource(R.drawable.img_perfil);
+       // img.setImageResource(R.drawable.img_perfil);
 
         nombre=(EditText) findViewById(R.id.et_editar_nombre);
         email=(EditText) findViewById(R.id.et_editar_email);
@@ -237,6 +250,9 @@ public class Editar_Perfil extends AppCompatActivity {
 
     public void editar_foto(View v){
 
+
+        mExplosionField.explode(civ);
+
         new MaterialDialog.Builder(this)
                 .title(R.string.elegir_modo)
                 .items(R.array.camara_galeria)
@@ -260,9 +276,23 @@ public class Editar_Perfil extends AppCompatActivity {
                         }
                     }
 
+                }).canceledOnTouchOutside(true)
+                .cancelable(true)
+                .cancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        civ.setScaleX(1);
+                        civ.setScaleY(1);
+                        civ.setAlpha(1.0F);
+                        mExplosionField.clear();
+                    }
                 })
 
                 .show();
+
+
+
+
     }
 
     //comprueba si viene de la galeria o desde la camara y recoge los datos
@@ -277,7 +307,10 @@ public class Editar_Perfil extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
-
+                mExplosionField.clear();
+                civ.setScaleX(1);
+                civ.setScaleY(1);
+                civ.setAlpha(1.0F);
                 civ.setImageBitmap(bitmap);
 
                 //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
@@ -292,6 +325,10 @@ public class Editar_Perfil extends AppCompatActivity {
             bm=(Bitmap)b.get("data");
             ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.WEBP, 100,arraybytes);
+            mExplosionField.clear();
+            civ.setScaleX(1);
+            civ.setScaleY(1);
+            civ.setAlpha(1.0F);
             civ.setImageBitmap(bm);
 
             //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
