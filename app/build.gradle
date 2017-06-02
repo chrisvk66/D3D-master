@@ -47,6 +47,7 @@ dependencies {
 
     compile files('mysql-connector-java-5.1.42-bin.jar')
     compile files('libs/mysql-connector-java-5.1.42-bin.jar')
+    compile 'com.zys:brokenview:1.0.3'
     compile 'tyrantgit:explosionfield:1.0.1'
     compile 'com.romainpiel.shimmer:library:1.4.0@aar'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'

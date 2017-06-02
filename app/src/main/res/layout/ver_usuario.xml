@@ -56,7 +56,7 @@
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginBottom="10sp"
                     android:text="Email:"
                     android:textStyle="bold" />
@@ -119,7 +119,7 @@
                 <TextView
                     android:id="@+id/tv_email_versusuario"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginBottom="10sp" />
 
                 <TextView

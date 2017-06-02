@@ -3,14 +3,10 @@ package com.doingit3d.d3d;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -25,13 +21,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sdsmdg.tastytoast.TastyToast;
+import com.zys.brokenview.BrokenCallback;
+import com.zys.brokenview.BrokenTouchListener;
+import com.zys.brokenview.BrokenView;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
-import tyrantgit.explosionfield.ExplosionField;
 
 /**
  * Created by david.martin on 22/05/2017.
@@ -50,22 +47,60 @@ public class Editar_Perfil extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 22;
     private static final int REQUEST_IMAGE_CAPTURE = 33;
     private Bundle b;
-    private ExplosionField mExplosionField;
+    //private ExplosionField mExplosionField;
+    private BrokenView brokenView;
+    private BrokenTouchListener listener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_perfil);
 
+        civ=(CircleImageView) findViewById(R.id.foto_editar);
+        civ.setImageBitmap(controller.obtener_imagen());
+        //mExplosionField = ExplosionField.attach2Window(this);
+        brokenView = BrokenView.add2Window(this);
+        brokenView.setCallback(new BrokenCallback() {
+            @Override
+            public void onStart(View v) {
+                super.onStart(v);
+            }
 
-        mExplosionField = ExplosionField.attach2Window(this);
+            @Override
+            public void onCancel(View v) {
+                super.onCancel(v);
+            }
+
+            @Override
+            public void onRestart(View v) {
+                super.onRestart(v);
+            }
+
+            @Override
+            public void onFalling(View v) {
+                super.onFalling(v);
+            }
+
+            @Override
+            public void onFallingEnd(View v) {
+                super.onFallingEnd(v);
+                editar_foto();
+            }
+
+            @Override
+            public void onCancelEnd(View v) {
+                super.onCancelEnd(v);
+            }
+        });
+        listener = new BrokenTouchListener.Builder(brokenView).build();
+        civ.setOnTouchListener(listener);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        civ=(CircleImageView) findViewById(R.id.foto_editar);
-        civ.setImageBitmap(controller.obtener_imagen());
+
 
         img=(ImageView) findViewById(R.id.foto_editar);
        // img.setImageResource(R.drawable.img_perfil);
@@ -248,10 +283,13 @@ public class Editar_Perfil extends AppCompatActivity {
 
     }
 
-    public void editar_foto(View v){
 
 
-        mExplosionField.explode(civ);
+    public void editar_foto(){
+
+
+        //mExplosionField.explode(civ);
+
 
         new MaterialDialog.Builder(this)
                 .title(R.string.elegir_modo)
@@ -284,14 +322,12 @@ public class Editar_Perfil extends AppCompatActivity {
                         civ.setScaleX(1);
                         civ.setScaleY(1);
                         civ.setAlpha(1.0F);
-                        mExplosionField.clear();
+                        civ.setVisibility(View.VISIBLE);
+                       // mExplosionField.clear();
                     }
                 })
 
                 .show();
-
-
-
 
     }
 
@@ -307,10 +343,11 @@ public class Editar_Perfil extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, arraybytes);
-                mExplosionField.clear();
+               // mExplosionField.clear();
                 civ.setScaleX(1);
                 civ.setScaleY(1);
                 civ.setAlpha(1.0F);
+                civ.setVisibility(View.VISIBLE);
                 civ.setImageBitmap(bitmap);
 
                 //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
@@ -325,10 +362,11 @@ public class Editar_Perfil extends AppCompatActivity {
             bm=(Bitmap)b.get("data");
             ByteArrayOutputStream arraybytes = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.WEBP, 100,arraybytes);
-            mExplosionField.clear();
+           // mExplosionField.clear();
             civ.setScaleX(1);
             civ.setScaleY(1);
             civ.setAlpha(1.0F);
+            civ.setVisibility(View.VISIBLE);
             civ.setImageBitmap(bm);
 
             //en imagen_bbdd te almacena los bytes de la imagen para guardarlos en la base de datos
