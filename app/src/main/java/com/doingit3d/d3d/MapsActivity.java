@@ -1,41 +1,41 @@
 package com.doingit3d.d3d;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
+import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
+import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMarkerDragListener,OnStreetViewPanoramaReadyCallback,GoogleMap.OnMarkerClickListener{
 
-    private GoogleMap mMap;
     private ArrayList<Double> latitude, longitude;
     private ArrayList<String> emails,nombres;
-    private ArrayList<Bitmap> bit;
-    private Bitmap bm;
     private String email,nombre;
     private  double lat = 0;
     private  double lon = 0;
+    private double lat2,lon2;
     private BBDD_Controller controller = new BBDD_Controller(this);
-    private  Bitmap escala;
     private Intent i;
     private SupportMapFragment mapFragment;
-    private MapView mapView;
+    private Marker marca;
+    private StreetViewPanorama panoram;
+
 
 
     @Override
@@ -51,7 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         longitude= new ArrayList<>();
         emails = new ArrayList<>();
         nombres = new ArrayList<>();
-        bit = new ArrayList<>();
 
         controller.obtener_todos_latitud(latitude);
         controller.obtener_todos_longitud(longitude);
@@ -59,6 +58,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         controller.obtener_todos_nombres(nombres);
 
         i= new Intent(this,Ver_usuario.class);
+
+        StreetViewPanoramaFragment streetViewPanoramaFragment =
+                (StreetViewPanoramaFragment) getFragmentManager()
+                        .findFragmentById(R.id.streetviewpanorama);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
+
 
 
     }
@@ -88,8 +93,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
         public void onMapReady(GoogleMap map) {
 
-        //mMap=map;
-
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
 
@@ -102,8 +105,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(i);
             }
         });
-
-
 
 
 
@@ -123,11 +124,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                // bm=bit.get(i);
                                // escala =controller.obtener_imagen_con_email(email).createScaledBitmap(controller.obtener_imagen_con_email(email), 75, 75, true);
 
-                                map.addMarker(new MarkerOptions()
+                               marca= map.addMarker(new MarkerOptions()
                                         .position(new LatLng(lat, lon))
                                         //.icon(BitmapDescriptorFactory.fromBitmap(escala))
                                         .title(email)
                                         .snippet(nombre));
+                                map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                                    @Override
+                                    public void onMapLongClick(LatLng latLng) {
+                                        //showStreetView(new LatLng(controller.obtener_latitud_con_email(marca.getTitle().toString()),controller.obtener_longitud_con_email(marca.getTitle().toString())));
+                                    }
+                                });
 
 
                                 map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -151,14 +158,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     }
                                 });
 
+
                             }
                         }
 
                     }
                 }
 
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                //if (marker.getTitle().equals(marca.getTitle().toString())){
 
+                lat2=controller.obtener_latitud_con_email(marker.getTitle().toString());
+                lon2=controller.obtener_longitud_con_email(marker.getTitle().toString());
+                showStreetView(new LatLng(lat2,lon2));
+                //Toast.makeText(MapsActivity.this, "latn: "+lat2, Toast.LENGTH_SHORT).show();
+                // panoram.setPosition(new LatLng(lat2,lon2));
+                //onStreetViewPanoramaReady(panoram);
+                //}
+
+                return false;
+            }
+        });
 
         }
+
+    @Override
+    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
+        panoram=panorama;
+        panoram.setPosition(new LatLng(lat2,lon2));
+        panorama.setOnStreetViewPanoramaChangeListener(new OnStreetViewPanoramaChangeListener() {
+            @Override
+            public void onStreetViewPanoramaChange(StreetViewPanoramaLocation location) {
+                if (location != null && location.links != null) {
+
+                } else {
+
+                    panorama.setPosition(new LatLng(lat2,lon2));
+                }
+            }
+        });
+
+    }
+
+
+
+    private void showStreetView( LatLng latLng ) {
+        if( panoram == null )
+            return;
+
+        StreetViewPanoramaCamera.Builder builder = new StreetViewPanoramaCamera.Builder( panoram.getPanoramaCamera() );
+        builder.tilt( 0.0f );
+        builder.zoom( 0.0f );
+        builder.bearing( 0.0f );
+        panoram.animateTo( builder.build(), 0 );
+
+        panoram.setPosition( latLng, 300 );
+        panoram.setStreetNamesEnabled( true );
+    }
+
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+    //    mStreetViewPanorama.setPosition(marker.getPosition(), 150);
+    }
+
+
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (marker.equals(marca)){
+            //lat=map
+            Toast.makeText(this, "Esto es una marca", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
 
 }

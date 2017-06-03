@@ -1355,4 +1355,52 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         return id_user;
     }
 
+    public double obtener_longitud_con_email(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double longitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT longitud FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    longitud=cursor.getDouble(cursor.getColumnIndex("longitud"));
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return longitud;
+    }
+
+    public double obtener_latitud_con_email(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        double latitud=0;
+
+        if(db!=null){
+            Cursor cursor = db.rawQuery("SELECT latitud FROM usuario WHERE email = "+"'"+email+"'",null);
+            if(cursor.moveToFirst()){
+                do{
+
+                    latitud=cursor.getDouble(cursor.getColumnIndex("latitud"));
+
+
+                }while(cursor.moveToNext());
+
+            }
+
+        }else{
+
+        }
+        db.close();
+
+        return latitud;
+    }
+
 }
