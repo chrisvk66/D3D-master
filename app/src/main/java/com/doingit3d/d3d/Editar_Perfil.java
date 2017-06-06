@@ -3,7 +3,6 @@ package com.doingit3d.d3d;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +19,11 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.zys.brokenview.BrokenCallback;
 import com.zys.brokenview.BrokenTouchListener;
@@ -47,9 +51,11 @@ public class Editar_Perfil extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 22;
     private static final int REQUEST_IMAGE_CAPTURE = 33;
     private Bundle b;
-    //private ExplosionField mExplosionField;
     private BrokenView brokenView;
     private BrokenTouchListener listener;
+    private PlaceAutocompleteFragment autocompleteFragment;
+    private double latitud=0, longitud=0;
+    private String lugar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +123,30 @@ public class Editar_Perfil extends AppCompatActivity {
         til_email=(TextInputLayout) findViewById(R.id.til_editar_email);
         til_pass=(TextInputLayout) findViewById(R.id.til_editar_pass);
         til_pass.setPasswordVisibilityToggleEnabled(true);
+
+
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                LatLng coordeadas=place.getLatLng();
+                latitud=coordeadas.latitude;
+                longitud=coordeadas.longitude;
+
+                lugar=place.getName().toString();
+
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                System.out.print("An error occurred: " + status);
+            }
+        });
 
     }
 
@@ -247,18 +277,18 @@ public class Editar_Perfil extends AppCompatActivity {
 
 
             if (fotoBytes == null) {
-                civ.setImageResource(R.drawable.nofoto);
-                bitmap = ((BitmapDrawable)civ.getDrawable()).getBitmap();
+               // civ.setImageResource(R.drawable.nofoto);
+               // bitmap = ((BitmapDrawable)civ.getDrawable()).getBitmap();
+                bitmap=controller.obtener_imagen();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 fotoBytes = stream.toByteArray();
 
-                controller.actualizar_perfil(nombre.getText().toString(),email.getText().toString(),design(),scanner(),impresion(),pass.getText().toString(),fotoBytes);
-               // Toast.makeText(this,"No hay imagen",Toast.LENGTH_SHORT).show();
+                controller.actualizar_perfil(nombre.getText().toString(),email.getText().toString(),design(),scanner(),impresion(),pass.getText().toString(),fotoBytes,latitud,longitud,lugar);
 
             }else{
-                //Toast.makeText(this,"SI hay imagen",Toast.LENGTH_SHORT).show();
-                controller.actualizar_perfil(nombre.getText().toString(),email.getText().toString(),design(),scanner(),impresion(),pass.getText().toString(),fotoBytes);
+
+                controller.actualizar_perfil(nombre.getText().toString(),email.getText().toString(),design(),scanner(),impresion(),pass.getText().toString(),fotoBytes,latitud,longitud,lugar);
             }
 
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
@@ -279,17 +309,11 @@ public class Editar_Perfil extends AppCompatActivity {
         }
 
 
-
-
     }
 
 
 
     public void editar_foto(){
-
-
-        //mExplosionField.explode(civ);
-
 
         new MaterialDialog.Builder(this)
                 .title(R.string.elegir_modo)
@@ -323,7 +347,7 @@ public class Editar_Perfil extends AppCompatActivity {
                         civ.setScaleY(1);
                         civ.setAlpha(1.0F);
                         civ.setVisibility(View.VISIBLE);
-                       // mExplosionField.clear();
+
                     }
                 })
 

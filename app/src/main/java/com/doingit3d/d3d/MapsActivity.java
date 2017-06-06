@@ -93,6 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
         public void onMapReady(GoogleMap map) {
 
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setBuildingsEnabled(true);
 

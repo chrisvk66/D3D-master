@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private BBDD_Controller controller = new BBDD_Controller(this);
     private SQLiteDatabase db;
     private Toolbar toolbar;
-    private Button facebook,registro,login;
+    private Button mapa,proyecto,registro,login;
     private Rect r;
     private Intent i;
     private PendingIntent pi;
@@ -210,7 +210,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //facebook=(Button) findViewById(R.id.b_facebook);
+        mapa=(Button) findViewById(R.id.b_mapa);
+        proyecto=(Button) findViewById(R.id.b_proyectos);
         registro=(Button) findViewById(R.id.b_registrarse);
         login=(Button) findViewById(R.id.b_entrar);
 
@@ -265,7 +266,8 @@ public class MainActivity extends AppCompatActivity {
         shimmerTextView= (ShimmerTextView)findViewById(R.id.shimmer_tv);
         //si el usuario esta conectado el menu lateral se habilita y sale el icono en la tollbar
        if (controller.comprobar_conectado()){
-          // facebook.setVisibility(View.INVISIBLE);
+           mapa.setVisibility(View.VISIBLE);
+           proyecto.setVisibility(View.VISIBLE);
            loginButton.setVisibility(View.INVISIBLE);
            registro.setVisibility(View.INVISIBLE);
            login.setVisibility(View.INVISIBLE);
@@ -308,7 +310,8 @@ public class MainActivity extends AppCompatActivity {
            //si no hay usuarios conectados, no se podrá usar el menu lateral ni saldrá el icono en la toolbar
        }else{
 
-           //facebook.setVisibility(View.VISIBLE);
+           mapa.setVisibility(View.INVISIBLE);
+           proyecto.setVisibility(View.INVISIBLE);
            loginButton.setVisibility(View.VISIBLE);
            registro.setVisibility(View.VISIBLE);
            login.setVisibility(View.VISIBLE);
@@ -750,5 +753,21 @@ public class MainActivity extends AppCompatActivity {
             finishAffinity();
         }
         startActivity(new Intent(getApplicationContext(), com.doingit3d.d3d.Profile.class));
+    }
+
+    public void ir_a_mapa(View v){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+        startActivity(new Intent(getApplicationContext(),MapsActivity.class));
+    }
+
+    public void ir_a_proyectos(View v){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }
+       i= new Intent(this,Project_Main.class);
+        i.putExtra("origen",0);
+        startActivity(i);
     }
 }

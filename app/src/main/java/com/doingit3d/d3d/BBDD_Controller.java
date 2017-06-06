@@ -638,7 +638,8 @@ public class BBDD_Controller extends SQLiteOpenHelper {
 
 
     //actualiza el perfil
-    public void actualizar_perfil(String nombre,String email,int design, int scanner, int impresion, String pass, byte [] foto){
+    public void actualizar_perfil(String nombre,String email,int design, int scanner, int impresion, String pass,
+                                  byte [] foto,double latitud,double longitud,String lugar){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -651,6 +652,9 @@ public class BBDD_Controller extends SQLiteOpenHelper {
         values.put("impresor", impresion);
         values.put("contrasena",pass);
         values.put("imagen",foto);
+        values.put("latitud",latitud);
+        values.put("longitud",longitud);
+        values.put("lugar",lugar);
         db.update("usuario",values,"id = "+obtener_id_conectado(),null);
         db.close();
     }
