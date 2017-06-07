@@ -124,6 +124,9 @@ public class MenuListFragment extends Fragment {
                 }else if (id== R.id.nav_publicar){
                     startActivity(new Intent(getActivity(), Publish_Project.class));
 
+                }else if (id== R.id.nav_chat){
+                    startActivity(new Intent(getActivity(), ChatMain.class));
+
                 }else if (id== R.id.nav_mis_proyectos){
                     //si la actividad se inicia desde aqui se mostraran solo los proyectos del usuario
                     i.putExtra("origen",1);

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "263538804349",
+    "firebase_url": "https://doingit3d-5879b.firebaseio.com",
+    "project_id": "doingit3d-5879b",
+    "storage_bucket": "doingit3d-5879b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263538804349:android:89386761980d97ac",
+        "android_client_info": {
+          "package_name": "com.doingit3d.d3d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263538804349-fhr1hh1gh98ebpbsg3v27pfe7j3328vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doingit3d.d3d",
+            "certificate_hash": "339fab205dac86abc8a51a1de18914fa09ca10ee"
+          }
+        },
+        {
+          "client_id": "263538804349-5vqvd6aqh3uem92s0ich2pdddud5ttaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doingit3d.d3d",
+            "certificate_hash": "167aedaef79f6eed47cd082d950d28ca102f87ba"
+          }
+        },
+        {
+          "client_id": "263538804349-fsl1d8r5bp76o6v3qt37i9ltv1v8s2op.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV-MagnVbzTkJ1pdbApJg3UB1TxCDWDII"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263538804349-fsl1d8r5bp76o6v3qt37i9ltv1v8s2op.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

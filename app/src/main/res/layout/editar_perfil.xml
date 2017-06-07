@@ -85,7 +85,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/nueva_pass"
-                            android:inputType="textVisiblePassword" />
+                            android:inputType="textPassword" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 

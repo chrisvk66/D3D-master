@@ -44,6 +44,11 @@
             android:title="@string/nav_mensajes" />
 
         <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_chat"
+            android:title="Chat" />
+
+        <item
             android:id="@+id/nav_como_funciona"
             android:icon="@drawable/question_black"
             android:title="@string/nav_como_funciona" />

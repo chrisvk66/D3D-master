@@ -594,7 +594,7 @@ public class MainActivity extends AppCompatActivity {
                                     .targetCircleColor(R.color.azul_facebook)
                                     .textColor(android.R.color.black),
 
-                            TapTarget.forBounds(r9, "Cómo Funciona", "Si tienes alguna duda de como funciona la aplicación pulsa aquí")
+                            TapTarget.forBounds(r9, "Chat", "Habla con otros usuarios en tiempo real")
                                     .dimColor(android.R.color.holo_red_dark)
                                     .transparentTarget(true)
                                     .cancelable(false)
