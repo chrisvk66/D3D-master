@@ -75,6 +75,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.google.android.gms:play-services-places:9.4.0'
     compile "com.google.android.gms:play-services-auth:9.4.0"
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     testCompile 'junit:junit:4.12'
 }
 
