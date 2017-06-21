@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.facebook.AccessTokenTracker;
@@ -55,6 +56,7 @@ import java.util.Random;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import jp.wasabeef.blurry.Blurry;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private String num2=String.valueOf(random.nextInt(1000+10)+10);
     private Shimmer shimmer;
     private ShimmerTextView shimmerTextView;
+    private LinearLayout fondo;
 
     private String tabla_usuario="CREATE TABLE IF NOT EXISTS usuario (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, imagen BLOB, nombre TEXT, email TEXT," +
             "contrasena TEXT, impresor INTEGER, disenador INTEGER, scanner INTEGER, latitud REAL, longitud REAL, conectado INTEGER, tutorial INTEGER," +
@@ -110,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_main);
+
+        fondo = (LinearLayout)findViewById(R.id.layoutinicial);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -271,9 +276,11 @@ public class MainActivity extends AppCompatActivity {
            loginButton.setVisibility(View.INVISIBLE);
            registro.setVisibility(View.INVISIBLE);
            login.setVisibility(View.INVISIBLE);
-           shimmerTextView.setVisibility(View.VISIBLE);
+           /*shimmerTextView.setVisibility(View.VISIBLE);
            shimmerTextView.setText("¡Bienvenido!\n"+controller.username_conectado());
-           shimmer.start(shimmerTextView);
+           shimmer.start(shimmerTextView);*/
+
+           fondo.setBackgroundResource(R.drawable.blur);
 
            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
            getSupportActionBar().setDisplayShowHomeEnabled(true);
